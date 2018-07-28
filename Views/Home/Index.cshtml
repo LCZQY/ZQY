@@ -1,0 +1,491 @@
+﻿@model QP.Prospectus.Models.businessplan
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+
+    .h5 { font-weight: 600; color: #000000; }
+
+    b { color: red; font-weight: bold; font-size: 20px; margin-left: 0.4%; }
+
+    p { font-size: 14px; font-weight: 500; margin-top: 1%; text-indent: 2%; line-height: inherit; }
+
+    .h5 { font-size: 15px; color: #625c5c; }
+
+
+    textarea { max-width: 620px; }
+    option { text-align: center; }
+</style>
+<div class="row">
+    <div class="col-md-7 col-lg-offset-2">
+        <p>
+            @ViewData["Brief"]
+        </p>
+    </div>
+</div>
+<div class="col-md-7  col-lg-offset-2 ">
+    @*在上传文件在时候一定要加上new { enctype = "multipart/form-data"}*@
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Partner, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @{
+                        var parther = (ViewData["Parther"] as List<string>);
+                        for (int i = 0; i < parther.Count - 1; i++)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="radio">
+                                            <label>
+                                                @Html.RadioButton("Partner", parther[i], new { htmlAttributes = new { @class = "form-control  " } }) @parther[i]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="radio">
+                                            <label>
+                                                @Html.RadioButton("Partner", parther[i + 1], new { htmlAttributes = new { @class = "form-control " } }) @parther[i + 1]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                    }
+                </div>
+                <div class="col-md-12">
+                    @Html.ValidationMessageFor(model => model.Partner, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProjectName, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.ProjectName, new { htmlAttributes = new { @class = "form-control input-sm", @maxlength = "10" } })
+                    @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProjectDescribe, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.TextAreaFor(a => a.ProjectDescribe, 3, 200, new { @resize = "none", @class = "form-control", @maxlength = "70" })
+                    @Html.ValidationMessageFor(model => model.ProjectDescribe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.C__Setback, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.TextAreaFor(a => a.C__Setback, 3, 200, new { @resize = "none", @class = "form-control", @maxlength = "70" })
+                    @Html.ValidationMessageFor(model => model.C__Setback, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TeamDescribe, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.TextAreaFor(a => a.TeamDescribe, 3, 200, new { @resize = "none", @class = "form-control", @maxlength = "70" })
+                    @Html.ValidationMessageFor(model => model.TeamDescribe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*格言*@
+            <div class="form-group">
+                @Html.LabelFor(model => model.Dictum, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.TextAreaFor(a => a.Dictum, 3, 200, new { @resize = "none", @class = "form-control", @maxlength = "20" })
+                    @Html.ValidationMessageFor(model => model.Dictum, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.C__ProjectPayOut, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @{
+                        var PayOut = (ViewData["PayOut"] as List<string>);
+                        for (int i = 0; i < PayOut.Count; i++)
+                        {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBox("C__ProjectPayOut", new { value = PayOut[i], @class = "payOut" })
+                                            @PayOut[i]
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="col-md-12">
+                    <span class="text-danger myValidate"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PayMoney, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.PayMoney, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.PayMoney, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    <span class="upload">
+                        <input type="text" class="upload-url input-sm" style="width:182px;" />
+                        <input type="button" class="upload-btn btn-default  btn-sm" value="浏览文件" />
+                        @*<input type="file" id="BlogPhoto" name="FilePath" class="upload-input-file form-control input-sm">*@
+                        @Html.EditorFor(model => model.FilePath, new { htmlAttributes = new { @id = "BlogPhoto", @type = "file", @class = "upload-input-file form-control input-sm" } })
+                    </span>
+                </div>
+                <div class="cold-md-12">
+                    @ViewBag.ErrorMessage
+                    @Html.ValidationMessageFor(model => model.FilePath, "", new { @id = "warning", @class = "text-danger" })
+                </div>
+                <style>
+                    .upload { position: relative; display: inline-block; height: 33px; line-height: 33px; overflow: hidden; vertical-align: middle; cursor: pointer; }
+                    .upload .upload-input-file { position: absolute; right: 0; top: 0; opacity: 0; filter: alpha(opacity=0); cursor: pointer; }
+                    .upload .upload-btn { outline: none; border: 0; color: #fff; background: #222222; cursor: pointer; border-radius: 3px; }
+                    .upload .upload-url { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; border-radius: 2px; border: solid 1px #ddd; height: 30px; -webkit-line-height: 1; line-height: 30px\9; -ms-line-height: 30px; text-indent: 3px; }
+                    .upload .upload-tip { display: none; background-color: #1c84c6; padding: 2px 10px; color: #fefefe; font-size: 12px !important; border-radius: 3px; }
+                </style>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control input-sm", @maxlength = "6" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.DropDownList("Sex", ViewData["Sex"] as SelectList, new { @class = "form-control input-sm" })
+                    @Html.ValidationMessageFor(model => model.Sex, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProjectTantistop, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @{
+                        var lists = (ViewData["keyWord"] as List<string>);
+                        for (int i = 0; i < lists.Count - 1; i++)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="checkbox">
+                                            <label>
+                                                @Html.CheckBox("ProjectTantistop", new { value = lists[i], @class = "tantistop" })
+                                                @lists[i]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="checkbox">
+                                            <label>
+                                                @Html.CheckBox("ProjectTantistop", new { value = lists[i + 1], @class = "tantistop" })
+                                                @lists[i + 1]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="checkbox">
+                                    <label>
+                                        @Html.CheckBox("other")其他 （以上全都不是）
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-12">
+                    <span class="text-danger myValidate"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @maxlength = "11", @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.WeChat, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.WeChat, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.WeChat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "h5" })<b>*</b>
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.Birthday, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.C__CompanyName, htmlAttributes: new { @class = "h5" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.C__CompanyName, new { htmlAttributes = new { @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.C__CompanyName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                @Html.LabelFor(model => model.CompanyUrl, htmlAttributes: new { @class = "h5" })
+                <div class="col-md-12">
+                    @Html.EditorFor(model => model.CompanyUrl, new { htmlAttributes = new { @placeholder = "http////", @maxlength = "200", @class = "form-control input-sm" } })
+                    @Html.ValidationMessageFor(model => model.CompanyUrl, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "h5" })
+                <div class="col-md-12">
+                    <div class="docs-methods">
+                        <div id="distpicker">
+                            <div class="col-md-4">
+                                <label class="sr-only" for="province10">Province</label>
+                                <select class="form-control input-sm" name="Address" id="province"></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="sr-only" for="city10">City</label>
+                                <select class="form-control input-sm" name="Address" id="city"></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="sr-only" for="district10">District</label>
+                                <select class="form-control input-sm" name="Address" id="district"></select>
+                            </div>
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+
+                    @Html.TextAreaFor(a => a.InDetails, 3, 200, new { @resize = "none", @class = "form-control", @maxlength = "50", @placeholder = "详细地址" })
+                    @Html.ValidationMessageFor(model => model.InDetails, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-11" style=" text-align:center;">
+                    <input type="submit" id="mits" value="提交申请" class="btn btn-lg btn-default" />
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+<script type="text/javascript">   
+    //禁止自动选择
+    $("#distpicker").distpicker({
+        autoSelect: false
+    });
+
+
+    /**
+     * ************************************   上传文件
+     */
+
+
+    // 获取文件的大小
+    var GetFileSize = function (fileid) {
+        var fileSize = 0;
+        fileSize = $("#" + fileid)[0].files[0].size;
+        fileSize = fileSize / 1048576;
+        return fileSize;
+    }
+
+    //根据上传路径获取文件的大小
+    var getNameFromPath = function (strFilepath) {
+        var objRE = new RegExp(/([^\/\\]+)$/);
+        var strName = objRE.exec(strFilepath);
+        if (strName == null) {
+            return null;
+        }
+        else {
+            return strName[0];
+        }
+    }
+    //判断文件扩展名是否正确
+    var exten = function (extension) {
+        var fileTypeBool = true;
+        switch (extension) {
+            //Word
+            case 'doc':
+            case 'docx':
+            case 'dotm':
+            case 'docm':
+            //Excel
+            case 'xlsx':
+            case 'xlsm':
+            case 'xltx':
+            case 'xltm':
+            case 'xlsb':
+            case 'xlam':
+            //ppt
+            case 'pptx':
+            case 'pptm':
+            case 'ppsx':
+            case 'ppsx':
+            case 'potx':
+            case 'potm':
+            case 'ppam':
+                fileTypeBool = true;
+                break;
+            default:
+                fileTypeBool = false;
+        }
+        return fileTypeBool;
+
+    }
+
+    /*
+     * 文件错误显示
+     * */
+    var upFileError = function () {
+        $(".upload-url").val($("#BlogPhoto").val());
+        var file = getNameFromPath($("#BlogPhoto").val());
+        if (file != null) {
+            var extension = file.substr((file.lastIndexOf('.') + 1));
+            console.log(extension);
+            fileTypeBool = exten(extension);
+        }
+        if (!fileTypeBool) {
+            $("#warning").html("只能上传Word,Excel,PPt文件！");
+            return false;
+        }
+        else {
+            return true;
+            $("#warning").html("");
+            var size = GetFileSize('BlogPhoto');
+            if (size > 20) {
+                return true;
+                //fileSizeBool = true;
+                $("#warning").html("上传文件已经超过4兆！");
+            } else {
+                $("#warning").html("");
+                return false;
+                //fileSizeBool = false;
+            }
+        }
+    }
+
+    ///文件选择框变化时，验证上传文件是否正确
+    $("#BlogPhoto").change(function () {
+        upFileError();
+    });
+
+    /**
+     *  遍历多选框方法
+     * */
+
+    var flage = false;
+    var foreachCheckboxs = function (element, eq) {
+
+
+        $(element).each(function () {
+
+            $(this).click(function () {
+                if (!$(this).is(':checked')) {
+                    flage = false;
+                } else {
+                    flage = true;
+                    if (eq == 1) { // 单个取消
+                        $(".myValidate").eq(1).text("");
+                    } else {
+                        $(".myValidate").eq(0).text("");
+                    }
+                }
+            });
+        });
+        return flage;
+    }
+
+
+    /*
+     *多选验证
+     ***/
+
+    var SelectCheckBoxs = function () {
+
+        if (!foreachCheckboxs(".tantistop", 1)) {
+            $(".myValidate").eq(1).text("请选择信息");
+
+        };
+        if (!foreachCheckboxs(".payOut", 0)) {
+            $(".myValidate").eq(0).text("请选择信息");
+        };
+
+        if (foreachCheckboxs(".payOut") && foreachCheckboxs(".tantistop")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $("#mits").click(function () {
+        SelectCheckBoxs();
+        if ($("#BlogPhoto").val() != "") {        
+            return upFileError();
+        }
+    });
+
+
+    $("#mits").submit(function () {
+
+        $("input[type='text']").each(function (k, v) {
+            if ($(v).length) {
+                $(v).siblings("span").hide();
+            }
+        });
+        if (fileTypeBool || fileSizeBool) {
+            return false;
+        }
+    });
+
+
+
+</script>
+

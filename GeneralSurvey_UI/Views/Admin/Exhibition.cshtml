@@ -1,0 +1,88 @@
+﻿@{
+    Layout = null;
+    @using  GeneralSurvey_Data.Model;
+    @using  GeneralSurvey_Utility;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>数据显示页面</title>
+    <!--[if lt IE 7 ]> <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+    <!--[if IE 7 ]>    <html class="no-js lt-ie10 lt-ie9 lt-ie8"> <![endif]-->
+    <!--[if IE 8 ]>    <html class="no-js lt-ie10 lt-ie9"> <![endif]-->
+    <!--[if IE 9 ]>    <html class="no-js lt-ie10"> <![endif]-->
+    <!--[if (gt IE 9)|!(IE)]><!- <html class="no-js">    <!--<![endif]-->
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/lib/Table-Patterns/dist/css/rwd-table.css" rel="stylesheet" />
+    <script src="~/lib/jquery-easyui/jquery.min.js"></script>
+    <script src="~/lib/layui/layui.js"></script>
+    <script src="~/lib/Table-Patterns/src/js/rwd-table.js"></script>
+
+    <style>
+        .scroll_tablex { width: 100%; overflow-y: scroll; }
+        .scroll_tablex table { width: auto; min-width: 100%; border: 1px solid #e4e4e4; border-collapse: collapse; border-spacing: inherit; white-space: nowrap; }
+        .scroll_tablex table tr td { border: 1px solid #e4e4e4; padding: 5px; text-align: center; font-size: 12px; position: relative; height: 32px; border-bottom: 0; border-top: 0; min-width: 60px; }
+    </style>
+</head>
+<body>
+
+
+    <div class="table_grad scroll_tablex">
+        <table class="table_tab responsive">
+            <tr>
+                <th><input type="checkbox"></th>
+                <th>编号</th>
+                <th>消息</th>
+                <th>类型</th>
+                <th>接收时间</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>1</td>
+                <td class="oneline onelineTd">香港奇华饼家有限公司发布了新品“七星伴月冰皮月饼香港奇华饼家有限公司发布了新品“七星伴月冰皮月饼”</td>
+                <td>新品发布</td>
+                <td>2016-02-12 17:45</td>
+                <td>
+                    <span class="tdSpan_btn green_btn" onclick="editBrand('4028816f5c056c53015c0eb52d04001c','锤子手机','0','香港奇华饼家有限公司发布了新品“七星伴月冰皮月饼香港奇华饼家有限公司发布了新品“七星伴月冰皮月饼”')">去看看</span>
+                    <span class="tdSpan_btn red_btn">删除</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <table class=" responsive">
+        <thead>
+            <tr>
+                @{
+                    foreach (var item in ViewData["theader"] as List<Topicgroups>)
+                    {
+                        <th>@item.TopicName</th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var item in Model as List<AnswerGroup>)
+                {
+                    <tr>
+                        <td>@item.Answer.ToString() </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</body>
+</html>
+
+<script>
+
+            /// 后台拼接标签到前端 直接当成字符串显示了 ？？？
+
+
+</script>

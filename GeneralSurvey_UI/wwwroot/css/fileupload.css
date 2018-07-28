@@ -1,0 +1,5 @@
+﻿.upload { position: relative; display: inline-block; height: 33px; line-height: 33px; overflow: hidden; vertical-align: middle; cursor: pointer; }
+.upload .upload-input-file { position: absolute; right: 0; top: 0; opacity: 0; filter: alpha(opacity=0); cursor: pointer; }
+.upload .upload-btn { outline: none; border: 0; color: #fff; background: #222222; cursor: pointer; border-radius: 3px; }
+.upload .upload-url { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; border-radius: 2px; border: solid 1px #ddd; height: 30px; -webkit-line-height: 1; line-height: 30px\9; -ms-line-height: 30px; text-indent: 3px; }
+.upload .upload-tip { display: none; background-color: #1c84c6; padding: 2px 10px; color: #fefefe; font-size: 12px !important; border-radius: 3px; }

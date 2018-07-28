@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简易创业计划书</title>
+
+    <link rel="shortcut icon" href="~/App_Data/favicon.ico" type="image/x-icon">
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <!--[if IE]>
+            <script src="~/Scripts/html5shiv.min.js"></script>
+    <!--[endif]-->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<style type="text/css">
+    p {
+        font-size: 18px;
+        font-weight: 500;
+        margin-top: 1%;
+        text-indent: 2%;
+    }
+
+    .navbar-brand {
+        font-size: 25px;
+    }
+</style>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("简易创业计划书", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">      
+        <div class="row" style="margin:auto; border:red solid thin;">          
+            
+                @RenderBody()
+     
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - 琦品出品</p>
+        </footer>
+    </div>
+    <section>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        <script src="~/Scripts/distpicker.data.js"></script>
+        <script src="~/Scripts/distpicker.js"></script>
+        <script src="~/Scripts/main.js"></script>
+        @RenderSection("scripts", required: false)
+    </section>
+</body>
+</html>

@@ -1,0 +1,26 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <h2>Upload</h2>
+        @using (Html.BeginForm("Upload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div>
+                <h4>Select a file:</h4>
+                <input name="files" id="files" type="file" />
+                <label id="lbError">@ViewBag.ErrorMessage</label>
+                <input type="submit" name="submit" value="Upload" />
+            </div>
+        }
+    </div>
+</body>
+</html>

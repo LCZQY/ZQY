@@ -1,0 +1,124 @@
+﻿@model QP.Prospectus.Models.businessplan
+
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>Exhibition</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <style>
+
+        .h5 { font-weight: 600; color: #000000; }
+
+        b { color: red; font-weight: bold; font-size: 12px; margin-left: 0.4%; }
+
+        p { font-size: 14px; font-weight: 500; margin-top: 1%; text-indent: 2%; line-height: inherit; }
+
+        .h5 { font-size: 15px; color: #625c5c; }
+
+        input { max-width: 620px; }
+        option { text-align: center; }
+        textarea { resize: none; max-width: 620px; }
+        #mits { font-size: 20px; background: #222222; width: 300px; height: 45px; letter-spacing: 3px; font-weight: bold; color: #ffffff; }
+        .container-fluid { margin: 20% 0 0 0; }
+        @@media screen and (min-width: 600px) {
+            .container-fluid { margin: 5% 0 0 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="col-md-5 col-md-offset-3">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        @Html.ActionLink(ViewData["WebName"].ToString(), "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        <span style=" font-size:12px;" class="navbar-brand">网页参数配置</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <form method="post">
+                <div class="col-md-5 col-md-offset-3">
+
+                    <div class="form-group">
+                        <label> 网站名称</label>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control input-sm" value="@ViewData["WebName"]" name="WebName" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label> 合伙人名字</label><b>(以 * 号隔开,如：xxx * xxx)</b>
+                        <div class="col-md-12">
+                            <input type="text" class="form-control input-sm" value="@ViewData["Parther"]" name="Parthers" />
+
+                        </div>
+                        <div class="col-md-12">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label> 网站简介</label>
+                        <div class="col-md-12">
+                            <textarea class="form-control" name="Webbrief" cols="7" rows="3">
+                            @ViewData["Brief"]
+                            </textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label> 为了这个项目客户愿意？</label><b>(以 * 号隔开,如：xxx * xxx)</b>
+                        <div class="col-md-12">
+                            <textarea class="form-control " name="PayOut" cols="7" rows="3">
+                            @ViewData["PayOut"]
+                        </textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label> 客户项目关键字</label><b>(以 * 号隔开,如：xxx * xxx)</b>
+                        <div class="col-md-12">
+                            <textarea class="form-control " name="keyWord" cols="7" rows="3">
+                            @ViewData["keyWord"]
+                            </textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10" style=" text-align:center; margin-top:2%;">
+                        <input type="submit" id="mits" value="一键更新" class="btn btn-lg btn-default" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
+<script type="text/javascript">
+
+    $("#mits").click(function () {
+
+        if (!confirm("是否更新网站内容")) {
+            return false;
+        } else {
+
+
+        }
+
+    });
+
+
+</script>
+

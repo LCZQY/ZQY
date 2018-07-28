@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutContent.cshtml";
+}
+
+<div class="layui-container">
+    <div class="layui-row">
+        <div class=" layui-col-md-12">
+            <form class="layui-form layui-form-pane" method="post" action="@Url.Action("ContentPage","Home")">
+
+                <div class="layui-col-md-12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">题号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="Stides" autocomplete="off" value="@ViewData["stide"]" readonly="readonly" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md-12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">选项类型</label>
+                        <div class="layui-input-block">
+                            @Html.DropDownList("interest", ViewData["Group"] as SelectList, "---请选择---")
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md-12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">题干名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="TopicName" lay-verify="required" autocomplete="off" placeholder="设置题干" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md-12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">字数限制</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="Charlength" name="CharactersSize" autocomplete="off" placeholder="字数限制" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md-12">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">选项名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="OptionSet" autocomplete="off" placeholder="各选项名称（以 * 隔开）" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                </div>
+                <div class="layui-col-md-12" style="font-weight:bold;">
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="formDemo">保存设置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/lib/layui/layui.js"></script>
+    <script src="~/js/home.js"></script>
+    <script src="~/js/layuicontent.js"></script>
+    <script>
+
+        $("#interest").attr("lay-verify","options");
+        questionbody("@Url.Action("ContentPage","home")");
+        ajaxLayui("@Url.Action("ContentPage", "home")");
+    </script>
+}
+
+
+

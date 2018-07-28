@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简易创业计划书</title>
+
+    <link rel="shortcut icon" href="~/Content/Images/favicon.ico" type="image/x-icon">
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <!--[if IE]>
+            <script src="~/Scripts/html5shiv.min.js"></script>
+    <!--[endif]-->
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<style type="text/css">
+    * {
+        font-family: 'SimHei';
+    }
+    .navbar-brand {
+
+        font-size: 24px;
+    }
+    textarea {
+    resize:none;
+    }
+    #mits {
+        font-size: 20px;
+        background: #222222;
+        width: 300px;
+        height: 45px;
+        letter-spacing: 3px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+
+
+</style>
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="col-md-7 col-lg-offset-2">
+
+                <div class="navbar-header">
+                    @Html.ActionLink(ViewData["WebName"].ToString(), "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container ">
+        <section>
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
+            <script src="~/Scripts/distpicker.data.js"></script>
+            <script src="~/Scripts/distpicker.js"></script>
+            <script src="~/Scripts/main.js"></script>
+
+
+        </section>
+        @RenderBody()
+
+        <footer class="col-md-8 text-center" style="margin:5% 0 0 8%;">
+            <p>&copy; @DateTime.Now.Year - 琦品出品</p>
+        </footer>
+    </div>
+
+</body>
+</html>

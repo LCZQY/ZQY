@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "管理员登陆";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>简易创业计划书</title>
+    <link rel="shortcut icon" href="~/Content/Images/favicon.ico" type="image/x-icon">
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/site.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <style>
+        * { font-family: 'SimHei'; }
+        .navbar-brand { font-size: 24px; }
+        textarea { resize: none; }
+        #mits { font-size: 20px; background: #222222; width: 280px; height: 40px; letter-spacing: 20px; font-weight: bold; color: #ffffff; }
+        #bodys { margin-top: 3%; }
+        @@media screen and (max-width: 800px) {
+            .container-fluid { margin: 15% 0 0 0; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" style="margin-left:-2%;">
+        <div class="container">
+            <div class="col-md-7 col-md-offset-3">
+                <div class="navbar-header">
+                    @Html.ActionLink(ViewData["WebName"].ToString(), "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7 col-md-offset-4" id="bodys">
+        <form method="post">
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="exampleInputEmail1">用户名:</label>
+                    <input type="text" name="userName" class="form-control input-sm" id="exampleInputName" placeholder="用户名">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="exampleInputPassword1">密码:</label>
+                    <input type="password" name="passWord" class="form-control input-sm" maxlength="6" id="exampleInputPassword" placeholder="密码">
+                    <span class="text-danger" id="Error"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12" style="margin-top:2%; padding-top:2%;">
+                    <input type="submit" id="mits" value="登陆" class="btn  btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+
+    $("input[type='submit']").click(function () {
+        if ($("#exampleInputName").val() == "" || $("#exampleInputPassword").val() == "") {
+            $("#Error").text("请输入用户名或密码");
+            return false;
+        }
+        else {
+            if ($("#exampleInputName").val() != " admin" && $("#exampleInputName").val() != "admin") {
+                $("#Error").text("用户名或者密码错误");
+                return false;
+            } else {
+                return true;
+            }
+        }
+    });
+</script>

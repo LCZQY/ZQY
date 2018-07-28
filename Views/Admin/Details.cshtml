@@ -1,0 +1,251 @@
+﻿@model QP.Prospectus.Models.businessplan
+
+
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>Exhibition</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style type="text/css">
+        html, body { min-height: calc(120%-120px); }
+        .table { min-height: calc(120%-120px); font-size: 9px; }
+        .table thead tr > td { text-align: left; font-weight: bold; }
+        footer { text-align: center; padding: 12px 0; }
+        #mitsRtrun { font-size: 15px; background: #222222; width: 200px; height: 30px; letter-spacing: 5px; font-weight: bold; color: #ffffff; }
+        .navbar-brand { font-size: 24px; }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+
+        <div class="col-md-3 col-lg-offset-2">
+
+            @Html.ActionLink(ViewData["WebName"].ToString(), "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+
+    </div>
+
+    <div class="col-md-7   col-lg-offset-2">
+        <div class="table-responsive" style="margin:50px 0 0 0;">
+            <table class="table table-hover table-bordered table-responsive table-striped">
+                <tr>
+                    <td colspan="12">@Html.DisplayNameFor(model => model.Name)：</td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.Name)</td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="12">
+                        @Html.DisplayNameFor(model => model.Sex)：
+                    </td>
+                </tr>
+                <tr>
+
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.Sex)</td>
+                </tr>
+
+
+                <tr>
+                    <td colspan="12">
+                        我希望联系哪位合伙人：
+                    </td>
+                </tr>
+                <tr>
+
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.Partner)</td>
+                </tr>
+                <tr>
+                    <td>
+                        项目/产品名称：
+                    </td>
+                </tr>
+                <tr>
+
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.ProjectName)</td>
+                </tr>
+                <tr>
+                    <td>
+                        用一句话简介项目/产品：
+                    </td>
+                </tr>
+
+                <tr>
+
+                    <td colspan="12" style="padding-left:5%;">
+                        @Html.DisplayFor(modelItem => Model.ProjectDescribe)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        我试图解决的痛点/问题：
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.C__Setback)</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        团队的优势：
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.TeamDescribe)</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        打动我的名言：
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.Dictum)</td>
+                </tr>
+                <tr>
+                    <td>
+                        我可融钱/出股份：
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.PayMoney)</td>
+                </tr>
+                <tr>
+                    <td>
+                        为了这个项目我愿意投入：
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;">
+                
+                        @{
+
+                            if (Model.C__ProjectPayOut.IndexOf("*") > -1)
+                            {
+                                var Ido = Model.C__ProjectPayOut.ToString().Split('*');
+                                for (int i = 0; i < Ido.Length; i++)
+                                {
+                                    <span>@(i + 1).@Ido[i].</span><br />
+                                }
+                            }
+                            else
+                            {
+                                <span>.........</span>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        项目的关键词：
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;">
+                        
+                        @{
+                            if (Model.ProjectTantistop.IndexOf("*") > -1)
+                            {
+                                var keyword = Model.ProjectTantistop.ToString().Split('*');
+                                for (int i = 0; i < keyword.Length; i++)
+                                {
+                                    <span>@(i + 1).@keyword[i].</span><br />
+                                }
+                            }
+                            else
+                            {
+                                <span>.........</span>
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.Email)</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.Phone)</td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.WeChat)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.WeChat)</td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Birthday)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.Birthday)</td>
+                </tr>
+                <tr>
+                    <td widtd="80">
+                        公司名称
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.C__CompanyName)</td>
+                </tr>
+                <tr>
+                    <td>
+                        网址
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.CompanyUrl)</td>
+                </tr>
+                <tr>
+                    <td width="">
+                        @Html.DisplayNameFor(model => model.Address)
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.Address)</td>
+                </tr>
+                <tr>
+                    <td>
+                        详细地址
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;"> @Html.DisplayFor(modelItem => Model.InDetails)</td>
+                </tr>
+                <tr>
+                    <td>操作</td>
+                </tr>
+
+                <tr>
+                    <td colspan="12" style="padding-left:5%;">
+                        @Html.ActionLink("返回", "Exhibition", new { id = Model.Id }, new { @class = "btn btn-sm", @id = "mitsRtrun" })<br />
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - 琦品出品</p>
+    </footer>
+</body>
+</html>

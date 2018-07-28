@@ -1,0 +1,198 @@
+﻿@model IEnumerable<QP.Prospectus.Models.businessplan>
+
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>Exhibition</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style type="text/css">
+        html, body { min-height: calc(100%-100px); }
+        .table { min-height: calc(100%-100px); font-size: 9px; }
+        .table thead tr > td { text-align: left; font-weight: bold; }
+        footer { text-align: center; padding: 10px 0; }
+        .navbar-brand { font-size: 24px; }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-header">
+            @Html.ActionLink(ViewData["WebName"].ToString(), "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("主页", "Exhibition", "Admin")</li>
+                <li>@Html.ActionLink("网站管理", "Index", "Confige")</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="table-responsive" style="margin:50px 0 0 0;">
+        <table class="table table-hover table-bordered table-responsive table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th width="60">
+                        @Html.DisplayNameFor(model => model.Sex)
+                    </th>
+                    <th width="80">
+                        我希望联系的合伙人
+                    </th>
+                    <th>
+                        项目/产品名称
+                    </th>
+                    <th>
+                        用一句话简介项目/产品
+                    </th>
+                    <th>
+                        我试图解决的痛点/问题
+                    </th>
+                    <th>
+                        团队的优势
+                    </th>
+
+                    <th>
+                        我可融钱/出股份
+                    </th>
+                    <th>
+                        为了这个项目我愿意投入
+                    </th>
+
+                    <th>
+                        项目的关键词
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Phone)
+                    </th>
+
+                    <th width="100">
+                        公司名称
+                    </th>
+
+                    <th width="125">
+                        @Html.DisplayNameFor(model => model.Address)
+                    </th>
+
+                    <th width="65">附件</th>
+                    <th width="41">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sex)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Partner)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProjectDescribe)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.C__Setback)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TeamDescribe)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PayMoney)
+                        </td>
+                        <td>
+                            @{
+
+                                if (item.C__ProjectPayOut.IndexOf("*") > -1)
+                                {
+                                    var Ido = item.C__ProjectPayOut.ToString().Split('*');
+                                    for (int i = 0; i < Ido.Length; i++)
+                                    {
+                                        <span>@(i + 1).@Ido[i].</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>.........</span>
+                                }
+                            }
+                        </td>
+
+                        <td>
+                            @{
+                                if (item.ProjectTantistop.IndexOf("*") > -1)
+                                {
+                                    var keyword = item.ProjectTantistop.ToString().Split('*');
+                                    for (int i = 0; i < keyword.Length; i++)
+                                    {
+                                        <span>@(i + 1).@keyword[i].</span>
+                                    }
+                                }
+                                else
+                                {
+                                    <span>.........</span>
+                                }
+                            }
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.C__CompanyName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>  @Html.ActionLink("附件下载", "Download", new { id = item.Id })</td>
+                        <td>
+                            @Html.ActionLink("详细", "Details", new { id = item.Id })<br />
+                            @Html.ActionLink("删除", "Delete", new { id = item.Id }, new { @class = "Delete" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year - 琦品出品</p>
+    </footer>
+</body>
+</html>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<script>
+
+    $(".Delete").each(function () {
+        $(this).click(function () {
+
+            if (confirm("是否确定删除？")) {
+                return true;
+            }
+            return false;
+        })
+    })
+    //$("#Delete").click(function () {
+
+    //});
+</script>

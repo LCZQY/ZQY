@@ -1,0 +1,316 @@
+﻿
+@using GeneralSurvey_Data.Model
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title>问卷调研页</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/fileupload.css" rel="stylesheet" />
+    <style>
+        * { font-family: 'SimHei'; }
+        .h5 { font-weight: 600; color: #000000; }
+        b { color: red; font-weight: bold; font-size: 20px; margin-left: 0.4%; }
+        p { font-size: 14px; font-weight: 500; margin-top: 1%; text-indent: 2%; line-height: inherit; }
+        .h5 { font-size: 15px; color: #625c5c; }
+        textarea { max-width: 620px; }
+        option { text-align: center; }
+        .navbar-brand { font-size: 24px; }
+        textarea { resize: none; }
+        #mits { font-size: 20px; background: #222222; width: 300px; height: 45px; letter-spacing: 3px; font-weight: bold; color: #ffffff; }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <!--头部开始-->
+            <header>
+                <div class="row">
+                    <div class="navbar navbar-inverse navbar-fixed-top">
+                        <div class="container">
+                            <div class="col-md-7 col-md-offset-2">
+                                <div class="navbar-header">
+                                    调研信息系统管理
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!--内容页开始-->
+            <section>
+                <div class="row">
+                    <div class="col-md-7 col-md-offset-2">
+                        <p>
+                            新华社约翰内斯堡7月25日电(记者霍小光　孟娜　李建敏)国家主席习近平25日应邀出席在南非约翰内斯堡举行
+                            的金砖国家工商论坛，并发表题为《顺应时代潮流　实现共同发展》的重要讲话，强调金砖国家要顺应历史大势，坚持合作共赢、创新引领、包容普惠、多边主义，为构建新型国际关系、构建人类命运共同体发挥建设性作用。
+                        </p>
+                    </div>
+                    <div class="col-md-7  col-md-offset-2 ">
+                        <form method="post" enctype="multipart/form-data" action="@Url.Action("Index","ShowText")"  >
+
+                            <div class="form-horizontal">
+                                @{
+                                    var count = 0;
+                                    foreach (var item in (List<Topicgroups>)ViewData["query"])
+                                    {
+                                        <div class="form-group">
+                                            <label>@item.TopicName</label>
+
+                                            @{
+                                                switch (item.SetsettingId)
+                                                {
+                                                    case "001": // 多选框
+                                                        <div class="col-md-12">
+                                                            @{
+                                                                try
+                                                                {
+                                                                    if (item.OptionText.IndexOf("*") > -1)
+                                                                    {
+                                                                        var arry = item.OptionText.Split('*');
+                                                                        for (int i = 0; i < arry.Length - 1; i++)
+                                                                        {
+                                                                            if (i % 2 == 0)
+                                                                            {
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="checkbox">
+                                                                                            <label>
+                                                                                                <input type="checkbox" value="@arry[i]" name="@item.FromName" title="@arry[i]">
+                                                                                                @arry[i]
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <div class="checkbox">
+                                                                                            <label>
+                                                                                                <input type="checkbox" value="@arry[i+1]" name="@item.FromName" title="@arry[i + 1]">
+                                                                                                @arry[i + 1]
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                                catch (Exception ex)
+                                                                {
+                                                                    <span>请参照本系统规则添加选项</span>
+                                                                }
+                                                            }
+                                                        </div>
+                                                        break;
+                                                    case "002": //单选框
+                                                        try
+                                                        {
+                                                            if (item.OptionText.IndexOf("*") > -1)
+                                                            {
+                                                                var arry = item.OptionText.Split('*');
+                                                                <div class="col-md-12">
+                                                                    @{ for (int i = 0; i < arry.Length; i++)
+                                                                        {
+                                                                            if (i % 2 == 0)
+                                                                            {
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <label>
+                                                                                            <input type="radio" value="@arry[i]" name="@item.FromName" title="@arry[i]">
+                                                                                            @arry[i]
+                                                                                        </label>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <label>
+                                                                                            <input type="radio" value="@arry[i + 1]" name="@item.FromName" title="@arry[i + 1]">
+                                                                                            @arry[i + 1]
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                </div>
+                                                            }
+                                                        }
+                                                        catch (Exception el)
+                                                        {
+                                                            <span>请参照本系统规则添加选项</span>
+                                                        }
+                                                        break;
+                                                    case "003": // 下拉框
+                                                        <div class="col-md-12">
+
+                                                            <select class="form-control" name="@item.FromName">
+                                                                <option value="">--请选择--</option>
+                                                                @{
+                                                                    try
+                                                                    {
+                                                                        if (item.OptionText.IndexOf("*") > -1)
+                                                                        {
+                                                                            var arry = item.OptionText.Split('*');
+                                                                            for (int i = 0; i < arry.Length; i++)
+                                                                            {
+                                                                                <option name="@item.FromName" value="@arry[i]">@arry[i]</option>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    catch (Exception ex) { }
+                                                                }
+                                                            </select>
+                                                        </div>
+                                                        break;
+
+                                                    case "004": // 多文本内容
+                                                        <div class="col-md-12">
+                                                            <textarea class="form-control" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                        </div>
+                                                        break;
+                                                    case "005": // 文件上传
+                                                        if (count == 0) //只允许出现一个文件上传框
+                                                        {
+                                                            @*<input type="file" name="files" multiple />*@
+                                                            <span class="upload">
+                                                                    <input type="text"   class="upload-url input-sm" style="width:300px" />
+                                                                    <input type="button"  class="upload-btn btn-default  btn-sm" value="浏览文件" />
+                                                                    <input type="file" name="files" multiple id="BlogPhoto" class="upload-input-file form-control input-sm">
+                                                                </span>
+                                                            <div class="col-md-12">
+                                                                <span id="warning" style="color:red;"></span>
+                                                            </div>
+                                                            count++;
+                                                        }
+                                                        break;
+                                                    case "006": // 输入框
+                                                        <div class="col-md-12">
+                                                            <input type="text" class="form-control input-sm" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                        </div>
+                                                        break;
+                                                    case "007": // 时间
+                                                        <div class="col-md-12">
+                                                            <input class="layui-input" id="test1" name="@item.FromName" placeholder="yyyy-MM-dd" type="text" />
+                                                        </div>
+                                                        break;
+                                                    case "008": // 地址
+                                                        <div class="col-md-12">
+                                                            <div class="docs-methods">
+                                                                <div id="distpicker">
+                                                                    <div class="col-md-4">
+                                                                        <label class="sr-only" for="province10">Province</label>
+                                                                        <select class="form-control input-sm" name="@item.FromName" id="province"></select>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label class="sr-only" for="city10">City</label>
+                                                                        <select class="form-control input-sm" name="@item.FromName" id="city"></select>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label class="sr-only" for="district10">District</label>
+                                                                        <select class="form-control input-sm" name="@item.FromName" id="district"></select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        break;
+                                                }
+                                            }
+                                        </div>
+                                    }
+                                }
+                                <div class="form-group">
+                                    <div class="col-md-11" style=" text-align:center;">
+                                        <input type="submit" id="mits" value="提交申请" class="btn btn-lg btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <!--页尾开始-->
+            <footer class="col-md-8 text-center" style="margin:5% 0 0 8%;">
+                <p>&copy; @DateTime.Now.Year - 琦品出品</p>
+            </footer>
+        </div>
+    </div>
+    <script src="~/lib/layui/layui.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/home.js"></script>
+    <script src="~/js/showtext.js"></script>
+    <script src="~/lib/distpicker/distpicker.data.js"></script>
+    <script src="~/lib/distpicker/distpicker.js"></script>
+    <script src="~/lib/distpicker/main.js"></script>
+    <script>
+
+
+        /*
+         * 文件错误显示
+         * */
+        var upFileError = function () {
+            $(".upload-url").val($("#BlogPhoto").val());
+            var file = getNameFromPath($("#BlogPhoto").val());
+            if (file != null) {
+                var extension = file.substr((file.lastIndexOf('.') + 1));
+                console.log(extension);
+                fileTypeBool = exten(extension);
+            }
+            if (!fileTypeBool) {
+                $("#warning").html("只能上传Word,Excel,PPt文件！");
+                return false;
+            }
+            else {
+                return true;
+                $("#warning").html("");
+                var size = GetFileSize('BlogPhoto');
+                if (size > 20) {
+                    return true;
+                    //fileSizeBool = true;
+                    $("#warning").html("上传文件已经超过4兆！");
+                } else {
+                    $("#warning").html("");
+                    return false;
+                    //fileSizeBool = false;
+                }
+            }
+        }
+ 
+        function doUpload() {
+    var formData = new FormData($("#uploadForm")[0]);
+    $.ajax({
+        url: '@Url.Action("Index")',
+        type: 'POST',
+        data: formData,
+        async: false,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (returndata) {
+            alert(returndata);
+        },
+        error: function (returndata) {
+            alert(returndata);
+        }
+    });
+}
+
+        ///文件选择框变化时，验证上传文件是否正确
+        $("#BlogPhoto").change(function () {
+            upFileError();
+        });
+
+        $("#mits").click(function () {
+        
+        });
+
+
+    </script>
+</body>
+</html>

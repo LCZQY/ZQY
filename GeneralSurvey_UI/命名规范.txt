@@ -1,0 +1,24 @@
+
+
+所有成员变量前加前缀"_"
+
+Public class Database
+{
+    private string  _connectionString;
+}
+
+
+public class DataGrid //用Pascal规则来命名方法和类型，Pascal的命名规则是第一个字母必须大写，并且后面的连接词的第一个字母均为大写。
+{
+
+	//用Camel规则来命名局部变量和方法的参数，该规则指名称中第一个单词的第一个字母小写。
+	string strUserName; 
+	public void addUser();
+
+    public void CreateFile() //方法的命名，一般用动宾短语。
+    {
+     }
+    public vopid GetPath()
+    {
+    }   
+}
