@@ -29,14 +29,14 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        贤心
+                        管理员
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="">基本资料</a></dd>
                         <dd><a href="">安全设置</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">退了</a></li>
+                <li class="layui-nav-item"><a href="">退出登录</a></li>
             </ul>
         </div>
         <div class="layui-side layui-bg-black">
@@ -47,14 +47,28 @@
                         <a class="" href="javascript:;">基本设置</a>
                         <dl class="layui-nav-child">
                             <dd><a href="javascript:;" id="QuestionContent">问答设置</a></dd>
-                            <dd><a href="javascript:;">样式设置</a></dd>
                         </dl>
                     </li>
+
                     <li class="layui-nav-item">
                         <a href="javascript:;">页面设置</a>
                         <dl class="layui-nav-child">
                             <dd><a href="javascript:;" id="ViewContent">网页布局</a></dd>
                             <dd><a href="javascript:;" id="LayoutWebContent">排版设置</a></dd>
+                        </dl>
+                    </li>
+
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">问卷管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" id="DataGrid">查看问卷</a></dd>
+                            <dd><a href="javascript:;" id="AddSurvey">添加问卷</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">客户信息</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" id="DataGrid">数据报表</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -65,23 +79,22 @@
             <iframe src="" frameborder="0" scrolling="no" style=" width:100%; height:100%;"> </iframe>
         </div>
 
-        <div class="layui-footer">
+        <div class="layui-footer" style="height:30px;">
             <!-- 底部固定区域 -->
             ©@DateTime.Now.Year - 琦品
         </div>
     </div>
-
-
     <script src="~/js/home.js"></script>
     <script>
         layui.use('element', function () {
             var element = layui.element;
-
         });
+
         questionbody({
             question:"@Url.Action("ContentPage", "home")",
             view: "@Url.Action("Index", "ShowText")",
-            layout:"@Url.Action("Index", "LayoutWeb")"
+            layout: "@Url.Action("Index", "LayoutWeb")",
+            datagrids:"@Url.Action("Exhibition", "Admin")"
         });
 
     </script>

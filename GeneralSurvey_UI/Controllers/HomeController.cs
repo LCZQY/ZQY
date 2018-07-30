@@ -40,7 +40,7 @@ namespace GeneralSurvey_UI.Controllers
             catch (Exception el) { return Json(data: ResultMsg.FormatResult(el)); }
 
             List<Setsetting> query = new List<Setsetting>() { };
-            //类里面的字段要和表结构要一一对应
+            //模型类里面的字段要和表结构要一一对应
             query = Databases.connect().Query<Setsetting>("select id,TopicClass from `qp.setsetting`").ToList();
             ViewData["Group"] = new SelectList(Dropdown.createDropdown(query), "Key", "Value");
             return View();

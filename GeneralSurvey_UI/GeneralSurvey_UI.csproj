@@ -20,8 +20,4 @@
     <ProjectReference Include="..\GeneralSurvey_Utility\GeneralSurvey_Utility.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Files\" />
-  </ItemGroup>
-
 </Project>

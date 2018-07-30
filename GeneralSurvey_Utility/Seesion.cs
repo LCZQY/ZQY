@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace GeneralSurvey_Utility
 {
@@ -22,6 +24,7 @@ namespace GeneralSurvey_Utility
         public static Random sj { get; set; } = new Random();
 
 
+      
 
         /// <summary>
         ///  组合展示表头

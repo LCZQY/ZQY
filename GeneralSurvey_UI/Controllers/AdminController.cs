@@ -6,23 +6,36 @@ using Microsoft.AspNetCore.Mvc;
 using GeneralSurvey_Utility;
 using GeneralSurvey_Data.Model;
 using System.Text;
+using System.IO;
+using GeneralSurvey_Data;
+using Dapper;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Hosting;
 
 namespace GeneralSurvey_UI.Controllers
 {
     public class AdminController : Controller
     {
+        private IHostingEnvironment _hostingEnvironment;
+
+        public AdminController(IHostingEnvironment hosting)
+        {
+            _hostingEnvironment = hosting;
+        }
 
         public IActionResult Index()
         {
             return View();
         }
 
-
-
         [HttpPost]
         public ActionResult Index(string userName, string passWord)
         {
-            return RedirectToAction("Exhibition");
+            return Redirect(Url.Action("Index", "Home"));
         }
 
 
@@ -34,12 +47,8 @@ namespace GeneralSurvey_UI.Controllers
         {
 
             ViewData["theader"] = HelpTopicgroup.GetList();
-
-
-            return View(HelpAnswerGroup.GetList().ToList());     
+            return View(HelpAnswerGroup.GetList().ToList());
         }
-
-
 
         /// <summary>
         /// 详细
@@ -47,16 +56,12 @@ namespace GeneralSurvey_UI.Controllers
         /// <returns></returns>
         public ActionResult Details(string id)
         {
-            return View();
-            //ViewData["WebName"] = GolbalDbContext.Instace().confige.Find(0).webName;
-            //var db = GolbalDbContext.Instace();
-            //var busines = db.businessplan.FirstOrDefault(u => u.Id == id);
-            //if (busines != null)
-            //{
-
-            //    return View("Details", busines);
-            //}
-            //return RedirectToAction("Exhibition");
+            var entity = HelpAnswerGroup.GetList().FirstOrDefault(u => u.id == id);
+            if (entity != null)
+            {
+                return View("Details", entity);
+            }
+            return RedirectToAction("Exhibition");
         }
 
         /// <summary>
@@ -66,17 +71,23 @@ namespace GeneralSurvey_UI.Controllers
         /// <returns></returns>
         public ActionResult Delete(string id)
         {
-            return View();
-            //var db = GolbalDbContext.Instace();
-            //var entity = db.businessplan.SingleOrDefault(u => u.Id == id);
-            //if (entity != null)
-            //{
-            //    db.businessplan.Remove(entity);
-            //    db.SaveChanges();
-            //    // 删除信息同时是否删除文件夹？？？  
+            // ???? 所有的Js 都没有弹出                    
+            var entity = HelpAnswerGroup.GetList().FirstOrDefault(u => u.id == id);
+            if (entity != null)
+            {
+                if (HelpAnswerGroup.Delete(id))
+                {
+                    return RedirectToAction("Exhibition");
+                }
+                return Content("<script>alert('删除失败 ,请重试');window.history.back(-1); </script>");
+                // 删除信息同时是否删除文件夹？？？  
 
-            //}
-            //return RedirectToAction("Exhibition");
+            }
+            else
+            {
+                return Content("<script>alert('删除失败,请重试');window.history.back(-1); </script>");
+            }
+
         }
 
         /// <summary>
@@ -87,30 +98,50 @@ namespace GeneralSurvey_UI.Controllers
         public ActionResult Download(string id)
         {
 
-            //var filepath = GolbalDbContext.Instace().businessplan.FirstOrDefault(u => u.Id == id).FilePath;
-            //if (filepath != null)
-            //{
-            //    try
-            //    {
-            //        string path = AppDomain.CurrentDomain.BaseDirectory + filepath;
-            //        string fileName = filepath.Split('/')[3];
-            //        return File(new FileStream(path, FileMode.Open), "application/octet-stream", fileName);
-            //    }
-            //    catch (Exception el)
-            //    {
-            //        return Content("<script>alert('文件下载失败,请重试');window.history.back(-1); </script>");
-            //    }
-            //}
-            //else
-            //{
-            //    return Content("<script>alert('文件下载失败,请重试');window.history.back(-1); </script>");
-            //}
+            var FilesPath = HelpAnswerGroup.GetList().FirstOrDefault(u => u.id == id).Answer;
+            if (FilesPath != null)
+            {
+                JObject jo = (JObject)JsonConvert.DeserializeObject(FilesPath);
+                foreach (var path in jo["Values"])
+                {
+                    ///判断是否为路径格式，如果存在就直接显示下载
+                    if (path.ToString().IndexOf("/") > -1)
+                    {
+                        try
+                        {
+                            //  var wwwroot = _hostingEnvironment.ContentRootPath + path;
+                            //判断该文件是否存在？？？？？
+                            //if (System.IO.File.Exists(path.ToString()))
+                            //{
+                            /// 虚拟文件地址输出下载     
+                            //}
+                            //return Content("<script>alert('该文件已丢失,请重试');window.history.back(-1); </script>");
+                            return File(path.ToString(), "application/vnd.android.package-archive", Path.GetFileName(path.ToString()));
+                        }
+                        catch (Exception el)
+                        {
+                            return Content("<script>alert('文件下载失败,请重试');window.history.back(-1); </script>");
+                        }
+
+                    }
+                }
+            }
+            return Content("<script>alert('文件下载失败,请重试');window.history.back(-1); </script>");
+
+        }
 
 
+
+
+        /// <summary>
+        ///  添加问卷
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AddSurvey()
+        {
 
             return View();
         }
-
 
     }
 }

@@ -1,6 +1,6 @@
+ï»¿
 
-
-ËùÓĞ³ÉÔ±±äÁ¿Ç°¼ÓÇ°×º"_"
+æ‰€æœ‰æˆå‘˜å˜é‡å‰åŠ å‰ç¼€"_"
 
 Public class Database
 {
@@ -8,17 +8,48 @@ Public class Database
 }
 
 
-public class DataGrid //ÓÃPascal¹æÔòÀ´ÃüÃû·½·¨ºÍÀàĞÍ£¬PascalµÄÃüÃû¹æÔòÊÇµÚÒ»¸ö×ÖÄ¸±ØĞë´óĞ´£¬²¢ÇÒºóÃæµÄÁ¬½Ó´ÊµÄµÚÒ»¸ö×ÖÄ¸¾ùÎª´óĞ´¡£
+public class DataGrid //ç”¨Pascalè§„åˆ™æ¥å‘½åæ–¹æ³•å’Œç±»å‹ï¼ŒPascalçš„å‘½åè§„åˆ™æ˜¯ç¬¬ä¸€ä¸ªå­—æ¯å¿…é¡»å¤§å†™ï¼Œå¹¶ä¸”åé¢çš„è¿æ¥è¯çš„ç¬¬ä¸€ä¸ªå­—æ¯å‡ä¸ºå¤§å†™ã€‚
 {
 
-	//ÓÃCamel¹æÔòÀ´ÃüÃû¾Ö²¿±äÁ¿ºÍ·½·¨µÄ²ÎÊı£¬¸Ã¹æÔòÖ¸Ãû³ÆÖĞµÚÒ»¸öµ¥´ÊµÄµÚÒ»¸ö×ÖÄ¸Ğ¡Ğ´¡£
+	//ç”¨Camelè§„åˆ™æ¥å‘½åå±€éƒ¨å˜é‡å’Œæ–¹æ³•çš„å‚æ•°ï¼Œè¯¥è§„åˆ™æŒ‡åç§°ä¸­ç¬¬ä¸€ä¸ªå•è¯çš„ç¬¬ä¸€ä¸ªå­—æ¯å°å†™ã€‚
 	string strUserName; 
 	public void addUser();
 
-    public void CreateFile() //·½·¨µÄÃüÃû£¬Ò»°ãÓÃ¶¯±ö¶ÌÓï¡£
+    public void CreateFile() //æ–¹æ³•çš„å‘½åï¼Œä¸€èˆ¬ç”¨åŠ¨å®¾çŸ­è¯­ã€‚
     {
      }
     public vopid GetPath()
     {
     }   
 }
+
+
+//çŸ¥è¯†ç‚¹æŒæ¡ï¼š1
+							/// <summary>
+                            /// è™šæ‹Ÿæ–‡ä»¶åœ°å€è¾“å‡ºä¸‹è½½     
+                            /// </summary>
+                            /// <returns></returns>
+                            public IActionResult OnPostDown()
+                            {
+                                var addrUrl = "/bak/love.apk"; return File(addrUrl, "application/vnd.android.package-archive", Path.GetFileName(addrUrl));
+                            }
+                            /// <summary>
+                            /// æ–‡ä»¶æµçš„æ–¹å¼è¾“å‡º        /// </summary>
+                            /// <returns></returns>
+                            public IActionResult OnPostDown01()
+                            {
+                                var addrUrl = @"D:\F\å­¦ä¹ \vs2017\netcore\Study.AspNetCore\WebApp02-1\wwwroot\bak\love.apk"; var stream = System.IO.File.OpenRead(addrUrl); return File(stream, "application/vnd.android.package-archive", Path.GetFileName(addrUrl));
+                            }        /// <summary>
+                                     /// é€šè¿‡HttpClientè·å–å¦å¤–ç«™ç‚¹çš„æ–‡ä»¶æµï¼Œå†è¾“å‡º        /// </summary>
+                                     /// <returns></returns>
+                            public async Task<IActionResult> OnPostDown02()
+                            {
+                                var path = "https://files.cnblogs.com/files/wangrudong003/%E7%89%B9%E4%BB%B701.gif";
+                                HttpClient client = new HttpClient();
+                                client.BaseAddress = new Uri(path); var stream = await client.GetStreamAsync(path); return File(stream, "application/vnd.android.package-archive", Path.GetFileName(path));
+                            }
+
+Bug ï¼š   
+   
+     å¦‚æœåœ¨ç­”æ¡ˆå±•ç¤ºåå†å»æ‰“ä¹±é¢˜å· è¿™æ ·ä¼šç…§æˆå…¶é¢˜ç›®å’Œç­”æ¡ˆä¸ä¸€è‡´ ï¼Ÿï¼Ÿï¼Ÿï¼Ÿ
+	 åœ¨æ·»åŠ æ–‡ä»¶æ¡†çš„æ—¶å€™æ˜¯å¦éœ€è¦æç¤ºä¸€ä¸ªè°ƒç ”é—®å·åªèƒ½è®¾ç½®ä¸€ä¸ªæ–‡ä»¶ä¸Šä¼ æ¡†ï¼Ÿï¼Ÿï¼Ÿ/

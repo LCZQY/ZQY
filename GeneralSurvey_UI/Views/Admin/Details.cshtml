@@ -1,0 +1,55 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutContent.cshtml";
+    @using GeneralSurvey_Data.Model;
+    @using  GeneralSurvey_Utility;
+    @using  Newtonsoft.Json;
+    @using  Newtonsoft.Json.Linq;
+}
+<div class="layui-container-full">
+    <div class="col-md-12">
+        <table class="layui-table">
+            <tbody>
+                @{
+                    var models = Model as AnswerGroup;
+                    if (models.Answer.ToString() != null)
+                    {
+                        JObject jo = (JObject)JsonConvert.DeserializeObject(models.Answer);
+                        for (int i = 0; i < jo["FormName"].Count(); i++)
+                        {
+                            var topic = HelpTopicgroup.GetList().FirstOrDefault(u => u.FromName == jo["FormName"][i].ToString()).TopicName;
+                            <tr>
+                                <td style="background:rgb(242,242,242);">
+                                    @topic.ToString()：
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left:5%;">
+                                    @{ if (jo["Values"][i].ToString().IndexOf("/") > -1)
+                                        {
+                                            @Html.ActionLink("附件下载", "Download", new { id = models.id })
+                                        }
+                                        else
+                                        {
+                                            @jo["Values"][i].ToString()
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+                <tr>
+                    <td style="background:rgb(242,242,242);">
+                        操作：
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding-left:5%;">
+                        @Html.ActionLink("返回", "Exhibition", new { @class = "btn btn-sm", @id = "mitsRtrun" })<br />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

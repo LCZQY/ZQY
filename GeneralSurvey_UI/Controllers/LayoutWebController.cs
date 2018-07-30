@@ -19,23 +19,7 @@ namespace GeneralSurvey_UI.Controllers
         {
             return View();
         }
-        /// <summary>
-        ///  组合 layui表格 json
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult jsonTable()
-        {
-            List<Topicgroups> query = new List<Topicgroups>();
-            query = HelpTopicgroup.GetList();
-            var tableJson = new
-            {
-                count = query.Count(),  //总行数
-                code = 0, //状态码 0 成功
-                msg = "操作成功",
-                data = query
-            };
-            return Json(tableJson);
-        }
+
         /// <summary>
         /// 删除
         /// </summary>
@@ -175,6 +159,24 @@ namespace GeneralSurvey_UI.Controllers
             {
                 return Json(ResultMsg.FormatResult(el));
             }
+        }
+
+        /// <summary>
+        ///  组合 layui表格 json
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult jsonTable()
+        {
+            List<Topicgroups> query = new List<Topicgroups>();
+            query = HelpTopicgroup.GetList();
+            var tableJson = new
+            {
+                count = query.Count(),  //总行数
+                code = 0, //状态码 0 成功
+                msg = "操作成功",
+                data = query
+            };
+            return Json(tableJson);
         }
     }
 }

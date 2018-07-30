@@ -5,11 +5,9 @@ VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneralSurvey_Data", "GeneralSurvey_Data\GeneralSurvey_Data.csproj", "{C522E4A7-9AD8-43BC-A53A-6F0B5106D0D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MysqlConnstions", "MysqlConnstions\MysqlConnstions.csproj", "{1E81C1FC-9BE0-4B4C-94E5-1948B1B19482}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneralSurvey_UI", "GeneralSurvey_UI\GeneralSurvey_UI.csproj", "{90E5FEF1-6888-4B72-A1EA-1F324618F48E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneralSurvey_Utility", "GeneralSurvey_Utility\GeneralSurvey_Utility.csproj", "{F6C73E98-4A94-4CBA-B935-68B86C3F828D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeneralSurvey_Utility", "GeneralSurvey_Utility\GeneralSurvey_Utility.csproj", "{F6C73E98-4A94-4CBA-B935-68B86C3F828D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{C522E4A7-9AD8-43BC-A53A-6F0B5106D0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C522E4A7-9AD8-43BC-A53A-6F0B5106D0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C522E4A7-9AD8-43BC-A53A-6F0B5106D0D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E81C1FC-9BE0-4B4C-94E5-1948B1B19482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E81C1FC-9BE0-4B4C-94E5-1948B1B19482}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E81C1FC-9BE0-4B4C-94E5-1948B1B19482}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E81C1FC-9BE0-4B4C-94E5-1948B1B19482}.Release|Any CPU.Build.0 = Release|Any CPU
 		{90E5FEF1-6888-4B72-A1EA-1F324618F48E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{90E5FEF1-6888-4B72-A1EA-1F324618F48E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90E5FEF1-6888-4B72-A1EA-1F324618F48E}.Release|Any CPU.ActiveCfg = Release|Any CPU

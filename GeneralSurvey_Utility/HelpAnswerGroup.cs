@@ -45,7 +45,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static bool Delete(string id)
         {
-            int remove = Databases.connect().Execute(@"delete from `qp.answergroup` where id=@id", new { id = @id });
+            int remove = Databases.connect().Execute("delete from `qp.answergroup` where id =@id", new { id = id });
             if (remove > 0)
             {
                 return true;

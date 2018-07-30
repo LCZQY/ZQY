@@ -1,0 +1,111 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>添加问卷</title>
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/css/survey.css" rel="stylesheet" />
+    <script src="~/lib/layui/layui.all.js"></script>
+</head>
+<body>
+    <div class="layui-container">
+        <div class="row">
+            <div class="layui-col-md12">
+                <div class="header layui-col-md12">
+                    <div class="logo">
+                        <h1><a href="//www.taobao.com"></a></h1>
+                        <h2 class="tsl" data-phase-id="r_p_registration">添加问卷</h2>
+                    </div>
+                </div>
+                <div class="layui-col-md12">
+                    <div class="steps steps-4">
+                        <ol>
+                            <li class="active"><i>1</i><span class="tsl" data-phase-id="r_p_createAccount">设置用户名</span></li>
+                            <li><i>2</i><span class="tsl" data-phase-id="r_p_fillUserInfo">填写账号信息</span></li>
+                            <li><i>3</i><span class="tsl" data-phase-id="r_p_fillUserInfo">设置支付方式</span></li>
+                            <li><i class="iconfont">4</i><span class="tsl" data-phase-id="r_p_regSuc">注册成功</span></li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="content layui-col-md12 ">
+                    <div class="layui-tab" lay-filter="demo" lay-allowclose="true">
+                        <ul class="layui-tab-title" hidden>
+                            <li class="layui-this" lay-id="11">网站设置</li>
+                            <li lay-id="22">用户管理</li>
+                            <li lay-id="33">权限分配</li>
+                            <li lay-id="44">商品管理</li>
+                            <li lay-id="55">订单管理</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                5331131313
+                            </div>
+                            <div class="layui-tab-item">内容2</div>
+                            <div class="layui-tab-item">内容3</div>
+                            <div class="layui-tab-item">内容4</div>
+                            <div class="layui-tab-item">内容5</div>
+                        </div>
+                    </div>
+                    <div class="site-demo-button" style="margin-bottom: 0;">
+                        <button class="layui-btn site-demo-active" data-type="tabAdd">新增Tab项</button>
+                        <button class="layui-btn site-demo-active" data-type="tabDelete">删除：商品管理</button>
+                        <button class="layui-btn site-demo-active" data-type="tabChange">下一步</button>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+
+    layui.use('element', function () {
+        var $ = layui.jquery
+            , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+        //触发事件
+        var active = {
+            tabAdd: function () {
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                    , content: '内容' + (Math.random() * 1000 | 0)
+                    , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            , tabDelete: function (othis) {
+                //删除指定Tab项
+                element.tabDelete('demo', '44'); //删除：“商品管理”
+                othis.addClass('layui-btn-disabled');
+            }
+            , tabChange: function () {
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function (elem) {
+            location.hash = 'test=' + $(this).attr('lay-id');
+        });
+
+    });
+
+</script>

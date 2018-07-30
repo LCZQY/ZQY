@@ -12,6 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GeneralSurvey_Data\GeneralSurvey_Data.csproj" />
+    <ProjectReference Include="..\GeneralSurvey_UI\GeneralSurvey_UI.csproj" />
+    <ProjectReference Include="..\GeneralSurvey_Utility\GeneralSurvey_Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Google.Protobuf">
       <HintPath>..\..\..\..\v4.5.2\Google.Protobuf.dll</HintPath>
     </Reference>

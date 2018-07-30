@@ -5,8 +5,8 @@ using Newtonsoft.Json.Linq;
 using System.Data;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-
 using Dapper;
+using GeneralSurvey_Data.Model;
 
 namespace MysqlConnstions
 {
@@ -18,31 +18,10 @@ namespace MysqlConnstions
 
         }
     }
-    public class Topicgroups
-    {
-        public int id { get; set; }
-        public string TopicName { get; set; }
-        public int CharactersSize { get; set; }
-        public string OptionSer { get; set; }
-
-    }
-
-
-    public class Setsetting
-    {
-        public string id { set; get; }
-        public string TopicClass { set; get; }
-    }
-
-    public class Person
-    {
-        public string Name { get; set; }
-        public int Age { get; set; }
-    }
-
+  
     public class connstionMysql
     {
-        private readonly string ConnectString = "datasource=127.0.0.1;port=3306;Database=qp.databases;characterset=utf8;user=root;pwd='root';SslMode=None;";
+        private readonly string ConnectString = "datasource=127.0.0.1;port=3306;Database=zqy;characterset=utf8;user=root;pwd='';SslMode=None;";
 
         public connstionMysql()
         {
@@ -57,10 +36,15 @@ namespace MysqlConnstions
                     //mySqlction.Execute("update `qp.setsetting`  set id='0001' where id=@id", new { id = "001" });
 
                     // 查询
-                    var querys = mySqlction.Query<Setsetting>("SELECT * FROM `qp.setsetting`");
+                    var querys = mySqlction.Query<AnswerGroup>("SELECT * FROM `qp.answergroup`");
                     foreach (var item in querys)
                     {
-                        Console.WriteLine(item.id.ToString() + "," + item.TopicClass.ToString());
+                        // 直接把字符串转成Json的形式
+                        JObject jo = (JObject)JsonConvert.DeserializeObject(item.Answer);                        
+                        foreach (var objects in jo["Values"])
+                        {
+                            Console.WriteLine(objects);
+                        }
                     }
 
                     ///////  删除数据

@@ -17,109 +17,104 @@ namespace GeneralSurvey_UI.Controllers
 {
     public class ShowTextController : Controller
     {
+
+        // 依赖注入类读取本地wwwroot文件夹  .Net Core已经没有了Server.MapPath() 属性了
         private IHostingEnvironment _hostingEnvironment;
-        public ShowTextController(IHostingEnvironment hosting) // 依赖注入类. Net Core已经没有了Server.MapPath() 属性了
+        public ShowTextController(IHostingEnvironment hosting)
         {
             _hostingEnvironment = hosting;
         }
 
 
         public IActionResult Index()
-        {        
-            ////问题形式
+        {
             ViewData["query"] = HelpTopicgroup.GetList();
             return View();
         }
 
 
         /// <summary>
-        ///  保存所有的提交的数据， 先根据题号区分
+        ///  保存所有的提交的数据， 先根据题号区分？？
         /// </summary>
-        /// <returns></returns>
+        /// <returns>
+        ///   List<IFormFile> files 该参数必须和  文件框中的 name一致
+        /// </returns>
         [HttpPost]
-        public IActionResult Index(IFormCollection model)
+        public IActionResult Index(IFormCollection model, List<IFormFile> files)
         {
-            //// .Net Core  中获取不到上传的文件        ??????????????????? 
-            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>() { };       
+            var Path = FileSave();
+            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>() { };
             foreach (var item in model)
             {
                 if (item.Key.IndexOf("_") != 0)
                 {
-                    keyValuePairs.Add(item.Key, item.Value);
+                    //前端会上传类型路径的字符串，如果存在就替换成上传路径！
+                    if (item.Value.ToString().IndexOf("\\") > -1)
+                    {
+                        keyValuePairs.Add(item.Key, Path);
+                    }
+                    else
+                    {
+                        keyValuePairs.Add(item.Key, item.Value);
+                    }
                 }
-            }                   
+            }
+
             AnswerGroup InsertModel = new AnswerGroup()
             {
                 id = Guid.NewGuid().ToString(),
                 FromID = Seesion.FromIds,
-                Answer = JObject.FromObject(new{ FormName = keyValuePairs.Keys, Values = keyValuePairs.Values }).ToString()
-            };     
+                Answer = JObject.FromObject(new { FormName = keyValuePairs.Keys, Values = keyValuePairs.Values }).ToString()
+            };
             try
             {
                 int flage = HelpAnswerGroup.Insert(InsertModel);
                 if (flage > 0)
                 {
-                    return Json(new { keys = keyValuePairs.Keys, values = keyValuePairs.Values });
+                    return Content("<script>alert(我们已收到您的信息，请保持手机的畅通)</script>");
                 }
                 return Json("插入失败");
-            } catch (Exception el){ return Json(ResultMsg.FormatResult(el)); }
+            }
+            catch (Exception el) { return Json(ResultMsg.FormatResult(el)); }
+
         }
 
-
-
-        
-
-        public async Task<IActionResult> FileSave(List<IFormFile> files)
-        {          
-            long size = files.Sum(f => f.Length);
+        /// <summary>
+        ///  接受文件 
+        /// </summary>
+        /// <returns></returns>
+        public string FileSave()
+        {
+            var date = Request;
+            var files = Request.Form.Files;
+            //long size = files.Sum(f => f.Length);
             string webRootPath = _hostingEnvironment.WebRootPath;
-            string contentRootPath = _hostingEnvironment.ContentRootPath;
+            //string contentRootPath = _hostingEnvironment.ContentRootPath;
+            var filename = "";
             foreach (var formFile in files)
             {
                 if (formFile.Length > 0)
                 {
-                    var filename = formFile.FileName;
-                    string fileExt = filename.Substring(filename.IndexOf("."), filename.Length - filename.IndexOf(".")); //文件扩展名，不含“.”
-                    long fileSize = formFile.Length; //获得文件大小，以字节为单位
-                    string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
-                    var filePath = webRootPath + "/Files/" + newFileName;
-                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    filename = formFile.FileName;
+                    //获得文件大小，以字节为单位
+                    long fileSize = formFile.Length;
+                    //文件夹命名规则： 当前日期          
+                    var filePath = webRootPath + "/Files/" + DateTime.Now.ToShortDateString().Replace("-", "");
+                    //判断文件夹是否存在,若不存在则创建
+                    if (!Directory.Exists(filePath))
                     {
-                        await formFile.CopyToAsync(stream);
+                        Directory.CreateDirectory(filePath);
                     }
+
+                    using (var stream = new FileStream(filePath + "/" + filename, FileMode.Create))
+                    {
+                        formFile.CopyToAsync(stream);
+                    }
+
                 }
             }
-            return Ok(new { count = files.Count, size });
+            return "/Files/" + DateTime.Now.ToShortDateString().Replace("-", "") + "/" + filename;
         }
-
-        /// <summary>
-        ///  接受文件 【在设置上传文件的时候还要考虑其中的需要什么格式】
-        /// </summary>
-        /// <returns></returns>
-        //public bool FileSave()
-        //{
-        //    var date = Request;
-        //    var files = Request.Form.Files;
-        //    long size = files.Sum(f => f.Length);
-        //    string webRootPath = _hostingEnvironment.WebRootPath;
-        //    string contentRootPath = _hostingEnvironment.ContentRootPath;
-        //    foreach (var formFile in files)
-        //    {
-        //        if (formFile.Length > 0)
-        //        {
-        //            var filename = formFile.FileName;
-        //            string fileExt = filename.Substring(filename.IndexOf("."), filename.Length - filename.IndexOf(".")); //文件扩展名，不含“.”
-        //            long fileSize = formFile.Length; //获得文件大小，以字节为单位
-        //            string newFileName = System.Guid.NewGuid().ToString() + "." + fileExt; //随机生成新的文件名
-        //            var filePath = webRootPath + "/Files/" + newFileName;
-        //            using (var stream = new FileStream(filePath, FileMode.Create))
-        //            {
-        //                 formFile.CopyToAsync(stream);
-        //            }
-        //        }
-        //    }
-        //    return true;         
-        //}
 
 
     }

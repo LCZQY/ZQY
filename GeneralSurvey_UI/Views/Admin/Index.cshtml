@@ -4,33 +4,25 @@
 }
 
 
-<style>
-    * { font-family: 'SimHei'; }
-    .navbar-brand { font-size: 24px; }
-    textarea { resize: none; }
-    #mits { font-size: 20px; background: #222222; width: 280px; height: 40px; letter-spacing: 20px; font-weight: bold; color: #ffffff; }
-    #bodys { margin-top: 3%; }
-    @@media screen and (max-width: 800px) {
-        .container-fluid { margin: 15% 0 0 0; }
-    }
-</style>
 
 <div class="layui-container-full">
-    <div class="row">       
-        <div class="layui-col-md5 layui-col-md-offset3">
-            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-                <legend>登陆</legend>
+    <div class="row" >
+        <div class="layui-col-md4 layui-col-md-offset4">            
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">           
+                <legend>调研信息管理系统</legend>             
             </fieldset>
             <form class="layui-form layui-form-pane" asp-controller="Admin" asp-action="Index">
                 <div class="layui-form-item">
                     <label class="layui-form-label">用户名</label>
                     <div class="layui-input-block">
+                        @*<label class="layadmin-user-login-icon layui-icon layui-icon-username" for="LAY-user-login-username"></label>*@
                         <input name="userName" class="layui-input" type="text" id="exampleInputName" lay-verify="required" placeholder="请输入用户名" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">密码</label>
                     <div class="layui-input-block">
+                        @*<label class="layadmin-user-login-icon layui-icon layui-icon-password" for="LAY-user-login-password"></label>*@
                         <input name="passWord" class="layui-input" id="exampleInputPassword" type="text" placeholder="请输入密码" autocomplete="off" lay-verify="required">
                     </div>
                 </div>
@@ -44,7 +36,6 @@
     </div>
 </div>
 <script>
-
     layui.use(['form'], function () {
         var form = layui.form
             , layer = layui.layer;
@@ -58,8 +49,4 @@
             return true;
         });
     });
-    
-
-
-
 </script>

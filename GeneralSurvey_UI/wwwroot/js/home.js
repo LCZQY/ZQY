@@ -26,15 +26,25 @@ var ajax_request = function (options) {
 }
 
 var questionbody = function (url) {
-    console.log(url.view);
-    $("#ViewContent").click(function () {     
-        $("iframe").attr("src", url.view);
+    console.log(url.datagrids);
+    $("#ViewContent").click(function () {    
+
+        
+        //window.location.href = url.view;
+        //重新打开一个窗口
+        window.open(url.view);
     });
-    $("#QuestionContent").click(function () { 
+    $("#QuestionContent").click(function () {
+
         $("iframe").attr("src", url.question);
     });
     $("#LayoutWebContent").click(function () {
         $("iframe").attr("src", url.layout);
+    })
+
+    $("#DataGrid").click(function () {
+
+        $("iframe").attr("src", url.datagrids);
     })
 }
 
