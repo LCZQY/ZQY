@@ -92,17 +92,15 @@ namespace GeneralSurvey_UI.Controllers
         }
 
 
-
-        /// <summary>
+        /// <summary>   
         /// 查看当前用户添加的
         /// </summary>
         /// <returns></returns>
         public IActionResult LookSurvey()
         {
-        
-           return View();
+            return View();
         }
-  
+
         /// <summary>
         ///  组合 layui表格 json
         /// </summary>
@@ -110,7 +108,7 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult jsonTable()
         {
             List<Formsettings> query = new List<Formsettings>();
-            query =Databases.connect().Query<Formsettings>("select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater from `qp.formsettings`").ToList();
+            query = Databases.connect().Query<Formsettings>("select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater from `qp.formsettings`").ToList();
             var tableJson = new
             {
                 count = query.Count(),  //总行数

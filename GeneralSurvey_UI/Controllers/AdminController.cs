@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting;
 
+
 namespace GeneralSurvey_UI.Controllers
 {
     public class AdminController : Controller
@@ -36,7 +37,9 @@ namespace GeneralSurvey_UI.Controllers
         public ActionResult Index(string userName, string passWord)
         {
 
-            Seesion.UserName = userName;
+            Seesion.UserName = userName;   
+            Seesion.FromIds = Databases.connect().Query<Formsettings>("select * from `qp.formsettings`  limit 1").FirstOrDefault(u => u.FormCreater == userName).FormID;
+          
             return Redirect(Url.Action("Index", "Home"));
         }
 

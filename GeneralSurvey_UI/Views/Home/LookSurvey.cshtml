@@ -29,7 +29,7 @@
 </body>
 </html>
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs layui-bg-green" data-method="notice" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-xs layui-bg-green" data-method="notice" lay-event="look">查看</a>
     <a class="layui-btn layui-bg-green layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
@@ -51,7 +51,7 @@
                     , { field: 'formCreateDate', title: '创建时间', }
                     , { field: 'formStatus', title: '问卷状态', }
                     , { field: 'formCreater', title: '创建者', }
-                    , { field: 'id', title: '操作', toolbar: '#barDemo' }
+                    , { field: 'formID', title: '操作', toolbar: '#barDemo' }
                 ]]
                 , id: 'testReload'
                 , page: true
@@ -79,24 +79,26 @@
                             }
                         });
                     });
-                } else if (obj.event === 'edit') {
-                    var href = option.edit + "/?id=" + data["id"];
-                    editContent(href);
+                } else if (obj.event === 'look') {
+                    console.log(data["formID"]);
+                    var href = "@Url.Action("Index","ShowText")" + "/?formid=" + data["formID"];
+                    window.open(href);
+                   // editContent(href);
                 }
             });
         });
 
 
 
-    //修改
-    var editContent = function (href) {
-        console.log(href);
-        var index = layer.open({
-            type: 2,
-            content: href,
-            area: ['1220px', '505px'],
-            maxmin: true
-        });
-        layer.full(index);
-    }
+    ////修改
+    //var editContent = function (href) {
+    //    console.log(href);
+    //    var index = layer.open({
+    //        type: 2,
+    //        content: href,
+    //        area: ['1220px', '505px'],
+    //        maxmin: true
+    //    });
+    //    layer.full(index);
+    //}
 </script>

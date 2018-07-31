@@ -23,15 +23,26 @@ namespace GeneralSurvey_UI.Controllers
 
         // 依赖注入类读取本地wwwroot文件夹  .Net Core已经没有了Server.MapPath() 属性了
         private IHostingEnvironment _hostingEnvironment;
+
         public ShowTextController(IHostingEnvironment hosting)
         {
             _hostingEnvironment = hosting;
         }
 
 
-        public IActionResult Index()
+
+        public IActionResult Index(string formid)
         {
-            ViewData["query"] = HelpTopicgroup.GetList();
+           
+
+            if (formid == null)
+            {
+                ViewData["query"] = HelpTopicgroup.GetList();
+            }
+            else
+            {
+                ViewData["query"] = HelpTopicgroup.GetList("FromID='" + formid + "'");
+            }
             return View();
         }
 
