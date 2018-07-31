@@ -19,14 +19,13 @@ namespace GeneralSurvey_UI.Controllers
 {
     public class HomeController : Controller
     {
-
         public IActionResult Index()
         {
             return View();
         }
 
         /// <summary>
-        ///  内容页面一
+        ///添加提项
         /// </summary>
         /// <returns></returns>
         public ActionResult ContentPage()
@@ -82,9 +81,46 @@ namespace GeneralSurvey_UI.Controllers
             catch (Exception ex) { return Json(data: ResultMsg.FormatResult(ex)); }
         }
 
-        public IActionResult Error()
+
+        /// <summary>
+        ///   添加成功
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AddSucceed()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+            return View();
         }
+
+
+
+        /// <summary>
+        /// 查看当前用户添加的
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult LookSurvey()
+        {
+        
+           return View();
+        }
+  
+        /// <summary>
+        ///  组合 layui表格 json
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult jsonTable()
+        {
+            List<Formsettings> query = new List<Formsettings>();
+            query =Databases.connect().Query<Formsettings>("select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater from `qp.formsettings`").ToList();
+            var tableJson = new
+            {
+                count = query.Count(),  //总行数
+                code = 0, //状态码 0 成功
+                msg = "操作成功",
+                data = query
+            };
+            return Json(tableJson);
+        }
+
     }
 }

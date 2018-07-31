@@ -84,6 +84,8 @@ namespace GeneralSurvey_UI.Controllers
                 }
                 else
                 {
+
+
                     //把用户修改的题号 拿去数据库中对比，如果存在就两两相互替换，不修改其他内容，不存在就直接修改，并且修改所用
                     var existStide = Databases.connect().Query<Topicgroups>("select  id,TopicName,CharactersSize,SetsettingId ,OptionText ,Stide from  `qp.topicgroup`  where Stide =@Stide", new
                     {

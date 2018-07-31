@@ -1,5 +1,72 @@
 ﻿
 
 
+form
+{
+    padding-top: 5%;
+}
 
-textarea, th, ul { margin: 0; padding: 0; }
+footer
+{
+    margin-top: 20px;
+}
+
+textarea, th, ul
+{
+    margin: 0;
+    padding: 0;
+}
+
+.steps
+{
+    margin-top: 20%;
+}
+
+ol li
+{
+    margin-left: 10%;
+    color: #808080;
+    font-size: 20px;
+    float: left;
+}
+
+ol li div, ol li span
+{
+    float: left;
+}
+
+ol li div
+{
+    text-align: center;
+    color: #ffffff;
+    float: left;
+    width: 20px;
+    height: 20px;
+    border-radius: 20em;
+    border: #808080 solid thin;
+    background: #808080;
+}
+
+.i
+{
+    text-align: center;
+    color: #ffffff;
+    float: left;
+    width: 20px;
+    height: 20px;
+    border-radius: 20em;
+    border: Red solid thin;
+    background: Red;
+}
+
+.tsl
+{
+    color: Red;
+}
+
+
+.layui-tab-content
+{
+height:1800px;
+
+}

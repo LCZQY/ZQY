@@ -27,25 +27,23 @@ var ajax_request = function (options) {
 
 var questionbody = function (url) {
     console.log(url.datagrids);
-    $("#ViewContent").click(function () {    
+    $("#AddSurvey").click(function () {
 
-        
-        //window.location.href = url.view;
-        //重新打开一个窗口
-        window.open(url.view);
+        $("iframe").attr("src", url.add);
     });
-    $("#QuestionContent").click(function () {
-
-        $("iframe").attr("src", url.question);
+    $("#LookSurvey").click(function () {
+        $("iframe").attr("src", url.look);
     });
-    $("#LayoutWebContent").click(function () {
-        $("iframe").attr("src", url.layout);
-    })
 
     $("#DataGrid").click(function () {
 
         $("iframe").attr("src", url.datagrids);
     })
+
+    $("#view").click(function () {
+
+        window.open(url.views);
+    });
 }
 
 

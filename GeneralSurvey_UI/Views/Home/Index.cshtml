@@ -4,7 +4,6 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -40,29 +39,21 @@
             </ul>
         </div>
         <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">              
+            <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
+
                     <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="javascript:;">基本设置</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" id="QuestionContent">问答设置</a></dd>
-                        </dl>
-                    </li>
-
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">页面设置</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" id="ViewContent">网页布局</a></dd>
-                            <dd><a href="javascript:;" id="LayoutWebContent">排版设置</a></dd>
-                        </dl>
-                    </li>
-
-                    <li class="layui-nav-item">
                         <a href="javascript:;">问卷管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" id="DataGrid">查看问卷</a></dd>
                             <dd><a href="javascript:;" id="AddSurvey">添加问卷</a></dd>
+                            <dd><a href="javascript:;" id="LookSurvey">查看问卷</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">网页布局</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;" id="view">页面显示</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -89,12 +80,11 @@
         layui.use('element', function () {
             var element = layui.element;
         });
-
         questionbody({
-            question:"@Url.Action("ContentPage", "home")",
-            view: "@Url.Action("Index", "ShowText")",
-            layout: "@Url.Action("Index", "LayoutWeb")",
-            datagrids:"@Url.Action("Exhibition", "Admin")"
+            add: "@Url.Action("AddSurvey", "Admin")",
+            look:"@Url.Action("LookSurvey", "Home")",
+            datagrids: "@Url.Action("Exhibition", "Admin")",
+            views:"@Url.Action("Index","ShowText")"
         });
 
     </script>

@@ -23,8 +23,12 @@ namespace GeneralSurvey_Utility
         /// </summary>
         public static Random sj { get; set; } = new Random();
 
+        /// <summary>
+        ///  当前用户名
+        /// </summary>
+        public static string UserName { get; set; }
 
-      
+
 
         /// <summary>
         ///  组合展示表头

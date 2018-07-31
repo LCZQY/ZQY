@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>问卷添加成功</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <style>
+        .i
+        {
+            text-align: center;
+            color: #ffffff;
+            float: left;
+            width: 20px;
+            height: 20px;
+            border-radius: 20em;
+            border: Red solid thin;
+            background: Red;
+        }
+
+        .tsl
+        {
+            color: Red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="layui-container">
+        <div class="row">
+            <hr style="height:3px;" />
+            <div class="layui-col-md12">
+                <ol>
+                    <li class="active"><div class="i"><i>1</i></div><span class="tsl" data-phase-id="r_p_createAccount">添加完成</span></li>
+                </ol>
+            </div>
+            <div class="layui-col-md12">
+               <h1> 添加成功！！！ @Html.ActionLink("查看已有问卷","/")</h1>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

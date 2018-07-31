@@ -51,7 +51,7 @@ namespace GeneralSurvey_UI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Admin}/{action=AddSurvey}/{id?}");
+                    template: "{controller=Admin}/{action=Index}/{id?}");
             });
         }
     }

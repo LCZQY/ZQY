@@ -8,13 +8,12 @@ using System.Text;
 
 namespace GeneralSurvey_Data
 {
-
     public static class Databases
     {
-        
+
         private static MySqlConnection mySqlction = null;
         //private static string server = System.Configuration.ConfigurationManager.AppSettings["MySQLServer"];
-        //private readonly string ConnectString = "datasource=127.0.0.1;port=3306;Database=qp.databases;characterset=utf8;user=root;pwd='root';SslMode=None;";
+     //   private static readonly string ConnectString = "datasource=127.0.0.1;port=3306;Database=qp.databases;characterset=utf8;user=root;pwd='root';SslMode=None;";
         private static  readonly string ConnectString = "datasource=127.0.0.1;port=3306;Database=zqy;characterset=utf8;user=root;pwd='';SslMode=None;";
 
         public static MySqlConnection connect()
@@ -33,7 +32,7 @@ namespace GeneralSurvey_Data
             {
                 mySqlction = new MySqlConnection(ConnectString);
             }
-            
+
             return mySqlction;
         }
 

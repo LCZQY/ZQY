@@ -35,6 +35,8 @@ namespace GeneralSurvey_UI.Controllers
         [HttpPost]
         public ActionResult Index(string userName, string passWord)
         {
+
+            Seesion.UserName = userName == "" ? "Admin" : userName;
             return Redirect(Url.Action("Index", "Home"));
         }
 
@@ -143,5 +145,36 @@ namespace GeneralSurvey_UI.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult AddSurvey(string title, string brief, string copy)
+        {
+            try
+            {
+                // 表单ID 
+                string formId = Guid.NewGuid().ToString();
+                var InsertState = Databases.connect().Execute("insert into  `qp.formsettings` value(@FormID,@FormNote,@FormTitle,@FormCopyright,@FormCreateDate,@FormStatus,@FormCreater)", new
+                {
+                    FormID = formId,
+                    FormNote = brief,
+                    FormTitle = title,
+                    FormCopyright = copy,
+                    FormCreateDate = DateTime.Now.ToShortDateString(),
+                    FormStatus = 1,
+                    FormCreater = Seesion.UserName
+                });
+                //给全局的表单ID赋值
+                Seesion.FromIds = formId;
+                if (InsertState > 0)
+                {
+                    return Json(ResultMsg.FormatResult(200, Seesion.FromIds, Seesion.UserName));
+                }
+                return Json(ResultMsg.FormatResult(0, "数据添加失败", "失败"));
+            }
+            catch (Exception el)
+            {
+                return Json(ResultMsg.FormatResult(el));
+            }
+
+        }
     }
 }
