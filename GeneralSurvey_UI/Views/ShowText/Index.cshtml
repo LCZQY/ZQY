@@ -1,10 +1,9 @@
-﻿
-@using GeneralSurvey_Data.Model
+﻿@using GeneralSurvey_Utility;
+@using GeneralSurvey_Data.Model;
 @{
     Layout = null;
 }
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -12,106 +11,46 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <title>问卷调研页</title>
+    <link href="~/lib/Validform_v5.3.2/style.css" rel="stylesheet" />
+    <link href="~/lib/Validform_v5.3.2/demo.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap/css/Datetimepicker.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
     <link href="~/css/fileupload.css" rel="stylesheet" />
-    <style>
-        *
-        {
-            font-family: 'SimHei';
-        }
+    <link href="~/css/home.css" rel="stylesheet" />
 
-        .h5
-        {
-            font-weight: 600;
-            color: #000000;
-        }
 
-        b
-        {
-            color: red;
-            font-weight: bold;
-            font-size: 20px;
-            margin-left: 0.4%;
-        }
-
-        p
-        {
-            font-size: 14px;
-            font-weight: 500;
-            margin-top: 1%;
-            text-indent: 2%;
-            line-height: inherit;
-        }
-
-        .h5
-        {
-            font-size: 15px;
-            color: #625c5c;
-        }
-
-        textarea
-        {
-            max-width: 620px;
-        }
-
-        option
-        {
-            text-align: center;
-        }
-
-        .navbar-brand
-        {
-            font-size: 24px;
-        }
-
-        textarea
-        {
-            resize: none;
-        }
-
-        #mits
-        {
-            font-size: 20px;
-            background: #222222;
-            width: 300px;
-            height: 45px;
-            letter-spacing: 3px;
-            font-weight: bold;
-            color: #ffffff;
-        }
-    </style>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
-            <!--头部开始-->
-            <header>
-                <div class="row">
+            <div class="col-md-12">
+                <!--头部开始-->
+                <header>
                     <div class="navbar navbar-inverse navbar-fixed-top">
                         <div class="container">
                             <div class="col-md-7 col-md-offset-2">
                                 <div class="navbar-header">
-                                    调研信息系统管理
+                                    @{
+                                        string title = HelpFormsettings.GetList().SingleOrDefault().FormTitle;
+                                        <h3>@title</h3>
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </header>
-            <!--内容页开始-->
-            <section>
-                <div class="row">
-                    <div class="col-md-7 col-md-offset-2">
-                        <p>
-                            新华社约翰内斯堡7月25日电(记者霍小光　孟娜　李建敏)国家主席习近平25日应邀出席在南非约翰内斯堡举行
-                            的金砖国家工商论坛，并发表题为《顺应时代潮流　实现共同发展》的重要讲话，强调金砖国家要顺应历史大势，坚持合作共赢、创新引领、包容普惠、多边主义，为构建新型国际关系、构建人类命运共同体发挥建设性作用。
-                        </p>
+                </header>
+                <!--内容页开始-->
+                <section>
+                    <div class="col-md-7 col-lg-offset-2" style="margin-top:5%;">
+                        @{
+                            string query = HelpFormsettings.GetList().SingleOrDefault().FormNote;
+                            <h3>@query</h3>
+                        }
                     </div>
-                    <div class="col-md-7  col-md-offset-2 ">
-                        <form method="post" enctype="multipart/form-data" action="@Url.Action("Index","ShowText")">
-
+                    <div class="col-md-7  col-md-offset-2">
+                        <form method="post" enctype="multipart/form-data" id="postForm" action="@Url.Action("Index","ShowText")">
                             <div class="form-horizontal">
                                 @{
                                     var count = 0;
@@ -154,7 +93,6 @@
                                                                                     </div>
                                                                                 </div>
                                                                             }
-
                                                                         }
                                                                     }
                                                                 }
@@ -163,6 +101,7 @@
                                                                     <span>请参照本系统规则添加选项</span>
                                                                 }
                                                             }
+                                                            <div class="Validform_checktip"></div>
                                                         </div>
                                                         break;
                                                     case "002": //单选框
@@ -193,6 +132,7 @@
                                                                             }
                                                                         }
                                                                     }
+                                                                    <div class="Validform_checktip"></div>
                                                                 </div>
                                                             }
                                                         }
@@ -221,40 +161,44 @@
                                                                     catch (Exception ex) { }
                                                                 }
                                                             </select>
+
+                                                            <div class="Validform_checktip"></div>
                                                         </div>
                                                         break;
 
                                                     case "004": // 多文本内容
                                                         <div class="col-md-12">
-                                                            <textarea class="form-control" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                            <textarea class="form-control" datatype="*1-@item.CharactersSize" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                            <div class="Validform_checktip"></div>
                                                         </div>
                                                         break;
                                                     case "005": // 文件上传
                                                         if (count == 0) //只允许出现一个文件上传框
                                                         {
-                                                            @*<input type="file" name="files" multiple />*@
-                                                            <span class="upload">
-
-                                                                @*<input type="file" name="@item.FromName" />*@
-                                                                <input type="text" name="@item.FromName" class="upload-url input-sm" style="width:300px" />
-                                                                <input type="button" class="upload-btn btn-default  btn-sm" value="浏览文件" />
-                                                                <input type="file" name="files" multiple id="BlogPhoto" class="upload-input-file form-control input-sm">
-                                                            </span>
                                                             <div class="col-md-12">
-                                                                <span id="warning" style="color:red;"></span>
+                                                                <span class="upload">
+                                                                    <input type="text" datatype="*" name="@item.FromName" class="upload-url input-sm" style="width:250px" />
+                                                                    <input type="button" class="upload-btn btn-default  btn-sm" value="浏览文件" />
+                                                                    <input type="file" name="files" multiple id="BlogPhoto" class="upload-input-file form-control input-sm">
+                                                                </span>
+                                                                <div class="Validform_checktip"></div>
                                                             </div>
                                                             count++;
                                                         }
-
                                                         break;
                                                     case "006": // 输入框
                                                         <div class="col-md-12">
-                                                            <input type="text" class="form-control input-sm" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                            <input type="text" class="form-control input-sm" datatype="*1-@item.CharactersSize" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                            <div class="Validform_checktip"></div>
                                                         </div>
+                                                        @*<div class="Validform_checktip">昵称为6~18个字符</div>*@
                                                         break;
                                                     case "007": // 时间
-                                                        <div class="col-md-12">                                                         
-                                                            <input class="layui-input" id="test1" name="@item.FromName" placeholder="yyyy-MM-dd" type="text" />
+                                                        <div class="input-group date form_date col-md-12" data-date="" data-date-format="" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                                                            <input class="form-control input-sm" datatype="*" type="text" name="@item.FromName" value="" readonly>
+                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                                            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                            <div class="Validform_checktip"></div>
                                                         </div>
                                                         break;
                                                     case "008": // 地址
@@ -275,6 +219,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                            <div class="Validform_checktip"></div>
                                                         </div>
                                                         break;
                                                 }
@@ -290,25 +235,91 @@
                             </div>
                         </form>
                     </div>
-                </div>
-            </section>
-            <!--页尾开始-->
-            <footer class="col-md-8 text-center" style="margin:5% 0 0 8%;">
-                <p>&copy; @DateTime.Now.Year - 琦品出品</p>
-            </footer>
+
+                </section>
+                <!--页尾开始-->
+                <footer class="col-md-8 text-center" style="margin:5% 0 0 8%;">
+                    @{
+                        string copy = HelpFormsettings.GetList().SingleOrDefault().FormCopyright;
+                        <p>   &copy; @DateTime.Now.Year - @copy</p>
+                    }
+                </footer>
+            </div>
         </div>
     </div>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src = "~/lib/bootstrap/js/bootstrap-datetimepicker.js" ></script>
+    <script src="~/lib/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="~/lib/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="~/lib/Validform_v5.3.2/Validform_v5.3.2_min.js"></script>
     <script src="~/lib/layui/layui.js"></script>
     <script src="~/lib/distpicker/distpicker.data.js"></script>
     <script src="~/lib/distpicker/distpicker.js"></script>
     <script src="~/lib/distpicker/main.js"></script>
+    <script src="~/lib/layui/layui.js"></script>
     <script src="~/js/home.js"></script>
     <script src="~/js/showtext.js"></script>
     <script>
 
+        var demo  =  $(document.forms[0]).Validform({
+            btnSubmit: "#mits",
+            btnReset: ".btn_reset",
+            tiptype: 4,
+            ignoreHidden: true,
+            dragonfly: false,
+            tipSweep: true,
+            label: ".label",
+            showAllError: true,
+            postonce: true,
+            ajaxPost: true,
+            callback: function (rst) {
+                if (rst.code == 200) {
+                    layer.open({
+                        title: ['提交成功', 'background: green; color:#fff;'], content: '请保持手机畅通，我们会主动联系您！'
+                    });
+                    window.location.href = "@Url.Action("Index", "ShowText")";
+                }
+                else {
+                    layer.open({
+                        title: ['提交失败', 'background: #FF4351; color:#fff;'], content: rst.code
+                    });
+                }
+            }
+        });
+
+        demo.addRule([
+            {
+                ele: "select",
+                datatype: "*"
+            },
+            {
+                ele: ":radio:first",
+                datatype: "*"
+            },
+            {
+                ele: ":checkbox:first",
+                datatype: "*"
+            }
+        ]);
+
+
+
+        //禁止自动选择
+        $("#distpicker").distpicker({
+            autoSelect: false
+        });
+        //初始化日历控件
+        $('.form_date').datetimepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
 
         /*
          * 文件错误显示

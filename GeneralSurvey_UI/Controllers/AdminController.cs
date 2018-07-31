@@ -153,8 +153,6 @@ namespace GeneralSurvey_UI.Controllers
         }
 
 
-
-
         /// <summary>
         ///  添加问卷
         /// </summary>
@@ -168,20 +166,21 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult AddSurvey(string title, string brief, string copy)
         {
             try
-            {
+            {     
                 // 表单ID 
                 string formId = Guid.NewGuid().ToString();
-                var InsertState = Databases.connect().Execute("insert into  `qp.formsettings` value(@FormID,@FormNote,@FormTitle,@FormCopyright,@FormCreateDate,@FormStatus,@FormCreater)", new
+                Formsettings InsertModel = new Formsettings()
                 {
                     FormID = formId,
                     FormNote = brief,
                     FormTitle = title,
                     FormCopyright = copy,
-                    FormCreateDate = DateTime.Now.ToShortDateString(),
+                    FormCreateDate =  DateTime.Parse(DateTime.Now.ToShortDateString()),
                     FormStatus = 1,
                     FormCreater = Seesion.UserName
-                });
+                };      
                 //给全局的表单ID赋值
+                var InsertState = HelpFormsettings.Insert(InsertModel);
                 Seesion.FromIds = formId;
                 if (InsertState > 0)
                 {

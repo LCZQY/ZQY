@@ -81,7 +81,8 @@
                     });
                 } else if (obj.event === 'look') {
                     console.log(data["formID"]);
-                    var href = "@Url.Action("Index","ShowText")" + "/?formid=" + data["formID"];
+                    var url = " @Url.Action("Index", "ShowText")";
+                    var href = url + "/?formid=" + data["formID"];
                     window.open(href);
                    // editContent(href);
                 }

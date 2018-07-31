@@ -10,41 +10,43 @@ using System.Linq;
 
 namespace GeneralSurvey_Utility
 {
-    public static class HelpAnswerGroup
+    public static class HelpFormsettings
     {
+
         /// <summary>
         /// 单个插入，返回影响行数
         /// </summary>
         /// <param name="topicgroups"></param>
         /// <returns></returns>
-        public static int Insert(AnswerGroup model)
+        public static int Insert(Formsettings model)
         {
             using (var db = Databases.connect())
             {
-                return db.Execute(@"insert into `qp.answergroup`(id,Answer,FromID) values(@id,@Answer,@FromID);", model);
+                return db.Execute(@"insert into `qp.formsettings`(FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater) values(@FormID,@FormNote,@FormTitle,@FormCopyright,@FormCreateDate,@FormStatus,@FormCreater);", model);
             }
         }
+
         /// <summary>
         ///   批量插入，返回影响行数
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static int Insert(List<AnswerGroup> model)
+        public static int Insert(List<Formsettings> model)
         {
             using (var db = Databases.connect())
             {
-                return db.Execute(@"insert into `qp.answergroup`(id,Answer,FromID) values(@id,@Answer,@FromID);", model);
+                return db.Execute(@"insert into `qp.formsettings`(FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater) values(@FormID,@FormNote,@FormTitle,@FormCopyright,@FormCreateDate,@FormStatus,@FormCreater);", model);
             }
         }
 
         /// <summary>
         /// 删除
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="FormID"></param>
         /// <returns></returns>
-        public static bool Delete(string id)
+        public static bool Delete(string FormID)
         {
-            int remove = Databases.connect().Execute("delete from `qp.answergroup` where id =@id", new { id = id });
+            int remove = Databases.connect().Execute("delete from `qp.formsettings` where FormID =@FormID", new { FormID = FormID });
             if (remove > 0)
             {
                 return true;
@@ -58,11 +60,11 @@ namespace GeneralSurvey_Utility
         /// </summary>
         /// <param name="topicgroups"></param>
         /// <returns></returns>
-        public static bool Update(AnswerGroup model)
+        public static bool Update(Formsettings model)
         {
             using (var db = Databases.connect())
             {
-                int updateSet = db.Execute(@"update `qp.answergroup` set Answer=@Answer,FromID=@FromID where id=@id", new { model });
+                int updateSet = db.Execute(@"update `qp.formsettings` set Answer=@Answer,FromID=@FromID where FormID=@FormID", new { model });
                 if (updateSet > 0)
                 {
                     return true;
@@ -76,12 +78,12 @@ namespace GeneralSurvey_Utility
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static bool Update(List<AnswerGroup> model)
+        public static bool Update(List<Formsettings> model)
         {
 
             using (var db = Databases.connect())
             {
-                int updateSet = db.Execute(@"update `qp.answergroup` set Answer=@Answer,FromID=@FromID where id=@id", new { model });
+                int updateSet = db.Execute(@"update `qp.formsettings` set Answer=@Answer,FromID=@FromID where FormID=@FormID", new { model });
                 if (updateSet > 0)
                 {
                     return true;
@@ -95,12 +97,12 @@ namespace GeneralSurvey_Utility
         /// </summary>
         /// <param name="cond"></param>
         /// <returns></returns>
-        public static List<AnswerGroup> GetList(string cond)
+        public static List<Formsettings> GetList(string cond)
         {
-            string sql = @"select id,Answer,FromID from `qp.answergroup` where " + cond + " and FromID='" + Seesion.FromIds + "'";
+            string sql = @"select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater from `qp.formsettings` where " + cond + "";
             using (var db = Databases.connect())
             {
-                return db.Query<AnswerGroup>(sql).ToList();
+                return db.Query<Formsettings>(sql).ToList();
             }
         }
 
@@ -110,27 +112,27 @@ namespace GeneralSurvey_Utility
         /// </summary>
         /// <param name="cond"></param>
         /// <returns></returns>
-        public static List<AnswerGroup> GetList()
+        public static List<Formsettings> GetList()
         {
-            string sql = @"select id,Answer,FromID  from `qp.answergroup`  where FromID='" + Seesion.FromIds + "'";
+            string sql = @"select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater  from `qp.formsettings` where FormID='" + Seesion.FromIds + "'";
             using (var db = Databases.connect())
             {
-                return db.Query<AnswerGroup>(sql).ToList();
+                return db.Query<Formsettings>(sql).ToList();
             }
         }
 
         /// <summary>
         /// 查询in操作
         /// </summary>
-        /// <param name="ids"></param>
+        /// <param name="FormIDs"></param>
         /// <returns></returns>
-        public static List<AnswerGroup> QueryIn(int[] ids, string cond = "id")
+        public static List<Formsettings> QueryIn(int[] FormIDs, string cond = "FormID")
         {
             using (var db = Databases.connect())
             {
-                var sql = "select * from `qp.answergroup` where" + cond + " in @ids";
+                var sql = "select * from `qp.formsettings` where" + cond + " in @FormIDs";
                 //参数类型是Array的时候，dappper会自动将其转化
-                return db.Query<AnswerGroup>(sql, new { ids }).ToList();
+                return db.Query<Formsettings>(sql, new { FormIDs }).ToList();
             }
         }
 

@@ -29,18 +29,15 @@ namespace GeneralSurvey_UI.Controllers
             _hostingEnvironment = hosting;
         }
 
-
-
         public IActionResult Index(string formid)
         {
-           
-
             if (formid == null)
             {
                 ViewData["query"] = HelpTopicgroup.GetList();
             }
             else
             {
+                Seesion.FromIds = formid;
                 ViewData["query"] = HelpTopicgroup.GetList("FromID='" + formid + "'");
             }
             return View();
@@ -48,7 +45,7 @@ namespace GeneralSurvey_UI.Controllers
 
 
         /// <summary>
-        ///  保存所有的提交的数据， 先根据题号区分？？
+        ///  保存所有的提交的数据
         /// </summary>
         /// <returns>
         ///   List<IFormFile> files 该参数必须和  文件框中的 name一致
@@ -85,7 +82,7 @@ namespace GeneralSurvey_UI.Controllers
                 int flage = HelpAnswerGroup.Insert(InsertModel);
                 if (flage > 0)
                 {
-                    return Content("<script>alert(我们已收到您的信息，请保持手机的畅通)</script>");
+                    return Json(ResultMsg.FormatResult());
                 }
                 return Json("插入失败");
             }
@@ -119,17 +116,15 @@ namespace GeneralSurvey_UI.Controllers
                     {
                         Directory.CreateDirectory(filePath);
                     }
-
                     using (var stream = new FileStream(filePath + "/" + filename, FileMode.Create))
                     {
                         formFile.CopyToAsync(stream);
                     }
-
                 }
             }
             return "/Files/" + DateTime.Now.ToShortDateString().Replace("-", "") + "/" + filename;
         }
-
+      
 
     }
 }
