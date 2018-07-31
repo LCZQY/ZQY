@@ -26,6 +26,7 @@ namespace GeneralSurvey_UI
             //设置文件上传的大小限制为21 MB。
             services.Configure<FormOptions>(options =>
             {
+                    //添加一个更改
                     options.MultipartBodyLengthLimit = 21000000;
             });
 
