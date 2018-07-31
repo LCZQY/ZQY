@@ -39,9 +39,12 @@
                     layer = layui.layer;
                     //询问框
                     layer.confirm('是否使用当前提干排序', function (index) {
+                     
                         // 直接替换成下一步
-                        var enelmnt = parent.parent.document.getElementById("twoStep").setAttribute("src", "@Url.Action("AddSucceed", "Home")");
+                        var enelmnt = parent.document.getElementById("twoStep").setAttribute("src", "@Url.Action("AddSucceed", "Home")");
                         layer.close(index);
+
+
                     }, function () {
 
                     });

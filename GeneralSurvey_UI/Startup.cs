@@ -26,7 +26,7 @@ namespace GeneralSurvey_UI
             //设置文件上传的大小限制为21 MB。
             services.Configure<FormOptions>(options =>
             {
-                    //添加一个更改
+                    //添加一个更改000
                     options.MultipartBodyLengthLimit = 21000000;
             });
 
@@ -45,14 +45,13 @@ namespace GeneralSurvey_UI
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Admin}/{action=Index}/{id?}");
+                    template: "{controller=Admin}/{action=AddSurvey}/{id?}");
             });
         }
     }

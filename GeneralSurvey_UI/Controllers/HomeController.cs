@@ -88,7 +88,6 @@ namespace GeneralSurvey_UI.Controllers
         /// <returns></returns>
         public IActionResult AddSucceed()
         {
-
             return View();
         }
 

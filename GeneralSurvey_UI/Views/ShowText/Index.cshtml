@@ -13,18 +13,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <title>问卷调研页</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap/css/Datetimepicker.css" rel="stylesheet" />
     <link href="~/css/fileupload.css" rel="stylesheet" />
     <style>
-        * { font-family: 'SimHei'; }
-        .h5 { font-weight: 600; color: #000000; }
-        b { color: red; font-weight: bold; font-size: 20px; margin-left: 0.4%; }
-        p { font-size: 14px; font-weight: 500; margin-top: 1%; text-indent: 2%; line-height: inherit; }
-        .h5 { font-size: 15px; color: #625c5c; }
-        textarea { max-width: 620px; }
-        option { text-align: center; }
-        .navbar-brand { font-size: 24px; }
-        textarea { resize: none; }
-        #mits { font-size: 20px; background: #222222; width: 300px; height: 45px; letter-spacing: 3px; font-weight: bold; color: #ffffff; }
+        *
+        {
+            font-family: 'SimHei';
+        }
+
+        .h5
+        {
+            font-weight: 600;
+            color: #000000;
+        }
+
+        b
+        {
+            color: red;
+            font-weight: bold;
+            font-size: 20px;
+            margin-left: 0.4%;
+        }
+
+        p
+        {
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 1%;
+            text-indent: 2%;
+            line-height: inherit;
+        }
+
+        .h5
+        {
+            font-size: 15px;
+            color: #625c5c;
+        }
+
+        textarea
+        {
+            max-width: 620px;
+        }
+
+        option
+        {
+            text-align: center;
+        }
+
+        .navbar-brand
+        {
+            font-size: 24px;
+        }
+
+        textarea
+        {
+            resize: none;
+        }
+
+        #mits
+        {
+            font-size: 20px;
+            background: #222222;
+            width: 300px;
+            height: 45px;
+            letter-spacing: 3px;
+            font-weight: bold;
+            color: #ffffff;
+        }
     </style>
 </head>
 
@@ -190,6 +245,7 @@
                                                             </div>
                                                             count++;
                                                         }
+
                                                         break;
                                                     case "006": // 输入框
                                                         <div class="col-md-12">
@@ -197,7 +253,7 @@
                                                         </div>
                                                         break;
                                                     case "007": // 时间
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-12">                                                         
                                                             <input class="layui-input" id="test1" name="@item.FromName" placeholder="yyyy-MM-dd" type="text" />
                                                         </div>
                                                         break;
@@ -244,6 +300,7 @@
     </div>
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src = "~/lib/bootstrap/js/bootstrap-datetimepicker.js" ></script>
     <script src="~/lib/layui/layui.js"></script>
     <script src="~/lib/distpicker/distpicker.data.js"></script>
     <script src="~/lib/distpicker/distpicker.js"></script>

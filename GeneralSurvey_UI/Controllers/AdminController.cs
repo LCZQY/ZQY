@@ -36,7 +36,7 @@ namespace GeneralSurvey_UI.Controllers
         public ActionResult Index(string userName, string passWord)
         {
 
-            Seesion.UserName = userName == "" ? "Admin" : userName;
+            Seesion.UserName = userName;
             return Redirect(Url.Action("Index", "Home"));
         }
 
@@ -141,7 +141,6 @@ namespace GeneralSurvey_UI.Controllers
         /// <returns></returns>
         public IActionResult AddSurvey()
         {
-
             return View();
         }
 

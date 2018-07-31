@@ -195,8 +195,6 @@ var ajaxLayui = function (options) {
         });
     });
 }
-
-
 //弹出框设置
 var alertAction = function (url) {
     console.log(url);
