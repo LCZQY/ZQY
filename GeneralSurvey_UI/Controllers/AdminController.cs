@@ -36,11 +36,28 @@ namespace GeneralSurvey_UI.Controllers
         [HttpPost]
         public ActionResult Index(string userName, string passWord)
         {
+            if (userName != null)
+            {
+                Seesion.UserName = userName;
+                try
+                {
+                    var query = Databases.connect().Query<Formsettings>("select * from `qp.formsettings` where FormCreater = '" + userName + "' LIMIT 1");
+                    foreach (var item in query)
+                    {
+                        Seesion.FromIds = item.FormID;
+                    }
+                }
+                catch (Exception ex)
+                {
 
-            Seesion.UserName = userName;   
-            Seesion.FromIds = Databases.connect().Query<Formsettings>("select * from `qp.formsettings`  limit 1").FirstOrDefault(u => u.FormCreater == userName).FormID;
-          
-            return Redirect(Url.Action("Index", "Home"));
+                    Seesion.FromIds = "1";
+                }
+                return Redirect(Url.Action("Index", "Home"));
+            }
+            else
+            {
+                return Json(ResultMsg.FormatResult(0, "登陆失败", "失败"));
+            }
         }
 
 
