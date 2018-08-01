@@ -62,3 +62,56 @@ textarea
     font-weight: bold;
     color: #ffffff;
 }
+
+
+.h5
+{
+    font-size: 13px;
+    font-weight: bold;
+    color: #625c5c;
+}
+
+#mits
+{
+    font-size: 15px;
+    background: #222;
+    width: 100%;
+    letter-spacing: 3px;
+    font-weight: bold;
+    color: #fff;
+}
+
+b
+{
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 0.4%;
+}
+
+p
+{
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 1%;
+    text-indent: 2%;
+    line-height: inherit;
+}
+
+
+
+.Validform_wrong
+{
+    color: #f00;
+}
+
+.Validform_right
+{
+    color: green;
+}
+
+h3
+{
+    margin: 0;
+}
+

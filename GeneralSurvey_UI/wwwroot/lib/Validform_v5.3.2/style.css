@@ -289,9 +289,9 @@ b{font-weight:normal; display:inline-block; margin:0 8px; color:#f27f02;}
 .questionlist p{margin:8px 0;}
 /*==========以下部分是Validform必须的===========*/
 .Validform_checktip{
-	margin-left:8px;
-	line-height:20px;
-	height:20px;
+	margin-left:-20px;
+	line-height:15px;
+	height:15px;
 	overflow:hidden;
 	color:#999;
 	font-size:12px;
