@@ -98,7 +98,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<AnswerGroup> GetList(string cond)
         {
-            string sql = @"select id,Answer,FromID from `qp.answergroup` where " + cond + " and FromID=" + Seesion.FromIds + "";
+            string sql = @"select id,Answer,FromID from `qp.answergroup` where " + cond + " and FromID='" + Seesion.FromIds + "'";
             using (var db = Databases.connect())
             {
                 return db.Query<AnswerGroup>(sql).ToList();
@@ -113,7 +113,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<AnswerGroup> GetList()
         {
-            string sql = @"select id,Answer,FromID  from `qp.answergroup`  where FromID=" + Seesion.FromIds + "";
+            string sql = @"select id,Answer,FromID  from `qp.answergroup`  where FromID='" + Seesion.FromIds + "'";
             using (var db = Databases.connect())
             {
                 return db.Query<AnswerGroup>(sql).ToList();

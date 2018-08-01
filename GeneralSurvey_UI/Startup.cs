@@ -16,9 +16,7 @@ namespace GeneralSurvey_UI
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -26,8 +24,8 @@ namespace GeneralSurvey_UI
             //设置文件上传的大小限制为21 MB。
             services.Configure<FormOptions>(options =>
             {
-                    //添加一个更改000
-                    options.MultipartBodyLengthLimit = 21000000;
+                //添加一个更改22333333
+                options.MultipartBodyLengthLimit = 21000000;
             });
 
             services.AddMvc();
@@ -51,7 +49,7 @@ namespace GeneralSurvey_UI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Admin}/{action=AddSurvey}/{id?}");
+                    template: "{controller=Admin}/{action=Index}/{id?}");
             });
         }
     }
