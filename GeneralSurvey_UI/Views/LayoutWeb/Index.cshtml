@@ -6,11 +6,11 @@
 <div class="layui-container-full">
     <div class="layui-row">
         <hr style="height:3px;" />
-        <div class="layui-col-md12">
+        @*<div class="layui-col-md12">
             <ol>
                 <li class="active"><div class="i"><i>3</i></div><span class="tsl" data-phase-id="r_p_createAccount">确定问卷排版</span></li>
             </ol>
-        </div>
+        </div>*@
         <div class="layui-col-md12">
             <table class="layui-table" id="LAY_table_user" lay-size="sm" lay-filter="useruv"></table>
         </div>
@@ -26,25 +26,24 @@
 <script src="~/js/home.js"></script>
 <script src="~/js/webcontent.js"></script>
 <script type="text/javascript">
+
         scriptjs({
             jsonT: "@Url.Action("jsonTable", "LayoutWeb")",
             del: "@Url.Action("Delete", "LayoutWeb")",
             edit:"@Url.Action("Edit","LayoutWeb")"
         });
 
-
         $("#nextStep03").click(function () {
             //弹出框设置
                 layui.use('layer', function () {
                     layer = layui.layer;
                     //询问框
-                    layer.confirm('是否使用当前提干排序', function (index) {
-                     
+                    layer.confirm('是否使用当前题干排序', function (index) {
                         // 直接替换成下一步
                         var enelmnt = parent.document.getElementById("twoStep").setAttribute("src", "@Url.Action("AddSucceed", "Home")");
                         layer.close(index);
-
-
+                        parent.document.getElementsByTagName("li")[3].childNodes[0].setAttribute("class", "i");
+                        parent.document.getElementsByTagName("li")[3].childNodes[1].setAttribute("class", "tsl");
                     }, function () {
 
                     });

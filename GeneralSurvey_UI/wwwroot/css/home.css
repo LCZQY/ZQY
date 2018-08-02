@@ -3,38 +3,16 @@
     font-family: 'SimHei';
 }
 
-.h5
+td, tr
 {
-    font-weight: 600;
-    color: #000000;
+    border-radius: 1em;
 }
 
-b
+section
 {
-    color: red;
-    font-weight: bold;
-    font-size: 20px;
-    margin-left: 0.4%;
-}
-
-p
-{
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 1%;
-    text-indent: 2%;
-    line-height: inherit;
-}
-
-.h5
-{
-    font-size: 15px;
-    color: #625c5c;
-}
-
-textarea
-{
-    max-width: 620px;
+    margin-top: 5%;
+    margin-left: 15%;
+    width: 80%;
 }
 
 option
@@ -50,17 +28,6 @@ option
 textarea
 {
     resize: none;
-}
-
-#mits
-{
-    font-size: 20px;
-    background: #222222;
-    width: 300px;
-    height: 45px;
-    letter-spacing: 3px;
-    font-weight: bold;
-    color: #ffffff;
 }
 
 
@@ -94,7 +61,7 @@ p
     font-size: 14px;
     font-weight: 500;
     margin-top: 1%;
-    text-indent: 2%;
+    text-indent: 10%;
     line-height: inherit;
 }
 
@@ -114,4 +81,3 @@ h3
 {
     margin: 0;
 }
-

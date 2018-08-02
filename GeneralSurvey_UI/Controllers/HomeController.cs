@@ -22,6 +22,7 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult Index()
         {
             return View();
+            
         }
 
         /// <summary>
@@ -91,7 +92,6 @@ namespace GeneralSurvey_UI.Controllers
             return View();
         }
 
-
         /// <summary>   
         /// 查看当前用户添加的
         /// </summary>
@@ -100,7 +100,6 @@ namespace GeneralSurvey_UI.Controllers
         {
             return View();
         }
-
         /// <summary>
         ///  组合 layui表格 json
         /// </summary>

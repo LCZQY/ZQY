@@ -49,7 +49,7 @@ namespace GeneralSurvey_UI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Admin}/{action=Index}/{id?}");
+                    template: "{controller=ShowText}/{action=Index}/{id?}");
             });
         }
     }

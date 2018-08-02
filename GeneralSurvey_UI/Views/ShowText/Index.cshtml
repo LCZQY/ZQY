@@ -13,19 +13,20 @@
     <link href="~/lib/Validform_v5.3.2/style.css" rel="stylesheet" />
     <link href="~/lib/Validform_v5.3.2/demo.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/lib/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet" />
     <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
     <link href="~/css/fileupload.css" rel="stylesheet" />
     <link href="~/css/home.css" rel="stylesheet" />
-    <style>
-        tr
-        {
-            border: red solid thin;
-        }
 
-        section
+
+    <style>
+        @@media (max-width: 1024px)
         {
-        margin-top:5%;
+            section
+            {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 18%;
+            }
         }
     </style>
 </head>
@@ -41,225 +42,263 @@
                             <div class="col-md-7 col-md-offset-2">
                                 <div class="navbar-header">
                                     @{
-                                        string title = HelpFormsettings.GetList().SingleOrDefault(u => u.FormID == Seesion.FromIds).FormTitle;
+                                        string title = HelpFormsettings.GetList().SingleOrDefault(u => u.FormID == Seesion.FromIds).FormTitle.Replace(" ", "");
                                         <h3>@title</h3>
                                     }
                                 </div>
                             </div>
                         </div>
                     </div>
-                </header>
+                </header>                
                 <!--内容页开始-->
-                <section>                  
-                    <div class="col-md-12">
-                        <form method="post" enctype="multipart/form-data" class="register" action="@Url.Action("Index","ShowText")">
-                            <div class="table-responsive">
-                                <table class="table table-striped" style="width:100%;">
-                                    <thead>
-                                        <tr>
-                                            <td class="col-md-7 col-lg-offset-2" style="margin-top:5%;">
-                                                @{
-                                                    string query = HelpFormsettings.GetList().SingleOrDefault(u => u.FormID == Seesion.FromIds).FormNote;
-                                                    <h3>@query</h3>
-                                                }
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            var count = 0;
-                                            foreach (var item in (List<Topicgroups>)ViewData["query"])
+                <section>
+                    <div>
+                        @{
+                            string query = HelpFormsettings.GetList().SingleOrDefault(u => u.FormID == Seesion.FromIds).FormNote;
+                            <p>@query</p>
+                        }
+                    </div>
+                    <form method="post" enctype="multipart/form-data" class="register" action="@Url.Action("Index","ShowText")">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-condensed table-hover " style="width:100%;">
+                                <tbody>
+                                    @{
+                                        var count = 0;
+                                        foreach (var item in (List<Topicgroups>)ViewData["query"])
+                                        {
+                                            <tr class="active">
+                                                <td id="title">@item.TopicName</td>
+                                            </tr>
+                                            switch (item.SetsettingId)
                                             {
-                                                <tr>
-                                                    <td>@item.TopicName</td>
-                                                </tr>
-                                                switch (item.SetsettingId)
-                                                {
-                                                    case "001": // 多选框
-                                                        try
+                                                case "001": // 多选框
+                                                    try
+                                                    {
+                                                        if (item.OptionText.IndexOf("*") > -1)
                                                         {
-                                                            if (item.OptionText.IndexOf("*") > -1)
-                                                            {
-                                                                var arry = item.OptionText.Split('*');
-                                                                <tr>
+                                                            var arry = item.OptionText.Split('*');
+                                                            <tr>
+                                                                <td class="col-md-12 col-sm-9">
                                                                     @{
                                                                         for (int i = 0; i < arry.Length - 1; i++)
                                                                         {
-                                                                            <td class="col-md-12 col-sm-9">
-                                                                                <div class="col-md-6">
-                                                                                    <input type="checkbox" value="@arry[i]" name="@item.FromName" title="@arry[i]">
-                                                                                    <label>
-                                                                                        @arry[i]
-                                                                                    </label>
-                                                                                    <span class="Validform_checktip"></span>
-                                                                                </div>
-                                                                                <div class="col-md-6">
-                                                                                    <input type="checkbox" value="@arry[i + 1]" name="@item.FromName" title="@arry[i + 1]">
-                                                                                    <label>
-                                                                                        @arry[i + 1]
-                                                                                    </label>
-                                                                                    <span class="Validform_checktip"></span>
-                                                                                </div>
-                                                                            </td>
-                                                                        }
-                                                                    }
-                                                                </tr>
-                                                            }
-                                                        }
-                                                        catch (Exception ex)
-                                                        {
-                                                            <span>请参照本系统规则添加选项</span>
-                                                        }
-                                                        break;
-                                                    case "002": //单选框
-                                                        try
-                                                        {
-                                                            if (item.OptionText.IndexOf("*") > -1)
-                                                            {
-                                                                var arry = item.OptionText.Split('*');
-                                                                <tr>
-                                                                    <td class="col-md-12">
-                                                                        @{
-                                                                            for (int i = 0; i < arry.Length; i++)
-                                                                            {
-                                                                        <div class="col-md-6">
-                                                                            <input type="radio" value="@arry[i]" name="@item.FromName" title="@arry[i ]">
-                                                                            <label>
-                                                                                @arry[i]
-                                                                            </label>
-                                                                            <span class="Validform_checktip"></span>
-                                                                        </div>
-                                                                            }
-                                                                        }
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                        catch (Exception el)
-                                                        {
-                                                            <span>请参照本系统规则添加选项</span>
-                                                        }
-                                                        break;
-                                                    case "003": // 下拉框
-                                                        <tr>
-                                                            <td class="col-md-12 col-sm-9">
-                                                                <select class="form-control input-sm" name="@item.FromName">
-                                                                    <option value="">--请选择--</option>
-                                                                    @{
-                                                                        try
-                                                                        {
-                                                                            if (item.OptionText.IndexOf("*") > -1)
-                                                                            {
-                                                                                var arry = item.OptionText.Split('*');
-                                                                                for (int i = 0; i < arry.Length; i++)
-                                                                                {
-                                                                                    <option name="@item.FromName" value="@arry[i]">@arry[i]</option>
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                        catch (Exception ex) { }
-                                                                    }
-                                                                </select>
-                                                                <span class="Validform_checktip"></span>
-                                                            </td>
-                                                        </tr>
-                                                        break;
-                                                    case "004": // 多文本
-                                                        <tr>
-                                                            <td class="col-md-12 col-sm-9">
-                                                                <textarea class="form-control" datatype="*1-@item.CharactersSize" name="@item.FromName" placeholder="请输入信息"></textarea>
-                                                                <span class="Validform_checktip"></span>
-                                                            </td>
-                                                        </tr>
-                                                        break;
-                                                    case "005": // 文件上传
-                                                        if (count == 0) //只允许出现一个文件上传框
-                                                        {
-                                                            <tr>
-                                                                <td class="col-md-12 col-sm-9">
-                                                                    <span class="upload">
-                                                                        <input type="text" datatype="*" name="@item.FromName" class="upload-url input-sm" style="width:250px" />
-                                                                        <span class="Validform_checktip"></span>
-                                                                        <input type="button" class="upload-btn btn-default  btn-sm" value="浏览文件" />
-                                                                        <input type="file" name="files" multiple id="BlogPhoto" class="upload-input-file form-control input-sm">
 
-                                                                    </span>
+                                                                            <div class="col-md-6">
+                                                                                <input type="checkbox" value="@arry[i]" name="@item.FromName" title="@arry[i]">
+                                                                                <label>
+                                                                                    @arry[i]
+                                                                                </label>
+                                                                                <span class="Validform_checktip"></span>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <input type="checkbox" value="@arry[i + 1]" name="@item.FromName" title="@arry[i + 1]">
+                                                                                <label>
+                                                                                    @arry[i + 1]
+                                                                                </label>
+                                                                                <span class="Validform_checktip"></span>
+                                                                            </div>
+
+                                                                        }
+                                                                    }
                                                                 </td>
                                                             </tr>
-                                                            count++;
                                                         }
-                                                        break;
-                                                    case "006": // 输入框
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        <span>请参照本系统规则添加选项</span>
+                                                    }
+                                                    break;
+                                                case "002": //单选框
+                                                    try
+                                                    {
+                                                        if (item.OptionText.IndexOf("*") > -1)
+                                                        {
+                                                            var arry = item.OptionText.Split('*');
+                                                            <tr>
+                                                                <td class="col-md-12">
+                                                                    @{
+                                                                        for (int i = 0; i < arry.Length; i++)
+                                                                        {
+                                                                            <div class="col-md-6">
+                                                                                <input type="radio" value="@arry[i]" name="@item.FromName" title="@arry[i ]">
+                                                                                <label>
+                                                                                    @arry[i]
+                                                                                </label>
+                                                                                <span class="Validform_checktip"></span>
+                                                                            </div>
+                                                                        }
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    catch (Exception el)
+                                                    {
+                                                        <span>请参照本系统规则添加选项</span>
+                                                    }
+                                                    break;
+                                                case "003": // 下拉框
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <select class="form-control input-sm" name="@item.FromName">
+                                                                <option value="">--请选择--</option>
+                                                                @{
+                                                                    try
+                                                                    {
+                                                                        if (item.OptionText.IndexOf("*") > -1)
+                                                                        {
+                                                                            var arry = item.OptionText.Split('*');
+                                                                            for (int i = 0; i < arry.Length; i++)
+                                                                            {
+                                                                                <option name="@item.FromName" value="@arry[i]">@arry[i]</option>
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    catch (Exception ex) { }
+                                                                }
+                                                            </select>
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "004": // 多文本
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <textarea class="form-control" datatype="*1-@item.CharactersSize" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "005": // 文件上传
+                                                    if (count == 0) //只允许出现一个文件上传框
+                                                    {
                                                         <tr>
                                                             <td class="col-md-12 col-sm-9">
-                                                                <input type="text" class="form-control input-sm" datatype="*1-@item.CharactersSize" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
-                                                                <span class="Validform_checktip"></span>
+                                                                <span class="upload">
+                                                                    <input type="text" readonly datatype="*" name="@item.FromName" class="upload-url input-sm" style="width:250px" />
+                                                                    <span class="Validform_checktip" style="color:red;" id="warning"></span>
+                                                                    <input type="button" class="upload-btn btn-default  btn-sm" value="浏览文件" />
+                                                                    <input type="file" name="files" multiple id="BlogPhoto" class="upload-input-file form-control input-sm">
+                                                                </span>
                                                             </td>
                                                         </tr>
-                                                        break;
-                                                    case "007": // 时间
-                                                        <tr>
-                                                            <td class=" col-md-12 col-sm-9">
-                                                                <input class="layui-input input-sm" datatype="*" id="test1" placeholder="年-月-日" type="text">
-                                                                <span class="Validform_checktip"></span>
-                                                            </td>
-                                                        </tr>
-                                                        break;
-                                                    case "008": // 地址
-                                                        <tr>
-                                                            <td class="docs-methods col-sm-9 col-md-12">
-                                                                <div id="distpicker">
-                                                                    <div class="col-md-4">
-                                                                        <label class="sr-only" for="province10">Province</label>
-                                                                        <select class="form-control input-sm" datatype="*" name="@item.FromName" id="province"></select>
-                                                                        <span class="Validform_checktip"></span>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label class="sr-only" for="city10">City</label>
-                                                                        <select class="form-control input-sm" datatype="*" name="@item.FromName" id="city"></select>
-                                                                        <span class="Validform_checktip"></span>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label class="sr-only" for="district10">District</label>
-                                                                        <select class="form-control input-sm" datatype="*" name="@item.FromName" id="district"></select>
-                                                                        <span class="Validform_checktip"></span>
-                                                                    </div>
+                                                        count++;
+                                                    }
+                                                    break;
+                                                case "006": // 输入框
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <input type="text" class="form-control input-sm" datatype="*1-@item.CharactersSize" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "007": // 时间
+                                                    <tr>
+                                                        <td class=" col-md-12 col-sm-9">
+                                                            <input class="layui-input input-sm" datatype="*" id="test1" placeholder="年-月-日" type="text">
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "008": // 地址
+                                                    <tr>
+                                                        <td class="docs-methods col-sm-9 col-md-12">
+                                                            <div id="distpicker">
+                                                                <div class="col-md-4">
+                                                                    <label class="sr-only" for="province10">Province</label>
+                                                                    <select class="form-control input-sm" datatype="*" name="@item.FromName" id="province"></select>
+                                                                    <span class="Validform_checktip"></span>
                                                                 </div>
-                                                            </td>
-                                                        </tr>
-                                                        break;
-                                                }
-
+                                                                <div class="col-md-4">
+                                                                    <label class="sr-only" for="city10">City</label>
+                                                                    <select class="form-control input-sm" datatype="*" name="@item.FromName" id="city"></select>
+                                                                    <span class="Validform_checktip"></span>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="sr-only" for="district10">District</label>
+                                                                    <select class="form-control input-sm" datatype="*" name="@item.FromName" id="district"></select>
+                                                                    @*<span class="Validform_checktip"></span>*@
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "009": // 邮箱
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <input type="text" class="form-control input-sm" datatype="e" name="@item.FromName" id="email" placeholder="请输入信息" />
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "010": // 手机
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <input type="text" class="form-control input-sm" datatype="m" name="@item.FromName" id="email" placeholder="请输入信息" />
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "011": // 网址
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <input type="text" class="form-control input-sm" datatype="url" name="@item.FromName" id="email" placeholder="请输入信息" />
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
                                             }
+
                                         }
-                                        <tr>
-                                            <td>
+                                    }
+                                    <tr>
+                                        <td align="center">
+                                            <div class="col-md-6 col-md-offset-3 ">
                                                 <input type="submit" id="mits" value="提交申请" class="btn btn-lg btn-default" />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td class="col-md-8 text-center" style="margin:5% 0 0 8%;">
-                                                @{
-                                                    string copy = HelpFormsettings.GetList().SingleOrDefault().FormCopyright;
-                                                    <p>   &copy; @DateTime.Now.Year - @copy</p>
-                                                }
-                                            </td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </form>
-                    </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="col-md-8 text-center" style="margin:5% 0 0 8%;">
+                                            @{
+                                                string copy = HelpFormsettings.GetList().SingleOrDefault().FormCopyright;
+                                                <p>   &copy; @DateTime.Now.Year - @copy</p>
+                                            }
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </form>
                 </section>
+                <div id="btn">                    
+                    <img src="~/images/arrow_up.png"  width="45" height="45"/>
+                </div>
+                <style>
+                    #btn
+                    {
+                        line-height:45px;
+                        text-align:center;                    
+                        background: no-repeat;
+                        position: fixed;
+                        border-radius: 12px;                     
+                        border: #cfcaca solid thin;
+                        bottom: 50px;
+                        right: 0;
+                        width: 45px;
+                        height: 45px;
+                    }
+                </style>
             </div>
         </div>
     </div>
+
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/lib/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
-    <script src="~/lib/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="~/lib/Validform_v5.3.2/Validform_v5.3.2_min.js"></script>
     <script src="~/lib/layui/layui.js"></script>
     <script src="~/lib/distpicker/distpicker.data.js"></script>
@@ -268,14 +307,17 @@
     <script src="~/lib/layui/layui.js"></script>
     <script src="~/js/home.js"></script>
     <script src="~/js/showtext.js"></script>
+    <script src="~/js/back_top.js"></script>
     <script>
+        // 验证存在问题 ？？？
+        backTop();
         layui.use('laydate', function () {
             var laydate = layui.laydate;
             //常规用法
             laydate.render({
                 elem: '#test1'
             });
-        });          
+        });
         var demo = $(".register").Validform({
             tiptype: function (msg, o, cssctl) {
                 //msg：提示信息;
@@ -307,19 +349,6 @@
         $("#distpicker").distpicker({
             autoSelect: false
         });
-        //初始化日历控件
-        $('.form_date').datetimepicker({
-            format: 'yyyy-mm-dd',
-            language: 'zh-CN',
-            weekStart: 1,
-            todayBtn: 1,
-            autoclose: 1,
-            todayHighlight: 1,
-            startView: 2,
-            minView: 2,
-            forceParse: 0
-        });
-
         /*
          * 文件错误显示
          * */
@@ -369,17 +398,10 @@
         }
     });
 }
-
         ///文件选择框变化时，验证上传文件是否正确
         $("#BlogPhoto").change(function () {
             upFileError();
         });
-
-        $("#mits").click(function () {
-
-        });
-
-
     </script>
 </body>
 </html>
