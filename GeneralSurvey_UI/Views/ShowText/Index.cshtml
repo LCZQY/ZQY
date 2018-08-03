@@ -16,8 +16,6 @@
     <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
     <link href="~/css/fileupload.css" rel="stylesheet" />
     <link href="~/css/home.css" rel="stylesheet" />
-
-
     <style>
         @@media (max-width: 1024px)
         {
@@ -49,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                </header>                
+                </header>
                 <!--内容页开始-->
                 <section>
                     <div>
@@ -197,7 +195,7 @@
                                                 case "007": // 时间
                                                     <tr>
                                                         <td class=" col-md-12 col-sm-9">
-                                                            <input class="layui-input input-sm" datatype="*" id="test1" placeholder="年-月-日" type="text">
+                                                            <input class="layui-input input-sm" name="@item.FromName" datatype="*" id="test1" placeholder="年-月-日" type="text">
                                                             <span class="Validform_checktip"></span>
                                                         </td>
                                                     </tr>
@@ -275,17 +273,18 @@
                         </div>
                     </form>
                 </section>
-                <div id="btn">                    
-                    <img src="~/images/arrow_up.png"  width="45" height="45"/>
+                <div id="btn">
+                    <i class="layui-icon layui-icon-top" style="font-size: 40px; color: #222222;"></i>
+                    @*<img src="~/images/arrow_up.png" width="45" height="45" />*@
                 </div>
                 <style>
                     #btn
                     {
-                        line-height:45px;
-                        text-align:center;                    
+                        line-height: 45px;
+                        text-align: center;
                         background: no-repeat;
                         position: fixed;
-                        border-radius: 12px;                     
+                        border-radius: 12px;
                         border: #cfcaca solid thin;
                         bottom: 50px;
                         right: 0;

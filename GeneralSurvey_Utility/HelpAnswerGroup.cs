@@ -19,7 +19,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static int Insert(AnswerGroup model)
         {
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 return db.Execute(@"insert into `qp.answergroup`(id,Answer,FromID) values(@id,@Answer,@FromID);", model);
             }
@@ -31,7 +31,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static int Insert(List<AnswerGroup> model)
         {
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 return db.Execute(@"insert into `qp.answergroup`(id,Answer,FromID) values(@id,@Answer,@FromID);", model);
             }
@@ -44,7 +44,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static bool Delete(string id)
         {
-            int remove = Databases.connect().Execute("delete from `qp.answergroup` where id =@id", new { id = id });
+            int remove = Databases.Instance.Execute("delete from `qp.answergroup` where id =@id", new { id = id });
             if (remove > 0)
             {
                 return true;
@@ -60,7 +60,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static bool Update(AnswerGroup model)
         {
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 int updateSet = db.Execute(@"update `qp.answergroup` set Answer=@Answer,FromID=@FromID where id=@id", new { model });
                 if (updateSet > 0)
@@ -79,7 +79,7 @@ namespace GeneralSurvey_Utility
         public static bool Update(List<AnswerGroup> model)
         {
 
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 int updateSet = db.Execute(@"update `qp.answergroup` set Answer=@Answer,FromID=@FromID where id=@id", new { model });
                 if (updateSet > 0)
@@ -98,7 +98,7 @@ namespace GeneralSurvey_Utility
         public static List<AnswerGroup> GetList(string cond)
         {
             string sql = @"select id,Answer,FromID from `qp.answergroup` where " + cond + " and FromID='" + Seesion.FromIds + "'";
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 return db.Query<AnswerGroup>(sql).ToList();
             }
@@ -113,7 +113,7 @@ namespace GeneralSurvey_Utility
         public static List<AnswerGroup> GetList()
         {
             string sql = @"select id,Answer,FromID  from `qp.answergroup`  where FromID='" + Seesion.FromIds + "'";
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 return db.Query<AnswerGroup>(sql).ToList();
             }
@@ -126,7 +126,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<AnswerGroup> QueryIn(int[] ids, string cond = "id")
         {
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 var sql = "select * from `qp.answergroup` where" + cond + " in @ids";
                 //参数类型是Array的时候，dappper会自动将其转化

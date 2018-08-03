@@ -13,6 +13,7 @@ function backTop() {
         btn.addEventListener("mouseout", moveOut, false);
 
         function moveIn() {
+         
             btn.style.color = "black"; //修改的是内联样式,具有最高的优先级;
             btn.style.textIndent = "0em";
             btn.style.backgroundImage = "none";

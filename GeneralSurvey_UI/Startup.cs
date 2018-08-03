@@ -16,6 +16,7 @@ namespace GeneralSurvey_UI
         {
             Configuration = configuration;
         }
+
         public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -27,8 +28,8 @@ namespace GeneralSurvey_UI
                     //添加一个更改22
                     options.MultipartBodyLengthLimit = 21000000;
             });
+            services.AddMvc();  
 
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

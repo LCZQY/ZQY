@@ -41,7 +41,7 @@ namespace GeneralSurvey_UI.Controllers
                 Seesion.UserName = userName;
                 try
                 {
-                    var query = Databases.connect().Query<Formsettings>("select * from `qp.formsettings` where FormCreater = '" + userName + "' LIMIT 1");
+                    var query = Databases.Instance.Query<Formsettings>("select * from `qp.formsettings` where FormCreater = '" + userName + "' LIMIT 1");
                     foreach (var item in query)
                     {
                         Seesion.FromIds = item.FormID;
