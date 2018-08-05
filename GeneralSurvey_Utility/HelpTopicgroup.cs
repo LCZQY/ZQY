@@ -9,7 +9,7 @@ using System.Data;
 using System.Linq;
 
 namespace GeneralSurvey_Utility
-{
+{   
     public static class HelpTopicgroup
     {
         /// <summary>
@@ -19,7 +19,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static int Insert(Topicgroups model)
         {
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 return db.Execute(@"insert into `qp.topicgroup`(id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID) values(@id,@TopicName,@CharactersSize,@SetsettingId ,@OptionText,@Stide,@FromName,@FromID);", model);
             }
@@ -32,7 +32,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static int Insert(List<Topicgroups> model)
         {
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 return db.Execute(@"insert into `qp.topicgroup`(id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID) values(@id,@TopicName,@CharactersSize,@SetsettingId ,@OptionText,@Stide,@FromName,@FromID);", model);
             }
@@ -45,7 +45,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static bool Delete(string id)
         {
-            int remove = Databases.connect().Execute(@"delete from `qp.topicgroup` where id=@id", new { id = @id });
+            int remove = Databases.Instance.Execute(@"delete from `qp.topicgroup` where id=@id", new { id = @id });
             if (remove > 0)
             {
                 return true;
@@ -61,7 +61,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static bool Update(Topicgroups model)
         {
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 int updateSet = db.Execute(@"update `qp.topicgroup` set TopicName=@TopicName,CharactersSize=@CharactersSize,SetsettingId=@SetsettingId,OptionText=@OptionText,Stide=@Stide,FromName=@FromName,FromID=@FromID where id=@id", new { model });
                 if (updateSet > 0)
@@ -80,7 +80,7 @@ namespace GeneralSurvey_Utility
         public static bool Update(List<Topicgroups> model)
         {
 
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 int updateSet = db.Execute(@"update `qp.topicgroup` set TopicName=@TopicName,CharactersSize=@CharactersSize,SetsettingId=@SetsettingId,OptionText=@OptionText,Stide=@Stide ,FromName=@FromName,FromID=@FromIDwhere id=@id", new { model });
                 if (updateSet > 0)
@@ -99,7 +99,7 @@ namespace GeneralSurvey_Utility
         public static List<Topicgroups> GetList(string cond)
         {
             string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID from `qp.topicgroup` where " + cond + "  ORDER BY Stide";
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
 
                 return db.Query<Topicgroups>(sql).ToList();
@@ -114,8 +114,15 @@ namespace GeneralSurvey_Utility
         public static List<Topicgroups> GetList()
         {
             string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID from `qp.topicgroup` where FromID='" + Seesion.FromIds + "'  ORDER BY Stide";
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
+                //List<Topicgroups> list = new List<Topicgroups>();
+
+                //开始一个异步多线程调用 ????
+                //new Action(() => {
+                //     list= db.Query<Topicgroups>(sql).ToList();
+                //}).BeginInvoke(null,null);
+                //return list;
                 return db.Query<Topicgroups>(sql).ToList();
             }
         }
@@ -127,7 +134,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<Topicgroups> QueryIn(int[] ids, string cond = "id")
         {
-            using (var db = Databases.connect())
+            using (var db = Databases.Instance)
             {
                 var sql = "select * from Person where" + cond + " in @ids";
                 //参数类型是Array的时候，dappper会自动将其转化

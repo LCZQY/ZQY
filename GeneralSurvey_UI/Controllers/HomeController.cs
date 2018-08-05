@@ -22,6 +22,7 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult Index()
         {
             return View();
+            
         }
 
         /// <summary>
@@ -33,14 +34,14 @@ namespace GeneralSurvey_UI.Controllers
             // 赋值题号
             try
             {
-                int order = int.Parse(Databases.connect().Query<Topicgroups>("select Stide from `qp.topicgroup`").Max(u => u.Stide).ToString()) + 1;
+                int order = int.Parse(Databases.Instance.Query<Topicgroups>("select Stide from `qp.topicgroup`").Max(u => u.Stide).ToString()) + 1;
                 ViewData["stide"] = order.ToString();
             }
             catch (Exception el) { return Json(data: ResultMsg.FormatResult(el)); }
 
             List<Setsetting> query = new List<Setsetting>() { };
             //模型类里面的字段要和表结构要一一对应
-            query = Databases.connect().Query<Setsetting>("select id,TopicClass from `qp.setsetting`").ToList();
+            query = Databases.Instance.Query<Setsetting>("select id,TopicClass from `qp.setsetting`").ToList();
             ViewData["Group"] = new SelectList(Dropdown.createDropdown(query), "Key", "Value");
             return View();
         }
@@ -91,7 +92,6 @@ namespace GeneralSurvey_UI.Controllers
             return View();
         }
 
-
         /// <summary>   
         /// 查看当前用户添加的
         /// </summary>
@@ -100,7 +100,6 @@ namespace GeneralSurvey_UI.Controllers
         {
             return View();
         }
-
         /// <summary>
         ///  组合 layui表格 json
         /// </summary>
@@ -108,7 +107,7 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult jsonTable()
         {
             List<Formsettings> query = new List<Formsettings>();
-            query = Databases.connect().Query<Formsettings>("select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater from `qp.formsettings`").ToList();
+            query = HelpFormsettings.GetList();// Databases.Instance.Query<Formsettings>("select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater from `qp.formsettings`").ToList();
             var tableJson = new
             {
                 count = query.Count(),  //总行数

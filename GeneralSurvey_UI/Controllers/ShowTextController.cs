@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
 
 namespace GeneralSurvey_UI.Controllers
 {
@@ -20,7 +21,6 @@ namespace GeneralSurvey_UI.Controllers
     /// </summary>
     public class ShowTextController : Controller
     {
-
         // 依赖注入类读取本地wwwroot文件夹  .Net Core已经没有了Server.MapPath() 属性了
         private IHostingEnvironment _hostingEnvironment;
 
@@ -43,7 +43,6 @@ namespace GeneralSurvey_UI.Controllers
             return View();
         }
 
-
         /// <summary>
         ///  保存所有的提交的数据
         /// </summary>
@@ -53,16 +52,18 @@ namespace GeneralSurvey_UI.Controllers
         [HttpPost]
         public IActionResult Index(IFormCollection model, List<IFormFile> files)
         {
-            var Path = FileSave();
+            //在文件上传的时候， 只能采用表单的提交后台才能够获取到文件？？ 而Ajax的方式不行？
+            string paths = FileSave(files);
             Dictionary<string, string> keyValuePairs = new Dictionary<string, string>() { };
             foreach (var item in model)
             {
+                // 去掉莫名上传的Cookies防伪标志
                 if (item.Key.IndexOf("_") != 0)
                 {
                     //前端会上传类型路径的字符串，如果存在就替换成上传路径！
                     if (item.Value.ToString().IndexOf("\\") > -1)
                     {
-                        keyValuePairs.Add(item.Key, Path);
+                        keyValuePairs.Add(item.Key, paths);
                     }
                     else
                     {
@@ -70,7 +71,6 @@ namespace GeneralSurvey_UI.Controllers
                     }
                 }
             }
-
             AnswerGroup InsertModel = new AnswerGroup()
             {
                 id = Guid.NewGuid().ToString(),
@@ -82,7 +82,7 @@ namespace GeneralSurvey_UI.Controllers
                 int flage = HelpAnswerGroup.Insert(InsertModel);
                 if (flage > 0)
                 {
-                    return Json(ResultMsg.FormatResult());
+                    return Ok("<script>alert('插入成功')</script>");
                 }
                 return Json("插入失败");
             }
@@ -94,23 +94,23 @@ namespace GeneralSurvey_UI.Controllers
         ///  接受文件 
         /// </summary>
         /// <returns></returns>
-        public string FileSave()
+        public string FileSave(List<IFormFile> files)
         {
             var date = Request;
-            var files = Request.Form.Files;
+            var file = Request.Form.Files;
             //long size = files.Sum(f => f.Length);
             string webRootPath = _hostingEnvironment.WebRootPath;
-            //string contentRootPath = _hostingEnvironment.ContentRootPath;
+            //string contentRootPath = _hostingEnvironment.ContentRootPath;          
             var filename = "";
-            foreach (var formFile in files)
+            foreach (var formFile in file)
             {
                 if (formFile.Length > 0)
                 {
-                    filename = formFile.FileName;
+                    filename += formFile.FileName;
                     //获得文件大小，以字节为单位
                     long fileSize = formFile.Length;
                     //文件夹命名规则： 当前日期          
-                    var filePath = webRootPath + "/Files/" + DateTime.Now.ToShortDateString().Replace("-", "");
+                    var filePath = webRootPath + "/Files/" + DateTime.Now.ToString("yyyyMMddHHmmss");
                     //判断文件夹是否存在,若不存在则创建
                     if (!Directory.Exists(filePath))
                     {
@@ -122,9 +122,10 @@ namespace GeneralSurvey_UI.Controllers
                     }
                 }
             }
-            return "/Files/" + DateTime.Now.ToShortDateString().Replace("-", "") + "/" + filename;
+            return "/Files/" + DateTime.Now.ToString("yyyyMMddHHmmss") + "/" + filename;
         }
-      
 
+
+       
     }
 }

@@ -8,8 +8,16 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>添加问卷</title>
+    <link rel="icon" href="~/favicon.ico" type="img/x-ico" />
     <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
     <link href="~/css/survey.css" rel="stylesheet" />
+    <style>
+        #step
+        {
+            margin-top: 10%;
+            padding-bottom: 2%;
+        }
+    </style>
 </head>
 <body>
     <div class="layui-container">
@@ -21,15 +29,18 @@
                         <h2 id="wenjuan" data-phase-id="r_p_registration">添加问卷</h2>
                     </div>
                 </div>
+                <div id="step" class="layui-col-md12">
+                    <ol>
+                        <li class="active"><div class="i"><i>1</i></div><span class="tsl" data-phase-id="r_p_createAccount">添加问卷信息</span></li>.
+                        <li class="active"><div><i>2</i></div><span data-phase-id="r_p_createAccount">设置问答形式</span></li>
+                        <li class="active"><div><i>3</i></div><span data-phase-id="r_p_createAccount">确定问卷排版</span></li>
+                        <li class="active"><div><i>4</i></div><span data-phase-id="r_p_createAccount">添加完成</span></li>
+                    </ol>
+                </div>
                 <form method="post" class="layui-form" action="">
                     <hr style="height:3px;" />
                     <div class="content layui-col-md12 ">
                         <div class="tab-items " id="firstStep">
-                            <div class="layui-form-item">
-                                <ol>
-                                    <li class="active"><div class="i"><i>1</i></div><span class="tsl" data-phase-id="r_p_createAccount">添加问卷信息</span></li>
-                                </ol>
-                            </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">标题：</label>
                                 <div class="layui-input-block">
@@ -45,7 +56,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">简介：</label>
                                 <div class="layui-input-block">
-                                    <textarea placeholder="请输入问卷简介" name="brief" class="layui-textarea"></textarea>                                    
+                                    <textarea placeholder="请输入问卷简介" name="brief" rows="5" class="layui-textarea"></textarea>
                                 </div>
                             </div>
                             <div class="layui-form-item layui-col-md5">
@@ -70,12 +81,18 @@
 <script src="~/js/addsurvey.js"></script>
 <script>
 
-layui.use('form', function () {
+    layui.use('form', function () {
+
     var form = layui.form;
     form.on('submit(formDemo1)', function (data) {
 
-        layui.use('layer',function() {
-            layer = layui.layer;
+        layui.use('layer', function () {
+             $("#firstStep").hide();
+             $("#twoStep").attr("src", "@Url.Action("ContentPage","Home")").parent().show();
+             $("li").eq(1).find("div").addClass("i");
+             $("li").eq(1).find("span").addClass("tsl");
+
+            @*layer = layui.layer;
             layer.confirm('是否确定当前添加信息', function (index) {
                 //Cookies的防伪标识也读取?????
                 ajax_request({
@@ -92,12 +109,14 @@ layui.use('form', function () {
                                 $("#firstStep").hide();
                                 $("#twoStep").attr("src", "@Url.Action("ContentPage","Home")").parent().show();
                                 layer.close(index);
+                                $("li").eq(1).find("div").addClass("i");
+                                $("li").eq(1).find("span").addClass("tsl");
                         } else {
                             layer.open(pic.message);
                         }
                     }
                 });
-            });
+            });*@
         });
         return false;
     });

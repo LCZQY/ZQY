@@ -4,17 +4,9 @@
 }
 
 <div class="layui-container">
-    <div class="layui-row">     
-        <div class="layui-col-md12">
-            <div class="steps steps-4">
-                <ol>
-                    <li><div class="i"><i>2</i></div><span class="tsl" data-phase-id="r_p_fillUserInfo">设置问答形式</span></li>
-                </ol>
-            </div>
-        </div>
+    <div class="layui-row">
         <div class=" layui-col-md-12">
             <form class="layui-form layui-form-pane" method="post" action="@Url.Action("ContentPage","Home")">
-
                 <div class="layui-col-md-12">
                     <div class="layui-form-item">
                         <label class="layui-form-label">题号</label>
@@ -27,7 +19,18 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">选项类型</label>
                         <div class="layui-input-block">
-                            @Html.DropDownList("interest", ViewData["Group"] as SelectList, "---请选择---")
+                            @{
+                                foreach (var item in ViewData["Group"] as SelectList)
+                                {
+                                    if (item.Value == "006")
+                                    {
+                                        //lay-filter 一定要加标识
+                                        <input name="interest" class="interest" lay-filter="interest" title="@item.Text" checked="" type="radio" value="@item.Value">
+                                    }
+                                    else
+                                    { <input name="interest" class="interest" lay-filter="interest" title="@item.Text" type="radio" value="@item.Value">}
+                                }
+                            }
                         </div>
                     </div>
                 </div>
@@ -66,15 +69,13 @@
         </div>
     </div>
 </div>
-
 @section Scripts{
     <script src="~/lib/layui/layui.js"></script>
     <script src="~/js/home.js"></script>
     <script src="~/js/layuicontent.js"></script>
     <script>
-        $("#interest").attr("lay-verify","options");
-        @*questionbody("@Url.Action("ContentPage","home")");*@
 
+        $(".interest").attr("lay-verify", "options");
         ajaxLayui({
             ajax:"@Url.Action("ContentPage", "home")",
             succeed:"@Url.Action("Index","LayoutWeb")",
