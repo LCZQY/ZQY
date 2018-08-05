@@ -19,6 +19,7 @@ namespace GeneralSurvey_UI.Controllers
 {
     public class HomeController : Controller
     {
+
         public IActionResult Index()
         {
             return View();
@@ -116,6 +117,13 @@ namespace GeneralSurvey_UI.Controllers
                 data = query
             };
             return Json(tableJson);
+        }
+
+
+        public IActionResult Ceshi()
+        {
+
+            return View();
         }
 
     }

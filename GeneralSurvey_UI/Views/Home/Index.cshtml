@@ -1,129 +1,33 @@
-﻿@using GeneralSurvey_Utility
+﻿
 @{
-    Layout = null;
-}
 
+    Layout = null;
+    @using GeneralSurvey_Utility;
+}
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>调研信息管理系统</title>
     <meta charset="utf-8">
+    <title>layui</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="icon" href="~/favicon.ico" type="img/x-ico" />
     <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
-    @*///图标*@
-    <link href="~/css/Home/css/font_eolqem241z66flxr.css" rel="stylesheet" />
     <link href="~/css/Home/css/main.css" rel="stylesheet" />
-    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <link href="~/css/Home/css/font_eolqem241z66flxr.css" rel="stylesheet" />
     <style>
-     
+
+        .logo
+        {
+            margin-left: 14%;
+        }
     </style>
+
 </head>
-
-@*<body class="layui-layout-body">
-    <div class="layui-layout layui-layout-admin">
-        <div class="layui-header">
-            <div class="layui-logo">调研信息系统管理</div>
-            <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">
-                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        管理员
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">基本资料</a></dd>
-                        <dd><a href="">安全设置</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">退出登录</a></li>
-            </ul>
-        </div>
-        <div class="layui-side layui-bg-black">
-        <div class="user-photo">
-            <a class="img" title="我的头像" ><img src="http://t.cn/RCzsdCq" /></a>
-            <p>你好！<span class="userName">请叫我马哥</span>, 欢迎登录</p>
-        </div>
-            <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;">问卷管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" data-type="tabAdd" lay-id="11" id="AddSurvey">添加问卷</a></dd>
-                            <dd><a href="javascript:;" data-type="tabAdd" lay-id="22" id="LookSurvey">查看问卷</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">网页布局</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" data-type="tabAdd" lay-id="33" id="view">页面显示</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">客户信息</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" data-type="tabAdd" lay-id="44" id="DataGrid">数据报表</a></dd>
-                        </dl>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div id="body">
-            <!-- 内容主体区域 -->
-            <iframe src="" frameborder="0" scrolling="no" style=" width:100%; height:100%;"> </iframe>
-        </div>
-
-        @*<div class="layui-tab" lay-filter="demo" lay-allowclose="true">
-            <ul class="layui-tab-title"></ul>
-            <div class="layui-tab-content" style="height:500px;">
-
-            </div>
-        </div>
-        <div class="site-demo-button" style="margin-bottom: 0;">
-            <button class="layui-btn site-demo-active" data-type="tabAdd">新增Tab项</button>
-            <button class="layui-btn site-demo-active" data-type="tabDelete">删除：商品管理</button>
-            <button class="layui-btn site-demo-active" data-type="tabChange">切换到：用户管理</button>
-        </div>*@
-@*
-            <div class="layui-footer" style="height:30px;">
-                <!-- 底部固定区域 -->
-                ©@DateTime.Now.Year - 琦品
-            </div>
-        </div>
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/layui/layui.js"></script>
-        <script src="~/js/home.js"></script>
-        <script>
-            layui.use('element', function () {
-                var element = layui.element;
-            });
-            questionbody({
-                add: "@Url.Action("AddSurvey", "Admin")",
-                look:"@Url.Action("LookSurvey", "Home")",
-                datagrids: "@Url.Action("Exhibition", "Admin")",
-                views:"@Url.Action("Index","ShowText")"
-            });
-        //    tabContent();
-        </script>
-
-    </body>*@
-
-<body class="main_body">
-    <div class="layui-layout layui-layout-admin">
-        <!-- 顶部 -->
-        <div class="layui-header header">
-            <div class="layui-main">
+<body>
+    <div class="layui-container-full">
+        <div class="row">
+            <div class="layui-main layui-col-md12" style="z-index:55; background:rgb(57,61,73); ">
                 <a href="#" class="logo">调研信息后台管理</a>
                 <!-- 顶部右侧菜单 -->
                 <ul class="layui-nav top_menu">
@@ -132,9 +36,6 @@
                     </li>
                     <li class="layui-nav-item" mobile>
                         <a href="javascript:;" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>设置</cite></a>
-                    </li>
-                    <li class="layui-nav-item" mobile>
-                        <a href="javascript:;"><i class="iconfont icon-loginout"></i> 退出</a>
                     </li>
                     <li class="layui-nav-item" pc>
                         <a href="javascript:;">
@@ -149,57 +50,67 @@
                     </li>
                 </ul>
             </div>
-        </div>
-        <!-- 左侧导航 -->
-        <div class="layui-side layui-bg-black">
-            <div class="user-photo">
-                <a class="img" title="我的头像">
-                    <img src="~/Files/images/true.jpg" />
-                </a>
-                <p>你好！@{ string username = Seesion.UserName ==null ? "Admin":Seesion.UserName; <span class="userName">@username </span> }, 欢迎登录</p>
-            </div>
-            <div class="navBar layui-side-scroll">
+            <div class="layui-col-md12">
 
+                <div class="layui-side layui-bg-black">
+                    <div class="user-photo" style="z-index:-1;">
+                        <a class="img" title="我的头像">
+                            <img src="~/Files/images/true.jpg" />
+                        </a>
+                        <p>你好！@{ string username = Seesion.UserName == null ? "Admin" : Seesion.UserName; <span class="userName">@username </span> }, 欢迎登录</p>
+                    </div>
+                    <ul class="layui-nav layui-nav-tree layui-nav-side" style=" z-index:-99; padding-top:10%;">
+                        <li class="layui-nav-item layui-nav-itemed">
+                            <a href="javascript:;">问卷管理</a>
+                            <dl class="layui-nav-child">
+                                <dd>
+                                    <a id="default" data-url="@Url.Action("AddSurvey","Admin")" data-id="11" data-title="添加问卷" href="javascript:void();" class="site-demo-active" data-type="tabAdd">添加问卷</a>
+                                </dd>
+                                <dd>
+                                    <a data-url="@Url.Action("LookSurvey","Home")" data-id="22" data-title="查看问卷" href="javascript:void();" class="site-demo-active" data-type="tabAdd">查看问卷</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">网页布局</a>
+                            <dl class="layui-nav-child">
+                                <dd>
+                                    <a data-url="" data-id="33" data-title="页面显示" href="@Url.Action("Index","ShowText")" target="_blank" class="site-demo-active" data-type="tabAdd">页面显示</a>
+                                </dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">客户信息</a>
+                            <dl class="layui-nav-child">
+                                <dd>
+                                    <a data-url="@Url.Action("Exhibition","Admin")" data-id="44" data-title="数据报表" href="javascript:void();" target="_blank" class="site-demo-active" data-type="tabAdd">数据报表</a>
+
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <!-- 右侧内容 -->
-        <div class="layui-body layui-form">
-            <div class="layui-tab marg0" lay-filter="bodyTab">
-                <ul class="layui-tab-title top_tab">
-                    <li class="layui-this" lay-id=""><i class="iconfont icon-computer"></i> <cite>后台首页</cite></li>
-                </ul>
-                <div class="layui-tab-content clildFrame">
-                    <div class="layui-tab-item layui-show">
-                        <iframe src="@Url.Action("Index","Admin")"></iframe>
+            <div class="layui-col-md10 layui-col-md-offset2">
+                <div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="  width:100%; margin-left:-1%;  ">
+                    <ul class="layui-tab-title"></ul>
+                    <div class="layui-tab-content">                        
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- 底部 -->
-        <div class="layui-footer footer">
-            <p>©@DateTime.Now.Year - 琦品　</p>
+            <div class="layui-col-md10 layui-col-md-offset2" style="text-align:center;">
+                ©@DateTime.Now.Year - 琦品
+            </div>
         </div>
     </div>
 
-    <!-- 锁屏 -->
-    <!-- 移动导航 -->
-    <div class="site-tree-mobile layui-hide"><i class="layui-icon">&#xe602;</i></div>
-    <div class="site-mobile-shade"></div>
 
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/layui/layui.js"></script>
-    <script src="~/js/Home/js/nav.js"></script>
     <script src="~/js/Home/js/bodyTabs.js"></script>
     <script>
-
       
-
-
-        $("#showNotice").on("click", function () {
-            showNotice();
-        });
-
+        $("#default").trigger("click");
     </script>
 </body>
 </html>
