@@ -1,0 +1,117 @@
+﻿*
+{
+    font-family: 'SimHei';
+}
+
+.h5
+{
+    font-weight: 600;
+    color: #000000;
+}
+
+b
+{
+    color: red;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 0.4%;
+}
+
+p
+{
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 1%;
+    text-indent: 2%;
+    line-height: inherit;
+}
+
+.h5
+{
+    font-size: 15px;
+    color: #625c5c;
+}
+
+textarea
+{
+    max-width: 620px;
+}
+
+option
+{
+    text-align: center;
+}
+
+.navbar-brand
+{
+    font-size: 24px;
+}
+
+textarea
+{
+    resize: none;
+}
+
+#mits
+{
+    font-size: 20px;
+    background: #222222;
+    width: 300px;
+    height: 45px;
+    letter-spacing: 3px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+
+.h5
+{
+    font-size: 13px;
+    font-weight: bold;
+    color: #625c5c;
+}
+
+#mits
+{
+    font-size: 15px;
+    background: #222;
+    width: 100%;
+    letter-spacing: 3px;
+    font-weight: bold;
+    color: #fff;
+}
+
+b
+{
+    color: red;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: 0.4%;
+}
+
+p
+{
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 1%;
+    text-indent: 2%;
+    line-height: inherit;
+}
+
+
+
+.Validform_wrong
+{
+    color: #f00;
+}
+
+.Validform_right
+{
+    color: green;
+}
+
+h3
+{
+    margin: 0;
+}
+

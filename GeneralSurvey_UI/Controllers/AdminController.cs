@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting;
 
+
 namespace GeneralSurvey_UI.Controllers
 {
     public class AdminController : Controller
@@ -35,9 +36,28 @@ namespace GeneralSurvey_UI.Controllers
         [HttpPost]
         public ActionResult Index(string userName, string passWord)
         {
+            if (userName != null)
+            {
+                Seesion.UserName = userName;
+                try
+                {
+                    var query = Databases.connect().Query<Formsettings>("select * from `qp.formsettings` where FormCreater = '" + userName + "' LIMIT 1");
+                    foreach (var item in query)
+                    {
+                        Seesion.FromIds = item.FormID;
+                    }
+                }
+                catch (Exception ex)
+                {
 
-            Seesion.UserName = userName;
-            return Redirect(Url.Action("Index", "Home"));
+                    Seesion.FromIds = "1";
+                }
+                return Redirect(Url.Action("Index", "Home"));
+            }
+            else
+            {
+                return Json(ResultMsg.FormatResult(0, "登陆失败", "失败"));
+            }
         }
 
 
@@ -133,8 +153,6 @@ namespace GeneralSurvey_UI.Controllers
         }
 
 
-
-
         /// <summary>
         ///  添加问卷
         /// </summary>
@@ -148,20 +166,21 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult AddSurvey(string title, string brief, string copy)
         {
             try
-            {
+            {     
                 // 表单ID 
                 string formId = Guid.NewGuid().ToString();
-                var InsertState = Databases.connect().Execute("insert into  `qp.formsettings` value(@FormID,@FormNote,@FormTitle,@FormCopyright,@FormCreateDate,@FormStatus,@FormCreater)", new
+                Formsettings InsertModel = new Formsettings()
                 {
                     FormID = formId,
                     FormNote = brief,
                     FormTitle = title,
                     FormCopyright = copy,
-                    FormCreateDate = DateTime.Now.ToShortDateString(),
+                    FormCreateDate =  DateTime.Parse(DateTime.Now.ToShortDateString()),
                     FormStatus = 1,
                     FormCreater = Seesion.UserName
-                });
+                };      
                 //给全局的表单ID赋值
+                var InsertState = HelpFormsettings.Insert(InsertModel);
                 Seesion.FromIds = formId;
                 if (InsertState > 0)
                 {

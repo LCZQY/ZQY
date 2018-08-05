@@ -88,7 +88,7 @@ namespace GeneralSurvey_Utility
                     return true;
                 }
                 return false;
-            }    
+            }
         }
 
         /// <summary>
@@ -98,10 +98,10 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<Topicgroups> GetList(string cond)
         {
-
-            string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID from `qp.topicgroup` where " + cond + " and FromID= '" + Seesion.FromIds + " ' ORDER BY Stide";
+            string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID from `qp.topicgroup` where " + cond + "  ORDER BY Stide";
             using (var db = Databases.connect())
             {
+
                 return db.Query<Topicgroups>(sql).ToList();
             }
         }
@@ -113,7 +113,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<Topicgroups> GetList()
         {
-            string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID from `qp.topicgroup` where FromID='"+Seesion.FromIds+"'  ORDER BY Stide";
+            string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID from `qp.topicgroup` where FromID='" + Seesion.FromIds + "'  ORDER BY Stide";
             using (var db = Databases.connect())
             {
                 return db.Query<Topicgroups>(sql).ToList();
