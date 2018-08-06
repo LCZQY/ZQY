@@ -16,11 +16,12 @@ using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting;
-using GeneralSurvey_Utility.Filter;
+
+using Microsoft.AspNetCore.Authorization;
 
 namespace GeneralSurvey_UI.Controllers
 {
-   
+  
     public class AdminController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -31,10 +32,10 @@ namespace GeneralSurvey_UI.Controllers
             _httpContextAccessor = contextAccessor;
         }
 
-        [NoPermissionRequired]
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            
+
             return View();
         }
 
@@ -46,7 +47,7 @@ namespace GeneralSurvey_UI.Controllers
                 Seesion.UserName = userName;
                 try
                 {
-                    HttpContext.Session.SetString("LoginInfo",userName);
+                    HttpContext.Session.SetString("LoginInfo", userName);
                     var query = Databases.Instance.Query<Formsettings>("select * from `qp.formsettings` where FormCreater = '" + userName + "' LIMIT 1");
                     foreach (var item in query)
                     {
@@ -71,6 +72,7 @@ namespace GeneralSurvey_UI.Controllers
         ///  显示数据
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Exhibition()
         {
 
@@ -82,6 +84,7 @@ namespace GeneralSurvey_UI.Controllers
         /// 详细
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Details(string id)
         {
             var entity = HelpAnswerGroup.GetList().FirstOrDefault(u => u.id == id);
@@ -97,6 +100,7 @@ namespace GeneralSurvey_UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Delete(string id)
         {
             // ???? 所有的Js 都没有弹出                    
@@ -123,6 +127,7 @@ namespace GeneralSurvey_UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Download(string id)
         {
 
@@ -163,6 +168,8 @@ namespace GeneralSurvey_UI.Controllers
         ///  添加问卷
         /// </summary>
         /// <returns></returns>
+        /// 
+        [Authorize]
         public IActionResult AddSurvey()
         {
             return View();

@@ -8,11 +8,15 @@ using GeneralSurvey_Data.Model;
 using GeneralSurvey_Data;
 using Dapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+
 namespace GeneralSurvey_UI.Controllers
 {
     /// <summary>
     ///  排版设置
     /// </summary>
+
+    [Authorize]
     public class LayoutWebController : Controller
     {
         public IActionResult Index()

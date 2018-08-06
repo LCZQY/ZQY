@@ -14,23 +14,24 @@ using Newtonsoft;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using Microsoft.AspNetCore.Http;
-using GeneralSurvey_Utility.Filter;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GeneralSurvey_UI.Controllers
 {
+
+    [Authorize]
     public class HomeController : Controller
-    {
-        [PermissionRequired]
+    {        
         public IActionResult Index()
         {
             return View();
-
         }
 
         /// <summary>
         ///添加提项
         /// </summary>
         /// <returns></returns>
+        
         public ActionResult ContentPage()
         {
             // 赋值题号
@@ -89,6 +90,8 @@ namespace GeneralSurvey_UI.Controllers
         ///   添加成功
         /// </summary>
         /// <returns></returns>
+        /// 
+        [Authorize]
         public IActionResult AddSucceed()
         {
             return View();
