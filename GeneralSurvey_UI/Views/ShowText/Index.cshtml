@@ -26,6 +26,17 @@
                 margin-top: 18%;
             }
         }
+
+        #warning
+        {
+            margin-left: 1px;
+        }
+
+        .navbar-header
+        {            
+            line-height: 50px;
+            margin-top:3%;
+        }
     </style>
 </head>
 
@@ -37,7 +48,7 @@
                 <header>
                     <div class="navbar navbar-inverse navbar-fixed-top">
                         <div class="container">
-                            <div class="col-md-7 col-md-offset-2">
+                            <div class="col-md-7 col-md-offset-2" >
                                 <div class="navbar-header">
                                     @{
                                         string title = HelpFormsettings.GetList().SingleOrDefault(u => u.FormID == Seesion.FromIds).FormTitle.Replace(" ", "");
@@ -175,10 +186,11 @@
                                                             <td class="col-md-12 col-sm-9">
                                                                 <span class="upload">
                                                                     <input type="text" readonly datatype="*" name="@item.FromName" class="upload-url input-sm" style="width:250px" />
-                                                                    <span class="Validform_checktip" style="color:red;" id="warning"></span>
+                                                                    <span class="Validform_checktip"></span>
                                                                     <input type="button" class="upload-btn btn-default  btn-sm" value="浏览文件" />
                                                                     <input type="file" name="files" multiple id="BlogPhoto" class="upload-input-file form-control input-sm">
                                                                 </span>
+                                                                <div id="warning" style="color:red;"></div>
                                                             </td>
                                                         </tr>
                                                         count++;
@@ -261,7 +273,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td class="col-md-8 text-center" style="margin:5% 0 0 8%;">
+                                        <td class="col-md-8 " id="footer" style="padding-left:37%">
                                             @{
                                                 string copy = HelpFormsettings.GetList().SingleOrDefault().FormCopyright;
                                                 <p>   &copy; @DateTime.Now.Year - @copy</p>
@@ -275,7 +287,6 @@
                 </section>
                 <div id="btn">
                     <i class="layui-icon layui-icon-top" style="font-size: 40px; color: #222222;"></i>
-                    @*<img src="~/images/arrow_up.png" width="45" height="45" />*@
                 </div>
                 <style>
                     #btn
@@ -310,6 +321,7 @@
     <script>
         // 验证存在问题 ？？？
         backTop();
+
         layui.use('laydate', function () {
             var laydate = layui.laydate;
             //常规用法
@@ -364,8 +376,9 @@
                 return false;
             }
             else {
-                return true;
                 $("#warning").html("");
+                return true;
+
                 var size = GetFileSize('BlogPhoto');
                 if (size > 20) {
                     return true;

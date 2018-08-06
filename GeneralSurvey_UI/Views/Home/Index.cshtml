@@ -1,6 +1,5 @@
 ﻿
 @{
-
     Layout = null;
     @using GeneralSurvey_Utility;
 }
@@ -8,31 +7,27 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
+    <title>调研信息后台管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="~/css/main.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
+
     <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
-    <link href="~/css/Home/css/main.css" rel="stylesheet" />
-    <link href="~/css/Home/css/font_eolqem241z66flxr.css" rel="stylesheet" />
     <style>
-
-        .logo
-        {
-            margin-left: 14%;
-        }
+        
     </style>
-
 </head>
 <body>
     <div class="layui-container-full">
         <div class="row">
-            <div class="layui-main layui-col-md12" style="z-index:55; background:rgb(57,61,73); ">
-                <a href="#" class="logo">调研信息后台管理</a>
+            <div class="layui-main layui-col-md12" style=" background:rgb(57,61,73); ">
+                <a href="#" class="logo" style=" margin-left: 14%;">调研信息后台管理</a>
                 <!-- 顶部右侧菜单 -->
-                <ul class="layui-nav top_menu">
+                <ul class="layui-nav top_menu layui-col-md2" style=" float:right;">
                     <li class="layui-nav-item showNotice" id="showNotice" pc>
-                        <a href="javascript:;"><i class="iconfont icon-gonggao"></i><cite>系统公告</cite></a>
+                        <a href="javascript:;"><i class="fa fa-volume-up"></i><cite>系统公告</cite></a>
                     </li>
                     <li class="layui-nav-item" mobile>
                         <a href="javascript:;" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>设置</cite></a>
@@ -64,6 +59,7 @@
                             <a href="javascript:;">问卷管理</a>
                             <dl class="layui-nav-child">
                                 <dd>
+                                    
                                     <a id="default" data-url="@Url.Action("AddSurvey","Admin")" data-id="11" data-title="添加问卷" href="javascript:void();" class="site-demo-active" data-type="tabAdd">添加问卷</a>
                                 </dd>
                                 <dd>
@@ -84,7 +80,6 @@
                             <dl class="layui-nav-child">
                                 <dd>
                                     <a data-url="@Url.Action("Exhibition","Admin")" data-id="44" data-title="数据报表" href="javascript:void();" target="_blank" class="site-demo-active" data-type="tabAdd">数据报表</a>
-
                                 </dd>
                             </dl>
                         </li>
@@ -103,14 +98,13 @@
             </div>
         </div>
     </div>
-
-
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/layui/layui.js"></script>
-    <script src="~/js/Home/js/bodyTabs.js"></script>
+    <script src="~/js/bodyTabs.js"></script>
     <script>
-      
-        $("#default").trigger("click");
+
+
+        showTree();
     </script>
 </body>
 </html>

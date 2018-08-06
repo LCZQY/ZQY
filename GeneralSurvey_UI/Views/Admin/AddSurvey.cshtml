@@ -86,8 +86,7 @@
              $("#twoStep").attr("src", "@Url.Action("ContentPage","Home")").parent().show();
              $("li").eq(1).find("div").addClass("i");
              $("li").eq(1).find("span").addClass("tsl");
-
-            @*layer = layui.layer;
+            layer = layui.layer;
             layer.confirm('是否确定当前添加信息', function (index) {
                 //Cookies的防伪标识也读取?????
                 ajax_request({
@@ -111,7 +110,7 @@
                         }
                     }
                 });
-            });*@
+            });
         });
         return false;
     });

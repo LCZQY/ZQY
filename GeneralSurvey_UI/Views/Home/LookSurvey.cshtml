@@ -16,9 +16,7 @@
 <body style="background:rgb(242,242,242);">
     <div class="layui-container-full">
         <div class="layui-row">
-
             <div class="layui-col-md12">
-
                 <h2>查看问卷</h2>
             </div>
             <div class="layui-col-md12">
@@ -30,12 +28,12 @@
 </html>
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs layui-bg-green" data-method="notice" lay-event="look">查看</a>
+    <a class="layui-btn layui-btn-xs layui-bg-green" data-method="notice" lay-event="update">题干排序</a>
     <a class="layui-btn layui-bg-green layui-btn-xs" lay-event="del">删除</a>
+
 </script>
 <script>
-
     //主方法
-
         layui.use('table', function () {
             var table = layui.table;
 
@@ -63,7 +61,7 @@
             // 删除，修改
             table.on('tool(useruv)', function (obj) {
                 var data = obj.data;
-                if (obj.event === 'del') {
+                if (obj.event === 'del') { // 删除
                     layer.confirm('是否确定删除', function (index) {
                         ajax_request({
                             url: option.del,
@@ -79,27 +77,31 @@
                             }
                         });
                     });
-                } else if (obj.event === 'look') {
+                } else if (obj.event === 'look') { // 查看
                     console.log(data["formID"]);
                     var url = " @Url.Action("Index", "ShowText")";
                     var href = url + "/?formid=" + data["formID"];
                     window.open(href);
-                   // editContent(href);
+                    // editContent(href);
+                } else if (obj.event == "update") { // 
+                    var href = "@Url.Action("Index", "LayoutWeb")";
+                    editContent(href);        
                 }
+                    
             });
         });
 
 
 
-    ////修改
-    //var editContent = function (href) {
-    //    console.log(href);
-    //    var index = layer.open({
-    //        type: 2,
-    //        content: href,
-    //        area: ['1220px', '505px'],
-    //        maxmin: true
-    //    });
-    //    layer.full(index);
-    //}
+    //修改
+    var editContent = function (href) {
+        console.log(href)
+        var index = layer.open({
+            type: 2,
+            content: href,
+            area: ['1220px', '505px'],
+            maxmin: true
+        });
+        layer.full(index);
+    }
 </script>

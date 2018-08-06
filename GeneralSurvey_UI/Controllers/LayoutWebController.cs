@@ -40,7 +40,7 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult Edit(string id)
         {
             List<Topicgroups> edit = new List<Topicgroups>();
-            edit = HelpTopicgroup.GetList("id='" + id + "'");
+            edit = HelpTopicgroup.GetList("id='"+ id +"'");
             foreach (var item in edit)
             {
                 Seesion._stide = item.Stide.ToString();

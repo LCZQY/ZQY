@@ -23,7 +23,7 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult Index()
         {
             return View();
-            
+
         }
 
         /// <summary>
@@ -118,13 +118,5 @@ namespace GeneralSurvey_UI.Controllers
             };
             return Json(tableJson);
         }
-
-
-        public IActionResult Ceshi()
-        {
-
-            return View();
-        }
-
     }
 }
