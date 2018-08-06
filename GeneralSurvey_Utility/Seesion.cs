@@ -26,7 +26,7 @@ namespace GeneralSurvey_Utility
         /// <summary>
         ///  当前用户名
         /// </summary>
-        public static string UserName { get; set; }
+        public static string UserName { get; set; } = "Admin";
 
 
 

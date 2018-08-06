@@ -109,6 +109,7 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult jsonTable()
         {
             List<Formsettings> query = new List<Formsettings>();
+
             query = HelpFormsettings.GetList();// Databases.Instance.Query<Formsettings>("select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater from `qp.formsettings`").ToList();
             var tableJson = new
             {

@@ -17,6 +17,14 @@
                 </div>
                 <div class="layui-col-md-12">
                     <div class="layui-form-item">
+                        <label class="layui-form-label">题干名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="TopicName" lay-verify="required" autocomplete="off" placeholder="设置题干" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-md-12">
+                    <div class="layui-form-item">
                         <label class="layui-form-label">选项类型</label>
                         <div class="layui-input-block">
                             @{
@@ -36,14 +44,6 @@
                 </div>
                 <div class="layui-col-md-12">
                     <div class="layui-form-item">
-                        <label class="layui-form-label">题干名称</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="TopicName" lay-verify="required" autocomplete="off" placeholder="设置题干" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-col-md-12">
-                    <div class="layui-form-item">
                         <label class="layui-form-label">字数限制</label>
                         <div class="layui-input-block">
                             <input type="text" id="Charlength" name="CharactersSize" autocomplete="off" placeholder="字数限制" class="layui-input">
@@ -54,7 +54,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">选项名称</label>
                         <div class="layui-input-block">
-                            <input type="text" name="OptionSet" autocomplete="off" placeholder="各选项名称（以 * 隔开）" class="layui-input">
+                            <input type="text" name="OptionSet" lay-verify="spaces" autocomplete="off" placeholder="各选项名称（以 * 隔开）" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -76,6 +76,7 @@
     <script>
 
         $(".interest").attr("lay-verify", "options");
+
         ajaxLayui({
             ajax:"@Url.Action("ContentPage", "home")",
             succeed:"@Url.Action("Index","LayoutWeb")",

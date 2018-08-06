@@ -20,7 +20,7 @@ var disableInput = function (value) {
     switch (value) {
         case "001":
         case "003":
-        case "002":    
+        case "002":
             addAttr("#Charlength");
             deleteAttr("input[name=OptionSet]");
             break;
@@ -55,17 +55,24 @@ var ajaxLayui = function (options) {
             , layer = layui.layer // 基础
             , layedit = layui.layedit //编辑器
             , laydate = layui.laydate; //日期            
-        
+
+
         form.verify({
             options: function (value) {
                 if (value == "") {
                     return '请选择选项类型'
                 }
+            },
+            spaces: function (value) {
+
+                if (value.indexOf("*") < -1) {
+                    return '选项之间用 * 号隔开'
+                }
             }
         });
 
         form.on('radio(interest)', function (data) {
-        
+
             //console.log(data.elem); //得到select原始Dom对象
             //console.log(data.othis); //得到美化后的Dom对象
             //console.log(data.value); //  得到选择的后的值
@@ -73,7 +80,7 @@ var ajaxLayui = function (options) {
         });
 
         //监听提交
-        form.on('submit(formDemo)', function (data) {                                
+        form.on('submit(formDemo)', function (data) {
 
             ajax_request({
                 data: {
@@ -112,6 +119,6 @@ var alertAction = function (url) {
             parent.document.getElementsByTagName("li")[2].childNodes[0].setAttribute("class", "i");
             parent.document.getElementsByTagName("li")[2].childNodes[1].setAttribute("class", "tsl");
         });
-    
+
     });
 }
