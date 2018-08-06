@@ -35,10 +35,12 @@ var showTree = function () {
             }
         };
         ///默认选项
-        active.tabAdd("admin/AddSurvey","11","添加问卷");
+
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
         $('.site-demo-active').on('click', function () {
+
             var dataid = $(this);
+            
             if (dataid.attr("data-url") != "") {
                 //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
                 if ($(".layui-tab-title li[lay-id]").length <= 0) {

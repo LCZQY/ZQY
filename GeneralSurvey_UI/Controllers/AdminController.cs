@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using GeneralSurvey_Utility;
 using GeneralSurvey_Data.Model;
 using System.Text;
@@ -15,21 +16,25 @@ using static System.Net.WebRequestMethods;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting;
-
+using GeneralSurvey_Utility.Filter;
 
 namespace GeneralSurvey_UI.Controllers
 {
+   
     public class AdminController : Controller
     {
-        private IHostingEnvironment _hostingEnvironment;
-
-        public AdminController(IHostingEnvironment hosting)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AdminController(IHostingEnvironment hosting, IHttpContextAccessor contextAccessor)
         {
             _hostingEnvironment = hosting;
+            _httpContextAccessor = contextAccessor;
         }
 
+        [NoPermissionRequired]
         public IActionResult Index()
         {
+            
             return View();
         }
 
@@ -41,6 +46,7 @@ namespace GeneralSurvey_UI.Controllers
                 Seesion.UserName = userName;
                 try
                 {
+                    HttpContext.Session.SetString("LoginInfo",userName);
                     var query = Databases.Instance.Query<Formsettings>("select * from `qp.formsettings` where FormCreater = '" + userName + "' LIMIT 1");
                     foreach (var item in query)
                     {
@@ -166,7 +172,7 @@ namespace GeneralSurvey_UI.Controllers
         public IActionResult AddSurvey(string title, string brief, string copy)
         {
             try
-            {     
+            {
                 // 表单ID 
                 string formId = Guid.NewGuid().ToString();
                 Formsettings InsertModel = new Formsettings()
@@ -175,10 +181,10 @@ namespace GeneralSurvey_UI.Controllers
                     FormNote = brief,
                     FormTitle = title,
                     FormCopyright = copy,
-                    FormCreateDate =  DateTime.Parse(DateTime.Now.ToShortDateString()),
+                    FormCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString()),
                     FormStatus = 1,
                     FormCreater = Seesion.UserName
-                };      
+                };
                 //给全局的表单ID赋值
                 var InsertState = HelpFormsettings.Insert(InsertModel);
                 Seesion.FromIds = formId;

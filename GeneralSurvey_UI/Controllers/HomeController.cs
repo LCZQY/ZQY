@@ -14,12 +14,13 @@ using Newtonsoft;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Data;
 using Microsoft.AspNetCore.Http;
+using GeneralSurvey_Utility.Filter;
 
 namespace GeneralSurvey_UI.Controllers
 {
     public class HomeController : Controller
     {
-
+        [PermissionRequired]
         public IActionResult Index()
         {
             return View();
