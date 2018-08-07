@@ -13,12 +13,14 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GeneralSurvey_UI.Controllers
 {
     /// <summary>
     ///  手机端--调研问卷页面
-    /// </summary>
+    /// </summary>    
+    [Authorize] 
     public class ShowTextController : Controller
     {
         // 依赖注入类读取本地wwwroot文件夹  .Net Core已经没有了Server.MapPath() 属性了

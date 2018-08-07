@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
@@ -22,13 +23,19 @@ namespace GeneralSurvey_UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             //设置文件上传的大小限制为21 MB。
             services.Configure<FormOptions>(options =>
             {
                     //添加一个更改0000
                     options.MultipartBodyLengthLimit = 21000000;
             });
+
+            /// 注入过滤器【在没有登陆的情况下直接跳转到登陆页】
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
+            {
+                o.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Admin/Index"); 
+            });
+
             services.AddMvc();  
 
         }
@@ -46,6 +53,9 @@ namespace GeneralSurvey_UI
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseStaticFiles();
+
+            //启用验证机制
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
