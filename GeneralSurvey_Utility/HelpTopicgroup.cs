@@ -98,7 +98,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<Topicgroups> GetList(string cond)
         {
-            string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID from `qp.topicgroup` where " + cond + "  ORDER BY Stide";
+            string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID,Isnull from `qp.topicgroup` where " + cond + "  ORDER BY Stide";
             using (var db = Databases.Instance)
             {
 
@@ -113,7 +113,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<Topicgroups> GetList()
         {
-            string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID from `qp.topicgroup` where FromID='" + Seesion.FromIds + "'  ORDER BY Stide";
+            string sql = @"select id,TopicName,CharactersSize,SetsettingId,OptionText,Stide,FromName,FromID,Isnull from `qp.topicgroup` where FromID='" + Seesion.FromIds + "'  ORDER BY Stide";
             using (var db = Databases.Instance)
             {
                 //List<Topicgroups> list = new List<Topicgroups>();

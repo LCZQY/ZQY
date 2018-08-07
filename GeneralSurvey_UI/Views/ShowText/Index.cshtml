@@ -64,8 +64,13 @@
                             <div class="col-md-7 col-md-offset-2">
                                 <div class="navbar-header">
                                     @{
-                                        string title = HelpFormsettings.GetList().SingleOrDefault(u => u.FormID == Seesion.FromIds).FormTitle.Replace(" ", "");
-                                        <h3>@title</h3>
+                                        try
+                                        {
+                                            var title = HelpFormsettings.GetList("FormID ='" + Seesion.FromIds + "'").Single().FormTitle;
+                                            <h3>@title</h3>
+                                        }
+                                        catch (Exception ex)
+                                        {@*<h3>@ex.Message</h3>*@}
                                     }
                                 </div>
                             </div>
@@ -76,8 +81,12 @@
                 <section>
                     <div>
                         @{
-                            string query = HelpFormsettings.GetList().SingleOrDefault(u => u.FormID == Seesion.FromIds).FormNote;
-                            <p>@query</p>
+                            try
+                            {
+                                string query = HelpFormsettings.GetList("FormID ='" + Seesion.FromIds + "'").SingleOrDefault(u => u.FormID == Seesion.FromIds).FormNote;
+                                <p>@query</p>
+                            }
+                            catch { }
                         }
                     </div>
                     <form method="post" enctype="multipart/form-data" class="register" action="@Url.Action("Index","ShowText")">
@@ -178,7 +187,17 @@
                                                 case "004": // 多文本
                                                     <tr>
                                                         <td class="col-md-12 col-sm-9">
-                                                            <textarea class="form-control" datatype="*1-@item.CharactersSize" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                            @{
+                                                                //等于空为不允许为空
+                                                                if (item.Isnull == null)
+                                                                {
+                                                                    <textarea class="form-control" datatype="*1-@item.CharactersSize" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <textarea class="form-control" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                                }
+                                                            }
                                                             <span class="Validform_checktip"></span>
                                                         </td>
                                                     </tr>
@@ -203,7 +222,16 @@
                                                 case "006": // 输入框
                                                     <tr>
                                                         <td class="col-md-12 col-sm-9">
-                                                            <input type="text" class="form-control input-sm" datatype="*1-@item.CharactersSize" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                            @{
+                                                                if (item.Isnull == null)
+                                                                {
+                                                                    <input type="text" class="form-control input-sm" datatype="*1-@item.CharactersSize" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="text" class="form-control input-sm" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                                }
+                                                            }
                                                             <span class="Validform_checktip"></span>
                                                         </td>
                                                     </tr>
@@ -232,7 +260,7 @@
                                                                 </div>
                                                                 <div class="col-md-4">
                                                                     <label class="sr-only" for="district10">District</label>
-                                                                    <select class="form-control input-sm" name="@item.FromName" id="district"></select>                                                               
+                                                                    <select class="form-control input-sm" name="@item.FromName" id="district"></select>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -276,10 +304,14 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td class="col-md-8 " id="footer" style="">
+                                        <td class="col-md-10 text-center" id="footer" style="">
                                             @{
-                                                string copy = HelpFormsettings.GetList().SingleOrDefault().FormCopyright;
-                                                <p>   &copy; @DateTime.Now.Year - @copy</p>
+                                                try
+                                                {
+                                                    string copy = HelpFormsettings.GetList("FormID ='" + Seesion.FromIds + "'").SingleOrDefault().FormCopyright;
+                                                    <p>   &copy; @DateTime.Now.Year - @copy</p>
+                                                }
+                                                catch { }
                                             }
                                         </td>
                                     </tr>

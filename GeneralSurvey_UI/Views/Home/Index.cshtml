@@ -13,11 +13,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="~/css/main.css" rel="stylesheet" />
     <link href="~/lib/font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet" />
-
     <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
-    <style>
-        
-    </style>
+
 </head>
 <body>
     <div class="layui-container-full">
@@ -37,16 +34,13 @@
                             <img src="~/Files/images/true.jpg" class="layui-circle" width="35" height="35">
                             @{ string user = Seesion.UserName == null ? "Admin" : Seesion.UserName; <cite class="userName">@user </cite> }
                         </a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;" data-url="page/user/userInfo.html"><i class="iconfont icon-zhanghu" data-icon="icon-zhanghu"></i><cite>个人资料</cite></a></dd>
-                            <dd><a href="javascript:;" data-url="page/user/changePwd.html"><i class="iconfont icon-shezhi1" data-icon="icon-shezhi1"></i><cite>修改密码</cite></a></dd>
-                            <dd><a href="javascript:;"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
+                        <dl class="layui-nav-child">                      
+                            <dd><a href="@Url.Action("index","admin")"><i class="iconfont icon-loginout"></i><cite>退出</cite></a></dd>
                         </dl>
                     </li>
                 </ul>
             </div>
             <div class="layui-col-md12">
-
                 <div class="layui-side layui-bg-black">
                     <div class="user-photo" style="z-index:-1;">
                         <a class="img" title="我的头像">
@@ -66,7 +60,8 @@
                                 </dd>
                             </dl>
                         </li>
-                        <li class="layui-nav-item">
+
+                        @*<li class="layui-nav-item">
                             <a href="javascript:;">网页布局</a>
                             <dl class="layui-nav-child">
                                 <dd>
@@ -81,19 +76,19 @@
                                     <a data-url="@Url.Action("Exhibition","Admin")" data-id="44" data-title="数据报表" href="javascript:;" target="_blank" class="site-demo-active" data-type="tabAdd">数据报表</a>
                                 </dd>
                             </dl>
-                        </li>
+                        </li>*@
                     </ul>
                 </div>
             </div>
-            <div class="layui-col-md10 layui-col-md-offset2">
-                <div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="  width:100%; margin-left:-1%;  ">
+            <div class="layui-col-md10 layui-col-lg-offset1">
+                <div class="layui-tab" lay-filter="demo" lay-allowclose="true" style="width:100%; margin-left:5%;  ">
                     <ul class="layui-tab-title"></ul>
                     <div class="layui-tab-content">                        
                     </div>
                 </div>
             </div>
             <div class="layui-col-md10 layui-col-md-offset2" style="text-align:center;">
-                ©@DateTime.Now.Year - 琦品
+                &copy;@DateTime.Now.Year - 琦品
             </div>
         </div>
     </div>

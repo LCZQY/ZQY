@@ -114,6 +114,7 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<Formsettings> GetList()
         {
+
             string sql = @"select FormID,FormNote,FormTitle,FormCopyright,FormCreateDate,FormStatus,FormCreater  from `qp.formsettings` where FormCreater='" + Seesion.UserName + "'";
             using (var db = Databases.Instance)
             {

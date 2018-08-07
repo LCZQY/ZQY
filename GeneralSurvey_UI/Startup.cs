@@ -35,7 +35,6 @@ namespace GeneralSurvey_UI
             {
                 o.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Admin/Index"); 
             });
-
             services.AddMvc();  
 
         }
@@ -61,7 +60,7 @@ namespace GeneralSurvey_UI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Admin}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=ContentPage}/{id?}");
             });
         }
     }

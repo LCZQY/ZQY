@@ -1,90 +1,90 @@
 ﻿
-// 添加禁用属性
-var addAttr = function (elem) {
-    $(elem).attr({
-        "disabled": "true",
-    }).css("border", "#8a8787 solid thin");
-
+// 显示元素
+var showDom = function (elem) {
+    $(elem).show();
 }
 
-// 删除禁用属性
-var deleteAttr = function (elem) {
-    $(elem).removeAttr("disabled").attr("lay-verify", "").css("border", "none");//required
+//隐藏元素
+var hideDom = function (elem) {
+    $(elem).hide();
 }
 
-
+var removeVerify = function () {
+    $("input[name=OptionSet]").removeAttr("lay-verify");
+    $("input[name=Charlength]").removeAttr("lay-verify");
+}
 
 // 输入框禁用
 var disableInput = function (value) {
-    console.log(value);
-    switch (value) {
-        case "001":
-        case "003":
-        case "002":
-            addAttr("#Charlength");
-            deleteAttr("input[name=OptionSet]");
-            break;
-        case "005":
-        case "009":
-        case "010":
-        case "011":
-            addAttr("#Charlength");
-            addAttr("input[name=OptionSet]");
-            break;
-        case "006":
-        case "004":
-            deleteAttr("#Charlength");
-            addAttr("input[name=OptionSet]");
-            break;
-        case "007":
-        case "008":
-            addAttr("#Charlength");
-            addAttr("input[name=OptionSet]");
-            break;
+    //输入框
+    if (value == "006" || value == "004") {
+        $("input[name=OptionSet]").attr("lay-verify", "");
+        $("input[name=CharactersSize]").attr("lay-verify", "required");
+        showDom("#isnull");
+        showDom("#Charlengths");
     }
+    //选项框
+    else if (value == "001" || value == "002" || value == "003") {
+        showDom("#OptionSets");
+        hideDom("#Charlengths");
+        $("input[name=OptionSet]").attr("lay-verify", "spaces");
+        $("input[name=CharactersSize]").attr("lay-verify", "");
+
+    } else {
+
+        $("input[name=OptionSet]").attr("lay-verify", "");
+        $("input[name=CharactersSize]").attr("lay-verify", "");
+        hideDom("#isnull");
+        hideDom("#Charlengths");
+        hideDom("#OptionSets");
+    }
+
+
 }
-
-
-
 
 //表单提交
 var ajaxLayui = function (options) {
     console.log("调用中....");
+    $("input[name=TopicName]").keydown(function () {
+        if ($(this).val() != "") {
+            showDom("#topics");
+        }
+    });
+
+  
     layui.use('form', function () {
         var form = layui.form  // 表单
             , layer = layui.layer // 基础
             , layedit = layui.layedit //编辑器
             , laydate = layui.laydate; //日期            
 
-
-        form.verify({
-            options: function (value) {
-                if (value == "") {
-                    return '请选择选项类型'
-                }
-            },
-            spaces: function (value) {
-
-                if (value.indexOf("*") < -1) {
+        form.verify({         
+            spaces: function (value) {              
+                if (value.indexOf("*") < 0) {
                     return '选项之间用 * 号隔开'
                 }
             }
         });
 
+        var verifys = 0;
         form.on('radio(interest)', function (data) {
-
+            verifys++;
             //console.log(data.elem); //得到select原始Dom对象
             //console.log(data.othis); //得到美化后的Dom对象
             //console.log(data.value); //  得到选择的后的值
             disableInput(data.value);
         });
+      
 
         //监听提交
         form.on('submit(formDemo)', function (data) {
-
+            if (verifys == 0) {
+                layer.msg('请选择题目类型', { icon: 5, time: 2000 });  
+                return false;
+            }
             ajax_request({
                 data: {
-                    interest: data.field["interest"], TopicName: data.field["TopicName"], CharactersSize: data.field["CharactersSize"], OptionSet: data.field["OptionSet"], Stides: data.field["Stides"]
+                    interest: data.field["interest"], TopicName: data.field["TopicName"], CharactersSize: data.field["CharactersSize"], OptionSet: data.field["OptionSet"], Stides: data.field["Stides"], Isempty: data.field["Isempty"]
                 },
                 url: options.ajax,
                 callback: function (data) {

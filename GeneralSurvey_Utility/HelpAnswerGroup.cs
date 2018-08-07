@@ -97,7 +97,8 @@ namespace GeneralSurvey_Utility
         /// <returns></returns>
         public static List<AnswerGroup> GetList(string cond)
         {
-            string sql = @"select id,Answer,FromID from `qp.answergroup` where " + cond + " and FromID='" + Seesion.FromIds + "'";
+
+            string sql = @"select id,Answer,FromID from `qp.answergroup` where " + cond + "";
             using (var db = Databases.Instance)
             {
                 return db.Query<AnswerGroup>(sql).ToList();

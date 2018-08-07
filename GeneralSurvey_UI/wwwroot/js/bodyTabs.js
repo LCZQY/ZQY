@@ -5,7 +5,7 @@ var showTree = function () {
 
     layui.use('element', function () {
         var $ = layui.jquery;
-        var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        var element = layui.element; 
 
         //触发事件
         var active = {
@@ -15,7 +15,7 @@ var showTree = function () {
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
                 element.tabAdd('demo', {
                     title: name,
-                    content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:99%;"></iframe>',
+                    content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>',
                     id: id //规定好的id
                 })
                 CustomRightClick(id); //给tab绑定右击事件
@@ -86,6 +86,7 @@ var showTree = function () {
                 return false;
             });
         }
+
 
         $(".rightmenu li").click(function () {
 
@@ -172,8 +173,6 @@ var showTree = function () {
 //    //	]}
 //];
 
-
-
 //function showNotice() {
 //    layui.use('layer', function () { //独立版的layer无需执行这一句
 //        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
@@ -259,34 +258,3 @@ var showTree = function () {
 //    ulHtml += '</ul>';
 //    return ulHtml;
 //}
-
-
-////组合选项卡头部
-//var createTab = function (name) {
-
-//    return '<li  lay-id=""><i class="iconfont icon-computer"></i> <cite>' + name+'</cite></li>';
-//}
-
-
-
-////初始化左侧导航
-//var _this = this;
-//$(".navBar").html(navBar(navs)).height($(window).height() - 230);
-//$(window).resize(function () {
-//    $(".navBar").height($(window).height() - 230);
-//});
-
-
-
-///// 添加选项卡
-//$("li[class=layui-nav-item]").click(function () {
-
-//    $(".top_tab").find("li").each(function () {
-
-//    });
-//    $(".top_tab").append(createTab($(this).attr("name")));
-//    console.log($(this).attr("name"));
-
-//})
-
-

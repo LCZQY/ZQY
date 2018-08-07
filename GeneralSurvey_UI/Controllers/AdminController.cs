@@ -18,10 +18,15 @@ using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting;
 
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace GeneralSurvey_UI.Controllers
 {
-  
+
+    //AuthenticationSchemes=CookieAuthenticationDefaults.AuthenticationScheme 找到保存的Cookies值，才允许登陆
+    //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class AdminController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -32,10 +37,9 @@ namespace GeneralSurvey_UI.Controllers
             _httpContextAccessor = contextAccessor;
         }
 
-        [AllowAnonymous]
+        //[AllowAnonymous] //允许访问
         public IActionResult Index()
         {
-
             return View();
         }
 
@@ -44,19 +48,24 @@ namespace GeneralSurvey_UI.Controllers
         {
             if (userName != null)
             {
-                Seesion.UserName = userName;
                 try
                 {
-                    HttpContext.Session.SetString("LoginInfo", userName);
-                    var query = Databases.Instance.Query<Formsettings>("select * from `qp.formsettings` where FormCreater = '" + userName + "' LIMIT 1");
-                    foreach (var item in query)
-                    {
-                        Seesion.FromIds = item.FormID;
-                    }
+                   /**
+                    * 登陆后获取token , 
+                    * 获取传递的token，去保存用户信息
+                    **/
+                    ClaimsIdentity identity = new ClaimsIdentity("Forms");
+                    identity.AddClaim(new Claim(ClaimTypes.Sid, "Admin"));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, userName));
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    Seesion.UserName = User.Identity.Name;
+                    var queryId = Databases.Instance.Query<Formsettings>("select FormID from `qp.formsettings` where FormCreater = '" + userName + "'").Single().FormID;
+                    Seesion.FromIds = queryId;
                 }
                 catch (Exception ex)
                 {
-
                     Seesion.FromIds = "1";
                 }
                 return Redirect(Url.Action("Index", "Home"));
@@ -71,13 +80,11 @@ namespace GeneralSurvey_UI.Controllers
         /// <summary>
         ///  显示数据
         /// </summary>
-        /// <returns></returns>
-        [Authorize]
-        public ActionResult Exhibition()
+        /// <returns></returns>    
+        public ActionResult Exhibition(string fid)
         {
-
-            ViewData["theader"] = HelpTopicgroup.GetList();
-            return View(HelpAnswerGroup.GetList().ToList());
+            ViewData["theader"] = HelpTopicgroup.GetList("FromID='" + fid + "'");
+            return View(HelpAnswerGroup.GetList("FromID='" + fid + "'").ToList());
         }
 
         /// <summary>
@@ -205,7 +212,6 @@ namespace GeneralSurvey_UI.Controllers
             {
                 return Json(ResultMsg.FormatResult(el));
             }
-
         }
     }
 }

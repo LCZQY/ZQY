@@ -14,18 +14,15 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Authorization;
-
 namespace GeneralSurvey_UI.Controllers
 {
     /// <summary>
     ///  手机端--调研问卷页面
     /// </summary>    
-    [Authorize] 
     public class ShowTextController : Controller
     {
         // 依赖注入类读取本地wwwroot文件夹  .Net Core已经没有了Server.MapPath() 属性了
         private IHostingEnvironment _hostingEnvironment;
-
         public ShowTextController(IHostingEnvironment hosting)
         {
             _hostingEnvironment = hosting;
@@ -33,8 +30,10 @@ namespace GeneralSurvey_UI.Controllers
 
         public IActionResult Index(string formid)
         {
+            // 如果没有formid为空直接展示默认的调研问卷
             if (formid == null)
             {
+                var name = User.Identity.Name;                
                 ViewData["query"] = HelpTopicgroup.GetList();
             }
             else
@@ -49,14 +48,15 @@ namespace GeneralSurvey_UI.Controllers
         ///  保存所有的提交的数据
         /// </summary>
         /// <returns>
-        ///   List<IFormFile> files 该参数必须和  文件框中的 name一致
-        /// </returns>
+        /// <IFormFile> files 该参数必须和  文件框中的 name一致
         [HttpPost]
         public IActionResult Index(IFormCollection model, List<IFormFile> files)
         {
             //在文件上传的时候， 只能采用表单的提交后台才能够获取到文件？？ 而Ajax的方式不行？
             string paths = FileSave(files);
-            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>() { };
+            Dictionary<string, string> keyValuePairs = new Dictionary<string, string>()
+            {
+            };
             foreach (var item in model)
             {
                 // 去掉莫名上传的Cookies防伪标志
@@ -69,7 +69,9 @@ namespace GeneralSurvey_UI.Controllers
                     }
                     else
                     {
-                        keyValuePairs.Add(item.Key, item.Value);
+                        string Value=item.Value.ToString() == "" ? "...." : item.Value.ToString();
+                        //keyValuePairs.Add(item.Key, item.Value);
+                        keyValuePairs.Add(item.Key, Value);
                     }
                 }
             }
@@ -84,14 +86,16 @@ namespace GeneralSurvey_UI.Controllers
                 int flage = HelpAnswerGroup.Insert(InsertModel);
                 if (flage > 0)
                 {
-                    return Ok("<script>alert('插入成功')</script>");
+                    //RedirectToAction 只能够在本页面跳转
+                    return RedirectToAction("Succeed");
                 }
                 return Json("插入失败");
             }
-            catch (Exception el) { return Json(ResultMsg.FormatResult(el)); }
-
+            catch (Exception el)
+            {
+                return Json(ResultMsg.FormatResult(el));
+            }
         }
-
         /// <summary>
         ///  接受文件 
         /// </summary>
@@ -128,6 +132,13 @@ namespace GeneralSurvey_UI.Controllers
         }
 
 
-       
+        /// <summary>
+        ///   问卷添加成功
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult Succeed()
+        {
+            return View();
+        }
     }
 }
