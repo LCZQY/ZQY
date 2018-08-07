@@ -83,8 +83,6 @@ namespace GeneralSurvey_UI.Controllers
             }
             catch (Exception ex) { return Json(data: ResultMsg.FormatResult(ex)); }
         }
-
-
         /// <summary>
         ///   添加成功
         /// </summary>
