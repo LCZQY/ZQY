@@ -189,7 +189,7 @@
                                                         <td class="col-md-12 col-sm-9">
                                                             @{
                                                                 //等于空为不允许为空
-                                                                if (item.Isnull == null)
+                                                                if (item.CharactersSize != "0")
                                                                 {
                                                                     <textarea class="form-control" datatype="*1-@item.CharactersSize" name="@item.FromName" placeholder="请输入信息"></textarea>
                                                                 }
@@ -223,7 +223,7 @@
                                                     <tr>
                                                         <td class="col-md-12 col-sm-9">
                                                             @{
-                                                                if (item.Isnull == null)
+                                                                if (item.CharactersSize != "0")
                                                                 {
                                                                     <input type="text" class="form-control input-sm" datatype="*1-@item.CharactersSize" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
                                                                 }

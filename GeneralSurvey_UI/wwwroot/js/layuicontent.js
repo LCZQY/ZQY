@@ -9,10 +9,6 @@ var hideDom = function (elem) {
     $(elem).hide();
 }
 
-var removeVerify = function () {
-    $("input[name=OptionSet]").removeAttr("lay-verify");
-    $("input[name=Charlength]").removeAttr("lay-verify");
-}
 
 // 输入框禁用
 var disableInput = function (value) {
@@ -20,7 +16,7 @@ var disableInput = function (value) {
     if (value == "006" || value == "004") {
         $("input[name=OptionSet]").attr("lay-verify", "");
         $("input[name=CharactersSize]").attr("lay-verify", "required");
-        showDom("#isnull");
+        // showDom("#isnull");
         showDom("#Charlengths");
     }
     //选项框
@@ -34,7 +30,7 @@ var disableInput = function (value) {
 
         $("input[name=OptionSet]").attr("lay-verify", "");
         $("input[name=CharactersSize]").attr("lay-verify", "");
-        hideDom("#isnull");
+        //  hideDom("#isnull");
         hideDom("#Charlengths");
         hideDom("#OptionSets");
     }
@@ -51,15 +47,15 @@ var ajaxLayui = function (options) {
         }
     });
 
-  
+
     layui.use('form', function () {
         var form = layui.form  // 表单
             , layer = layui.layer // 基础
             , layedit = layui.layedit //编辑器
             , laydate = layui.laydate; //日期            
 
-        form.verify({         
-            spaces: function (value) {              
+        form.verify({
+            spaces: function (value) {
                 if (value.indexOf("*") < 0) {
                     return '选项之间用 * 号隔开'
                 }
@@ -74,17 +70,17 @@ var ajaxLayui = function (options) {
             //console.log(data.value); //  得到选择的后的值
             disableInput(data.value);
         });
-      
+
 
         //监听提交
         form.on('submit(formDemo)', function (data) {
             if (verifys == 0) {
-                layer.msg('请选择题目类型', { icon: 5, time: 2000 });  
+                layer.msg('请选择题目类型', { icon: 5, time: 2000 });
                 return false;
             }
             ajax_request({
                 data: {
-                    interest: data.field["interest"], TopicName: data.field["TopicName"], CharactersSize: data.field["CharactersSize"], OptionSet: data.field["OptionSet"], Stides: data.field["Stides"], Isempty: data.field["Isempty"]
+                    interest: data.field["interest"], TopicName: data.field["TopicName"], CharactersSize: data.field["CharactersSize"], OptionSet: data.field["OptionSet"], Stides: data.field["Stides"]//, Isempty: data.field["Isempty"]
                 },
                 url: options.ajax,
                 callback: function (data) {

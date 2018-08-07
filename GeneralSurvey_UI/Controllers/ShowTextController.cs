@@ -69,7 +69,8 @@ namespace GeneralSurvey_UI.Controllers
                     }
                     else
                     {
-                        string Value=item.Value.ToString() == "" ? "...." : item.Value.ToString();
+                        
+                        string Value=item.Value.ToString() == "" ? "..." : item.Value.ToString();
                         //keyValuePairs.Add(item.Key, item.Value);
                         keyValuePairs.Add(item.Key, Value);
                     }

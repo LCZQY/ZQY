@@ -54,7 +54,7 @@ namespace GeneralSurvey_UI.Controllers
         /// <returns></returns>
         
         [HttpPost]
-        public IActionResult ContentPage(string Stides, string interest, string TopicName, string CharactersSize, string OptionSet,string Isempty)
+        public IActionResult ContentPage(string Stides, string interest, string TopicName, string CharactersSize, string OptionSet)
         {
              
           //return Json(new { string1= Stides, string2= interest, string3= TopicName, string4= CharactersSize, string5= OptionSet, string6= Isempty });
@@ -73,7 +73,7 @@ namespace GeneralSurvey_UI.Controllers
                     OptionText = OptionSet,
                     Stide = int.Parse(Stides),
                     FromName = fromName,
-                    Isnull = Isempty == null ? "空" : Isempty, 
+                  //  Isnull = Isempty == null ? "空" : Isempty, 
                     FromID = Seesion.FromIds
                 };
                 int request = HelpTopicgroup.Insert(InsertModel);
