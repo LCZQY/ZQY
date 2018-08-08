@@ -4,7 +4,6 @@
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
@@ -15,13 +14,15 @@
 </head>
 <body>
     <div class="layui-container-full">
-
         <div class="layui-row">
             <div class="layui-col-md12  layui-bg-cyan" style="height:60px; line-height:60px;">
-                <h2  style="padding-left:3%;">说明：1.如果要调整答题顺序请直接修改您的题号</h2>
+                <h2 style="padding-left:3%;">说明：1.如果要调整答题顺序请直接修改您的题号</h2>
             </div>
             <div class="layui-col-md12">
                 <table class="layui-table" id="LAY_table_user" lay-size="sm" lay-filter="useruv"></table>
+            </div>
+            <div class="layui-col-md12">
+                <input class="layui-btn layui-btn-sm layui-btn-fluid" id="nextStep03" type="button" value="下一步" />
             </div>
         </div>
     </div>
@@ -37,7 +38,26 @@
             jsonT: "@Url.Action("jsonTable", "LayoutWeb")",
             del: "@Url.Action("Delete", "LayoutWeb")",
             edit:"@Url.Action("Edit","LayoutWeb")"
-        }); 
+        });
+
+
+        $("#nextStep03").click(function () {
+            //弹出框设置
+                layui.use('layer', function () {
+                    layer = layui.layer;
+                    //询问框
+                    layer.confirm('注意', {
+                        btn: ['是否确定当前排序', '取消'] //按钮
+                    }, function () {
+                        // 直接替换成下一步
+                            var enelmnt = parent.parent.document.getElementById("twoStep").setAttribute("src", "@Url.Action("AddSucceed", "Home")");
+                    }, function () {
+
+                    });
+
+                });
+
+        });
     </script>
 </body>
 </html>

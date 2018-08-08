@@ -5,6 +5,13 @@
 
 <div class="layui-container">
     <div class="layui-row">
+        <div class="layui-col-md12">
+            <div class="steps steps-4">
+                <ol>
+                    <li><div><i>2</i></div><span data-phase-id="r_p_fillUserInfo">设置问答形式</span></li>
+                </ol>
+            </div>
+        </div>
         <div class=" layui-col-md-12">
             <form class="layui-form layui-form-pane" method="post" action="@Url.Action("ContentPage","Home")">
 
@@ -51,8 +58,8 @@
                 <div>
                 </div>
                 <div class="layui-col-md-12" style="font-weight:bold;">
-                    <div class="layui-form-item">
-                        <button class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="formDemo">保存设置</button>
+                    <div class="layui-form-item layui-col-md-5">
+                        <button class="layui-btn layui-btn-fluid layui-btn-sm" id="nextStep02" lay-submit="" lay-filter="formDemo">下一步</button>
                     </div>
                 </div>
             </form>
@@ -65,10 +72,13 @@
     <script src="~/js/home.js"></script>
     <script src="~/js/layuicontent.js"></script>
     <script>
-
         $("#interest").attr("lay-verify","options");
-        questionbody("@Url.Action("ContentPage","home")");
-        ajaxLayui("@Url.Action("ContentPage", "home")");
+        @*questionbody("@Url.Action("ContentPage","home")");*@
+
+        ajaxLayui({
+            ajax:"@Url.Action("ContentPage", "home")",
+            succeed:"@Url.Action("Index","LayoutWeb")",
+        });
     </script>
 }
 

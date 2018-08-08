@@ -27,9 +27,7 @@ var ajax_request = function (options) {
 
 var questionbody = function (url) {
     console.log(url.datagrids);
-    $("#ViewContent").click(function () {    
-
-        
+    $("#ViewContent").click(function () {            
         //window.location.href = url.view;
         //重新打开一个窗口
         window.open(url.view);

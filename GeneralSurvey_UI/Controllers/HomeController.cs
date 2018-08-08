@@ -82,9 +82,15 @@ namespace GeneralSurvey_UI.Controllers
             catch (Exception ex) { return Json(data: ResultMsg.FormatResult(ex)); }
         }
 
-        public IActionResult Error()
+
+        /// <summary>
+        ///   添加成功
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AddSucceed()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+
+            return View();
         }
     }
 }

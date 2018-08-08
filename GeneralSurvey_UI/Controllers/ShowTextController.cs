@@ -15,6 +15,9 @@ using Newtonsoft.Json.Linq;
 
 namespace GeneralSurvey_UI.Controllers
 {
+    /// <summary>
+    ///  手机端--调研问卷页面
+    /// </summary>
     public class ShowTextController : Controller
     {
 
