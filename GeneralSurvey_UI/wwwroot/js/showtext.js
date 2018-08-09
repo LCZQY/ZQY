@@ -44,6 +44,7 @@ var exten = function (extension) {
         case 'xlam':
         //ppt
         case 'pptx':
+        case 'ppt':
         case 'pptm':
         case 'ppsx':
         case 'ppsx':

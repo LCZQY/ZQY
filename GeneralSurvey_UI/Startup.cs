@@ -60,7 +60,7 @@ namespace GeneralSurvey_UI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=ContentPage}/{id?}");
+                    template: "{controller=Admin}/{action=Index}/{id?}");
             });
         }
     }

@@ -25,7 +25,6 @@
                 margin-left: 0;
                 margin-top: 18%;
             }
-
             .table
             {
                 color: red;
@@ -61,8 +60,9 @@
                 <header>
                     <div class="navbar navbar-inverse navbar-fixed-top">
                         <div class="container">
+                         
                             <div class="col-md-7 col-md-offset-2">
-                                <div class="navbar-header">
+                                <div class="navbar-header">                                    
                                     @{
                                         try
                                         {
@@ -354,8 +354,8 @@
     <script src="~/js/showtext.js"></script>
     <script src="~/js/back_top.js"></script>
     <script>
-        // 验证存在问题 ？？？
-        backTop();
+
+        backTop(); //  回答顶部
 
         layui.use('laydate', function () {
             var laydate = layui.laydate;
@@ -380,23 +380,17 @@
             {
                 ele: "select",
                 datatype: "*"
-            },
-            {
-                ele: ":radio:first",
-                datatype: "*"
-            },
-            {
-                ele: ":checkbox:first",
-                datatype: "*"
             }
         ]);
 
-        //禁止自动选择
+        //地址选择框禁止自动选择
         $("#distpicker").distpicker({
             autoSelect: false
         });
+
+
         /*
-         * 文件错误显示
+         * 文件上传的限制条件
          * */
         var upFileError = function () {
             $(".upload-url").val($("#BlogPhoto").val());
@@ -417,38 +411,29 @@
                 var size = GetFileSize('BlogPhoto');
                 if (size > 20) {
                     return true;
-                    //fileSizeBool = true;
                     $("#warning").html("上传文件已经超过4兆！");
                 } else {
                     $("#warning").html("");
                     return false;
-                    //fileSizeBool = false;
                 }
             }
         }
-
-        function doUpload() {
-    var formData = new FormData($("#uploadForm")[0]);
-    $.ajax({
-        url: '@Url.Action("Index")',
-        type: 'POST',
-        data: formData,
-        async: false,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (returndata) {
-            alert(returndata);
-        },
-        error: function (returndata) {
-            alert(returndata);
-        }
-    });
-}
         ///文件选择框变化时，验证上传文件是否正确
         $("#BlogPhoto").change(function () {
             upFileError();
+            $(".upload").find(".Validform_checktip").html("");
+        });
+
+        $("#mits").click(function () {
+            if (!fileTypeBool) {
+                alert("非法提交的文件")
+                return false;
+            } else {
+                $("#mits").submit();
+                return true;
+            }
         });
     </script>
 </body>
 </html>
+
