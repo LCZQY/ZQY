@@ -44,5 +44,10 @@ namespace GeneralSurvey_Data.Model
         /// </summary>
         public string FromName { get; set; }
 
+        /// <summary>
+        ///  是否为空
+        /// </summary>
+        ////public string Isnull { get; set; }
+
     }
 }

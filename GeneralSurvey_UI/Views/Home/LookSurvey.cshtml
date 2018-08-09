@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>查看问卷</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/lib/layui/layui.js"></script>
+    <style>      
+    </style>
+</head>
+<body style="background:rgb(242,242,242);">
+    <div class="layui-container-full">
+        <div class="layui-row">         
+            <div class="layui-col-md12">
+                <table class="layui-table" id="LAY_table_user"  lay-size="lg" lay-filter="useruv"></table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-bg-green" data-method="notice" lay-event="look">查看问卷</a>
+    <a class="layui-btn layui-btn-xs layui-bg-green" data-method="notice" lay-event="update">题干排序</a>
+    <a class="layui-btn layui-btn-xs layui-bg-green" data-method="notice" lay-event="customer">客户信息</a>
+    <a class="layui-btn layui-bg-green layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script>
+    //主方法 
+        layui.use('table', function () {
+            var table = layui.table;
+
+            //方法级渲染
+            table.render({
+                elem: '#LAY_table_user'
+                , url: "@Url.Action("jsonTable", "Home")"
+                , cols: [[
+                    //{ checkbox: true, fixed: true },
+                    { field: 'formNote', title: '问卷简介', width: 300, align: 'center' }
+                    , { field: 'formTitle', title: '问卷标题', width: 200, align: 'center' }
+                    , { field: 'formCopyright', title: '问卷版权', width: 280, align: 'center' }
+                    , { field: 'formCreateDate', title: '创建时间', width: 200, align: 'center' }
+                    , { field: 'formStatus', title: '问卷状态', width: 120, align: 'center' }
+                    , { field: 'formCreater', title: '创建者', width: 200, align: 'center'}
+                    , { field: 'formID', title: '操作', toolbar: '#barDemo', align: 'center' }
+                ]]
+                , id: 'testReload'
+                , page: true
+                , height: 'full-200'
+                , skin: 'line' //表格风格
+            });
+
+            // 删除，修改
+            table.on('tool(useruv)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'del') { // 删除
+                    layer.confirm('是否确定删除', function (index) {
+                        ajax_request({
+                            url: option.del,
+                            data: { id: data["id"] },
+                            callback: function (pic) {
+                                if (pic.code == 200) {
+                                    obj.del();
+                                    layer.close(index);
+                                } else {
+                                    console.log(pic);
+                                    layer.msg("服务器出错了，请重试");
+                                }
+                            }
+                        });
+                    });
+                } else if (obj.event === 'look') { // 查看
+                    console.log(data["formID"]);
+                    var url = " @Url.Action("Index", "ShowText")";
+                    var href = url + "/?formid=" + data["formID"];
+                    window.open(href);
+                   
+                } else if (obj.event == "update") { // 修改
+                    var href = "@Url.Action("Index", "LayoutWeb")";
+                    editContent(href);
+                } else if (obj.event == "customer") { // 客户信息
+                    var href = "@Url.Action("Exhibition", "Admin")" + "/?fid=" + data["formID"];
+                    editContent(href);
+                }                    
+            });
+        });
+
+    //修改
+    var editContent = function (href) {
+        console.log(href)
+        var index = layer.open({
+            type: 2,
+            content: href,
+            area: ['1220px', '505px'],
+            maxmin: true
+        });
+        layer.full(index);
+    }
+</script>

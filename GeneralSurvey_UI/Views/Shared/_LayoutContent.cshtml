@@ -4,11 +4,54 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title></title>
+    <link rel="icon" href="~/favicon.ico" type="img/x-ico" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
-    <script src="~/lib/layui/layui.js"></script>  
+    <script src="~/lib/layui/layui.js"></script>
+    <style>
+        ol li
+        {
+            color: #808080;
+            font-size: 20px;
+            float: left;
+        }
+
+        ol li div, ol li span
+        {
+            float: left;
+        }
+
+        ol li div
+        {
+            text-align: center;
+            color: #ffffff;
+            float: left;
+            width: 20px;
+            height: 20px;
+            border-radius: 20em;
+            border: #808080 solid thin;
+            background: #808080;
+        }
+
+        .i
+        {
+            text-align: center;
+            color: #ffffff;
+            float: left;
+            width: 20px;
+            height: 20px;
+            border-radius: 20em;
+            border: Red solid thin;
+            background: Red;
+        }
+
+        .tsl
+        {
+            color: Red;
+        }
+    </style>
 </head>
-<body style="background:#d9d9d9; height:auto;">
+<body style="height:auto;">
     @RenderBody()
 
     @RenderSection("Scripts", required: false)

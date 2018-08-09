@@ -8,13 +8,17 @@ using GeneralSurvey_Data.Model;
 using GeneralSurvey_Data;
 using Dapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.Cookies;
 namespace GeneralSurvey_UI.Controllers
 {
     /// <summary>
     ///  排版设置
     /// </summary>
+    //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)] //??? 登陆后也不能够访问 ？
     public class LayoutWebController : Controller
     {
+
         public IActionResult Index()
         {
             return View();
@@ -32,6 +36,7 @@ namespace GeneralSurvey_UI.Controllers
             }
             return Json(ResultMsg.FormatResult(0, "删除失败", "删除失败"));
         }
+
         /// <summary>
         ///  编辑
         /// </summary>
@@ -48,6 +53,7 @@ namespace GeneralSurvey_UI.Controllers
             ViewData["EditData"] = edit;
             return View();
         }
+
         [HttpPost]
         public IActionResult Edit()
         {
@@ -85,7 +91,7 @@ namespace GeneralSurvey_UI.Controllers
                 else
                 {
                     //把用户修改的题号 拿去数据库中对比，如果存在就两两相互替换，不修改其他内容，不存在就直接修改，并且修改所用
-                    var existStide = Databases.connect().Query<Topicgroups>("select  id,TopicName,CharactersSize,SetsettingId ,OptionText ,Stide from  `qp.topicgroup`  where Stide =@Stide", new
+                    var existStide = Databases.Instance.Query<Topicgroups>("select  id,TopicName,CharactersSize,SetsettingId ,OptionText ,Stide from  `qp.topicgroup`  where Stide =@Stide", new
                     {
                         Stide = stIdes
                     });
@@ -109,7 +115,6 @@ namespace GeneralSurvey_UI.Controllers
                                     FromName = fromNamed,
                                     FromID = Seesion.FromIds
                                 };
-
                                 HelpTopicgroup.Insert(updateModel);
                                 HelpTopicgroup.Delete(item.id);
                             }
@@ -127,7 +132,6 @@ namespace GeneralSurvey_UI.Controllers
                                 FromName = fromName,
                                 FromID = Seesion.FromIds
                             };
-
                             HelpTopicgroup.Insert(updateModel);
                             return View("Index");
                         }
@@ -141,7 +145,7 @@ namespace GeneralSurvey_UI.Controllers
                         //不存在这个题号的时候直接修改题号不需要搭理内容
                         try
                         {
-                            Databases.connect().Execute("update `qp.topicgroup` set Stide =@Stide where id=@id", new
+                            Databases.Instance.Execute("update `qp.topicgroup` set Stide =@Stide where id=@id", new
                             {
                                 id = topicID,
                                 Stide = stIdes
@@ -160,6 +164,7 @@ namespace GeneralSurvey_UI.Controllers
                 return Json(ResultMsg.FormatResult(el));
             }
         }
+
 
         /// <summary>
         ///  组合 layui表格 json

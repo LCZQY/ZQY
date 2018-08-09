@@ -1,155 +1,169 @@
-﻿
-@using GeneralSurvey_Data.Model
+﻿@using GeneralSurvey_Utility;
+@using GeneralSurvey_Data.Model;
 @{
     Layout = null;
 }
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
     <title>问卷调研页</title>
+    <link href="~/lib/Validform_v5.3.2/style.css" rel="stylesheet" />
+    <link href="~/lib/Validform_v5.3.2/demo.css" rel="stylesheet" />
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/layui/css/layui.css" rel="stylesheet" />
     <link href="~/css/fileupload.css" rel="stylesheet" />
+    <link href="~/css/home.css" rel="stylesheet" />
     <style>
-        * { font-family: 'SimHei'; }
-        .h5 { font-weight: 600; color: #000000; }
-        b { color: red; font-weight: bold; font-size: 20px; margin-left: 0.4%; }
-        p { font-size: 14px; font-weight: 500; margin-top: 1%; text-indent: 2%; line-height: inherit; }
-        .h5 { font-size: 15px; color: #625c5c; }
-        textarea { max-width: 620px; }
-        option { text-align: center; }
-        .navbar-brand { font-size: 24px; }
-        textarea { resize: none; }
-        #mits { font-size: 20px; background: #222222; width: 300px; height: 45px; letter-spacing: 3px; font-weight: bold; color: #ffffff; }
+        @@media (max-width: 1024px)
+        {
+            section
+            {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 18%;
+            }
+
+            .table
+            {
+                color: red;
+                border: red solid thin;
+                width: 10px;
+            }
+        }
+
+        #warning
+        {
+            margin-left: 1px;
+        }
+
+        #title
+        {
+            font-size: 15px;
+            background: rgb(234, 232, 232);
+        }
+
+        .navbar-header
+        {
+            line-height: 50px;
+            margin-top: 3%;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
-            <!--头部开始-->
-            <header>
-                <div class="row">
+            <div class="col-md-12">
+                <!--头部开始-->
+                <header>
                     <div class="navbar navbar-inverse navbar-fixed-top">
                         <div class="container">
                             <div class="col-md-7 col-md-offset-2">
                                 <div class="navbar-header">
-                                    调研信息系统管理
+                                    @{
+                                        try
+                                        {
+                                            var title = HelpFormsettings.GetList("FormID ='" + Seesion.FromIds + "'").Single().FormTitle;
+                                            <h3>@title</h3>
+                                        }
+                                        catch (Exception ex)
+                                        {@*<h3>@ex.Message</h3>*@}
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </header>
-            <!--内容页开始-->
-            <section>
-                <div class="row">
-                    <div class="col-md-7 col-md-offset-2">
-                        <p>
-                            新华社约翰内斯堡7月25日电(记者霍小光　孟娜　李建敏)国家主席习近平25日应邀出席在南非约翰内斯堡举行
-                            的金砖国家工商论坛，并发表题为《顺应时代潮流　实现共同发展》的重要讲话，强调金砖国家要顺应历史大势，坚持合作共赢、创新引领、包容普惠、多边主义，为构建新型国际关系、构建人类命运共同体发挥建设性作用。
-                        </p>
+                </header>
+                <!--内容页开始-->
+                <section>
+                    <div>
+                        @{
+                            try
+                            {
+                                string query = HelpFormsettings.GetList("FormID ='" + Seesion.FromIds + "'").SingleOrDefault(u => u.FormID == Seesion.FromIds).FormNote;
+                                <p>@query</p>
+                            }
+                            catch { }
+                        }
                     </div>
-                    <div class="col-md-7  col-md-offset-2 ">
-                        <form method="post" enctype="multipart/form-data" action="@Url.Action("Index","ShowText")">
-
-                            <div class="form-horizontal">
-                                @{
-                                    var count = 0;
-                                    foreach (var item in (List<Topicgroups>)ViewData["query"])
-                                    {
-                                        <div class="form-group">
-                                            <label>@item.TopicName</label>
-
-                                            @{
-                                                switch (item.SetsettingId)
-                                                {
-                                                    case "001": // 多选框
-                                                        <div class="col-md-12">
-                                                            @{
-                                                                try
-                                                                {
-                                                                    if (item.OptionText.IndexOf("*") > -1)
-                                                                    {
-                                                                        var arry = item.OptionText.Split('*');
-                                                                        for (int i = 0; i < arry.Length - 1; i++)
+                    <form method="post" enctype="multipart/form-data" class="register" action="@Url.Action("Index","ShowText")">
+                        <div class="table-responsive">
+                            <table class=" table-striped table-condensed table-hover " style="width:100%;">
+                                <tbody>
+                                    @{
+                                        var count = 0;
+                                        foreach (var item in (List<Topicgroups>)ViewData["query"])
+                                        {
+                                            <tr class="active">
+                                                <td id="title">@item.TopicName</td>
+                                            </tr>
+                                            switch (item.SetsettingId)
+                                            {
+                                                case "001": // 多选框
+                                                    try
+                                                    {
+                                                        if (item.OptionText.IndexOf("*") > -1)
+                                                        {
+                                                            var arry = item.OptionText.Split('*');
+                                                            <tr>
+                                                                <td class="col-md-12 col-sm-9">
+                                                                    @{
+                                                                        for (int i = 0; i < arry.Length; i++)
                                                                         {
-                                                                            if (i % 2 == 0)
-                                                                            {
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="checkbox">
-                                                                                            <label>
-                                                                                                <input type="checkbox" value="@arry[i]" name="@item.FromName" title="@arry[i]">
-                                                                                                @arry[i]
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="checkbox">
-                                                                                            <label>
-                                                                                                <input type="checkbox" value="@arry[i+1]" name="@item.FromName" title="@arry[i + 1]">
-                                                                                                @arry[i + 1]
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            }
-
+                                                                            <div class="col-md-6">
+                                                                                <input type="checkbox" datatype="*" value="@arry[i]" name="@item.FromName" title="@arry[i]">
+                                                                                <label>
+                                                                                    @arry[i]
+                                                                                </label>
+                                                                                <span class="Validform_checktip"></span>
+                                                                            </div>
                                                                         }
                                                                     }
-                                                                }
-                                                                catch (Exception ex)
-                                                                {
-                                                                    <span>请参照本系统规则添加选项</span>
-                                                                }
-                                                            }
-                                                        </div>
-                                                        break;
-                                                    case "002": //单选框
-                                                        try
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    catch (Exception ex)
+                                                    {
+                                                        <span>请参照本系统规则添加选项</span>
+                                                    }
+                                                    break;
+                                                case "002": //单选框
+                                                    try
+                                                    {
+                                                        if (item.OptionText.IndexOf("*") > -1)
                                                         {
-                                                            if (item.OptionText.IndexOf("*") > -1)
-                                                            {
-                                                                var arry = item.OptionText.Split('*');
-                                                                <div class="col-md-12">
-                                                                    @{ for (int i = 0; i < arry.Length; i++)
+                                                            var arry = item.OptionText.Split('*');
+                                                            <tr>
+                                                                <td class="col-md-12">
+                                                                    @{
+                                                                        for (int i = 0; i < arry.Length; i++)
                                                                         {
-                                                                            if (i % 2 == 0)
-                                                                            {
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <label>
-                                                                                            <input type="radio" value="@arry[i]" name="@item.FromName" title="@arry[i]">
-                                                                                            @arry[i]
-                                                                                        </label>
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <label>
-                                                                                            <input type="radio" value="@arry[i + 1]" name="@item.FromName" title="@arry[i + 1]">
-                                                                                            @arry[i + 1]
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </div>
-                                                                            }
+                                                                            <div class="col-md-6">
+                                                                                <input type="radio" value="@arry[i]" datatype="*" name="@item.FromName" title="@arry[i]">
+                                                                                <label>
+                                                                                    @arry[i]
+                                                                                </label>
+                                                                                <span class="Validform_checktip"></span>
+                                                                            </div>
                                                                         }
                                                                     }
-                                                                </div>
-                                                            }
+                                                                </td>
+                                                            </tr>
                                                         }
-                                                        catch (Exception el)
-                                                        {
-                                                            <span>请参照本系统规则添加选项</span>
-                                                        }
-                                                        break;
-                                                    case "003": // 下拉框
-                                                        <div class="col-md-12">
-
-                                                            <select class="form-control" name="@item.FromName">
+                                                    }
+                                                    catch (Exception el)
+                                                    {
+                                                        <span>请参照本系统规则添加选项</span>
+                                                    }
+                                                    break;
+                                                case "003": // 下拉框
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <select class="form-control input-sm" name="@item.FromName">
                                                                 <option value="">--请选择--</option>
                                                                 @{
                                                                     try
@@ -166,93 +180,221 @@
                                                                     catch (Exception ex) { }
                                                                 }
                                                             </select>
-                                                        </div>
-                                                        break;
-
-                                                    case "004": // 多文本内容
-                                                        <div class="col-md-12">
-                                                            <textarea class="form-control" name="@item.FromName" placeholder="请输入信息"></textarea>
-                                                        </div>
-                                                        break;
-                                                    case "005": // 文件上传
-                                                        if (count == 0) //只允许出现一个文件上传框
-                                                        {
-                                                            @*<input type="file" name="files" multiple />*@
-                                                            <span class="upload">
-
-                                                                @*<input type="file" name="@item.FromName" />*@
-                                                                <input type="text" name="@item.FromName" class="upload-url input-sm" style="width:300px" />
-                                                                <input type="button" class="upload-btn btn-default  btn-sm" value="浏览文件" />
-                                                                <input type="file" name="files" multiple id="BlogPhoto" class="upload-input-file form-control input-sm">
-                                                            </span>
-                                                            <div class="col-md-12">
-                                                                <span id="warning" style="color:red;"></span>
-                                                            </div>
-                                                            count++;
-                                                        }
-                                                        break;
-                                                    case "006": // 输入框
-                                                        <div class="col-md-12">
-                                                            <input type="text" class="form-control input-sm" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
-                                                        </div>
-                                                        break;
-                                                    case "007": // 时间
-                                                        <div class="col-md-12">
-                                                            <input class="layui-input" id="test1" name="@item.FromName" placeholder="yyyy-MM-dd" type="text" />
-                                                        </div>
-                                                        break;
-                                                    case "008": // 地址
-                                                        <div class="col-md-12">
-                                                            <div class="docs-methods">
-                                                                <div id="distpicker">
-                                                                    <div class="col-md-4">
-                                                                        <label class="sr-only" for="province10">Province</label>
-                                                                        <select class="form-control input-sm" name="@item.FromName" id="province"></select>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label class="sr-only" for="city10">City</label>
-                                                                        <select class="form-control input-sm" name="@item.FromName" id="city"></select>
-                                                                    </div>
-                                                                    <div class="col-md-4">
-                                                                        <label class="sr-only" for="district10">District</label>
-                                                                        <select class="form-control input-sm" name="@item.FromName" id="district"></select>
-                                                                    </div>
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "004": // 多文本
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            @{
+                                                                //等于空为不允许为空
+                                                                if (item.CharactersSize != "0")
+                                                                {
+                                                                    <textarea class="form-control" datatype="*1-@item.CharactersSize" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <textarea class="form-control" name="@item.FromName" placeholder="请输入信息"></textarea>
+                                                                }
+                                                            }
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "005": // 文件上传
+                                                    if (count == 0) //只允许出现一个文件上传框
+                                                    {
+                                                        <tr>
+                                                            <td class="col-md-12 col-sm-9">
+                                                                <span class="upload">
+                                                                    <input type="text" readonly datatype="*" name="@item.FromName" class="upload-url input-sm" style="width:250px" />
+                                                                    <span class="Validform_checktip"></span>
+                                                                    <input type="button" class="upload-btn btn-default  btn-sm" value="浏览文件" />
+                                                                    <input type="file" name="files" multiple id="BlogPhoto" class="upload-input-file form-control input-sm">
+                                                                </span>
+                                                                <div id="warning" style="color:red;"></div>
+                                                            </td>
+                                                        </tr>
+                                                        count++;
+                                                    }
+                                                    break;
+                                                case "006": // 输入框
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            @{
+                                                                if (item.CharactersSize != "0")
+                                                                {
+                                                                    <input type="text" class="form-control input-sm" datatype="*1-@item.CharactersSize" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="text" class="form-control input-sm" name="@item.FromName" id="exampleInputEmail1" placeholder="请输入信息" />
+                                                                }
+                                                            }
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "007": // 时间
+                                                    <tr>
+                                                        <td class=" col-md-12 col-sm-9">
+                                                            <input class="layui-input input-sm" name="@item.FromName" datatype="*" id="test1" placeholder="年-月-日" type="text">
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "008": // 地址
+                                                    <tr>
+                                                        <td class="docs-methods col-sm-9 col-md-12">
+                                                            <div id="distpicker">
+                                                                <div class="col-md-4">
+                                                                    <label class="sr-only" for="province10">Province</label>
+                                                                    <select class="form-control input-sm" datatype="*" name="@item.FromName" id="province"></select>
+                                                                    <span class="Validform_checktip"></span>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="sr-only" for="city10">City</label>
+                                                                    <select class="form-control input-sm" datatype="*" name="@item.FromName" id="city"></select>
+                                                                    <span class="Validform_checktip"></span>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <label class="sr-only" for="district10">District</label>
+                                                                    <select class="form-control input-sm" name="@item.FromName" id="district"></select>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        break;
-                                                }
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "009": // 邮箱
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <input type="text" class="form-control input-sm" datatype="e" name="@item.FromName" id="email" placeholder="请输入信息" />
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "010": // 手机
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <input type="text" class="form-control input-sm" datatype="m" name="@item.FromName" id="email" placeholder="请输入信息" />
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
+                                                case "011": // 网址
+                                                    <tr>
+                                                        <td class="col-md-12 col-sm-9">
+                                                            <input type="text" class="form-control input-sm" datatype="url" name="@item.FromName" id="email" placeholder="请输入信息" />
+                                                            <span class="Validform_checktip"></span>
+                                                        </td>
+                                                    </tr>
+                                                    break;
                                             }
-                                        </div>
+
+                                        }
                                     }
-                                }
-                                <div class="form-group">
-                                    <div class="col-md-11" style=" text-align:center;">
-                                        <input type="submit" id="mits" value="提交申请" class="btn btn-lg btn-default" />
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                                    <tr>
+                                        <td align="center">
+                                            <div class="col-md-6 col-md-offset-3 ">
+                                                <input type="submit" id="mits" value="提交申请" class="btn btn-lg btn-default" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="col-md-10 text-center" id="footer" style="">
+                                            @{
+                                                try
+                                                {
+                                                    string copy = HelpFormsettings.GetList("FormID ='" + Seesion.FromIds + "'").SingleOrDefault().FormCopyright;
+                                                    <p>   &copy; @DateTime.Now.Year - @copy</p>
+                                                }
+                                                catch { }
+                                            }
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </form>
+                </section>
+                <div id="btn">
+                    <i class="layui-icon layui-icon-top" style="font-size: 40px; color: #222222;"></i>
                 </div>
-            </section>
-            <!--页尾开始-->
-            <footer class="col-md-8 text-center" style="margin:5% 0 0 8%;">
-                <p>&copy; @DateTime.Now.Year - 琦品出品</p>
-            </footer>
+                <style>
+                    #btn
+                    {
+                        line-height: 45px;
+                        text-align: center;
+                        background: no-repeat;
+                        position: fixed;
+                        border-radius: 12px;
+                        border: #cfcaca solid thin;
+                        bottom: 50px;
+                        right: 0;
+                        width: 45px;
+                        height: 45px;
+                    }
+                </style>
+            </div>
         </div>
     </div>
+
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/lib/Validform_v5.3.2/Validform_v5.3.2_min.js"></script>
     <script src="~/lib/layui/layui.js"></script>
     <script src="~/lib/distpicker/distpicker.data.js"></script>
     <script src="~/lib/distpicker/distpicker.js"></script>
     <script src="~/lib/distpicker/main.js"></script>
+    <script src="~/lib/layui/layui.js"></script>
     <script src="~/js/home.js"></script>
     <script src="~/js/showtext.js"></script>
+    <script src="~/js/back_top.js"></script>
     <script>
+        // 验证存在问题 ？？？
+        backTop();
 
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            //常规用法
+            laydate.render({
+                elem: '#test1'
+            });
+        });
+        var demo = $(".register").Validform({
+            tiptype: function (msg, o, cssctl) {
+                //msg：提示信息;
+                //o:{obj:*,type:*,curform:*}, obj指向的是当前验证的表单元素（或表单对象），type指示提示的状态，值为1、2、3、4， 1：正在检测/提交数据，2：通过验证，3：验证失败，4：提示ignore状态, curform为当前form对象;
+                //cssctl:内置的提示信息样式控制函数，该函数需传入两个参数：显示提示信息的对象 和 当前提示的状态（既形参o中的type）;
+                if (!o.obj.is("form")) {//验证表单元素时o.obj为该表单元素，全部验证通过提交表单时o.obj为该表单对象;
+                    var objtip = o.obj.siblings(".Validform_checktip");
+                    cssctl(objtip, o.type);
+                    objtip.text(msg);
+                }
+            }
+        });
+        demo.addRule([
+            {
+                ele: "select",
+                datatype: "*"
+            },
+            {
+                ele: ":radio:first",
+                datatype: "*"
+            },
+            {
+                ele: ":checkbox:first",
+                datatype: "*"
+            }
+        ]);
 
+        //禁止自动选择
+        $("#distpicker").distpicker({
+            autoSelect: false
+        });
         /*
          * 文件错误显示
          * */
@@ -269,8 +411,9 @@
                 return false;
             }
             else {
-                return true;
                 $("#warning").html("");
+                return true;
+
                 var size = GetFileSize('BlogPhoto');
                 if (size > 20) {
                     return true;
@@ -302,17 +445,10 @@
         }
     });
 }
-
         ///文件选择框变化时，验证上传文件是否正确
         $("#BlogPhoto").change(function () {
             upFileError();
         });
-
-        $("#mits").click(function () {
-
-        });
-
-
     </script>
 </body>
 </html>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using GeneralSurvey_Utility;
 using GeneralSurvey_Data.Model;
 using System.Text;
@@ -16,17 +17,27 @@ using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Hosting;
 
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace GeneralSurvey_UI.Controllers
 {
+
+    //AuthenticationSchemes=CookieAuthenticationDefaults.AuthenticationScheme 找到保存的Cookies值，才允许登陆
+    //[Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class AdminController : Controller
     {
-        private IHostingEnvironment _hostingEnvironment;
-
-        public AdminController(IHostingEnvironment hosting)
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AdminController(IHostingEnvironment hosting, IHttpContextAccessor contextAccessor)
         {
             _hostingEnvironment = hosting;
+            _httpContextAccessor = contextAccessor;
         }
 
+        //[AllowAnonymous] //允许访问
         public IActionResult Index()
         {
             return View();
@@ -35,27 +46,52 @@ namespace GeneralSurvey_UI.Controllers
         [HttpPost]
         public ActionResult Index(string userName, string passWord)
         {
+            if (userName != null)
+            {
+                try
+                {
+                   /**
+                    * 登陆后获取token , 
+                    * 获取传递的token，去保存用户信息
+                    **/
+                    ClaimsIdentity identity = new ClaimsIdentity("Forms");
+                    identity.AddClaim(new Claim(ClaimTypes.Sid, "Admin"));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, userName));
+                    ClaimsPrincipal principal = new ClaimsPrincipal(identity);
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
-            Seesion.UserName = userName == "" ? "Admin" : userName;
-            return Redirect(Url.Action("Index", "Home"));
+                    Seesion.UserName = User.Identity.Name;
+                    var queryId = Databases.Instance.Query<Formsettings>("select FormID from `qp.formsettings` where FormCreater = '" + userName + "'").Single().FormID;
+                    Seesion.FromIds = queryId;
+                }
+                catch (Exception ex)
+                {
+                    Seesion.FromIds = "1";
+                }
+                return Redirect(Url.Action("Index", "Home"));
+            }
+            else
+            {
+                return Json(ResultMsg.FormatResult(0, "登陆失败", "失败"));
+            }
         }
 
 
         /// <summary>
         ///  显示数据
         /// </summary>
-        /// <returns></returns>
-        public ActionResult Exhibition()
+        /// <returns></returns>    
+        public ActionResult Exhibition(string fid)
         {
-
-            ViewData["theader"] = HelpTopicgroup.GetList();
-            return View(HelpAnswerGroup.GetList().ToList());
+            ViewData["theader"] = HelpTopicgroup.GetList("FromID='" + fid + "'");
+            return View(HelpAnswerGroup.GetList("FromID='" + fid + "'").ToList());
         }
 
         /// <summary>
         /// 详细
         /// </summary>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Details(string id)
         {
             var entity = HelpAnswerGroup.GetList().FirstOrDefault(u => u.id == id);
@@ -71,6 +107,7 @@ namespace GeneralSurvey_UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Delete(string id)
         {
             // ???? 所有的Js 都没有弹出                    
@@ -97,6 +134,7 @@ namespace GeneralSurvey_UI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Authorize]
         public ActionResult Download(string id)
         {
 
@@ -133,15 +171,14 @@ namespace GeneralSurvey_UI.Controllers
         }
 
 
-
-
         /// <summary>
         ///  添加问卷
         /// </summary>
         /// <returns></returns>
+        /// 
+        [Authorize]
         public IActionResult AddSurvey()
         {
-
             return View();
         }
 
@@ -152,17 +189,18 @@ namespace GeneralSurvey_UI.Controllers
             {
                 // 表单ID 
                 string formId = Guid.NewGuid().ToString();
-                var InsertState = Databases.connect().Execute("insert into  `qp.formsettings` value(@FormID,@FormNote,@FormTitle,@FormCopyright,@FormCreateDate,@FormStatus,@FormCreater)", new
+                Formsettings InsertModel = new Formsettings()
                 {
                     FormID = formId,
                     FormNote = brief,
                     FormTitle = title,
                     FormCopyright = copy,
-                    FormCreateDate = DateTime.Now.ToShortDateString(),
+                    FormCreateDate = DateTime.Parse(DateTime.Now.ToShortDateString()),
                     FormStatus = 1,
                     FormCreater = Seesion.UserName
-                });
+                };
                 //给全局的表单ID赋值
+                var InsertState = HelpFormsettings.Insert(InsertModel);
                 Seesion.FromIds = formId;
                 if (InsertState > 0)
                 {
@@ -174,7 +212,6 @@ namespace GeneralSurvey_UI.Controllers
             {
                 return Json(ResultMsg.FormatResult(el));
             }
-
         }
     }
 }
