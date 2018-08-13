@@ -418,6 +418,7 @@
                 }
             }
         }
+
         ///文件选择框变化时，验证上传文件是否正确
         $("#BlogPhoto").change(function () {
             upFileError();
@@ -425,8 +426,9 @@
         });
 
         $("#mits").click(function () {
+
             if (!fileTypeBool) {
-                alert("非法提交的文件")
+                alert("只能上传Word,Excel,PPt文件");
                 return false;
             } else {
                 $("#mits").submit();
